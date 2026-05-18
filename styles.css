@@ -28,8 +28,12 @@
 ========================================== */
 html {
   scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
+section {
+  scroll-margin-top: 80px;
+}
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
