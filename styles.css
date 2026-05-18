@@ -267,6 +267,49 @@ header {
   margin: 0;
   text-align: center;
 }
+.form label {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+
+
+.form button:hover {
+  background: #065a2c;
+}
+.form {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form button {
+  width: 100%;
+  padding: 12px;
+  background: #0b7a3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
 .container {
   text-align: center;
 }
