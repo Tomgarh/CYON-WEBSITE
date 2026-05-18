@@ -230,7 +230,7 @@ header {
 }
 /* Leadership Images */
 .card img {
-  width: 120px;
+  width: 50%;
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
@@ -238,6 +238,7 @@ header {
   display: block;
   margin: 0 auto 1rem;
   text-align: center;
+  object-position: top;
 }
 
 /* Center content inside leadership cards */
