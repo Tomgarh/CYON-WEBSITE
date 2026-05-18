@@ -1,0 +1,308 @@
+/* ==========================================
+   CYON WEBSITE STYLES
+   Brand Colors: Gold, White and Green
+========================================== */
+
+:root {
+  --gold: #c9a227;
+  --gold-light: #e8c96a;
+  --green: #0b7a3b;
+  --green-dark: #065a2c;
+  --white: #ffffff;
+  --off-white: #f9faf7;
+  --text-dark: #333333;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   RESET
+========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   GLOBAL STYLES
+========================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background: var(--white);
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Merriweather', serif;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   BRAND (LOGO + TEXT)
+========================================== */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.cyon-logo {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--gold);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--white);
+}
+
+/* ==========================================
+   HEADER / NAVBAR
+========================================== */
+header {
+  background: var(--green);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--gold-light);
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+/* Hero Content Styling */
+.hero-content {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.parish-name {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 1rem;
+}
+
+.motto {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.response {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+#home {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("img/church.jpeg") center/cover no-repeat;
+
+  color: white;
+  text-align: center;
+  padding: 7rem 0;
+}
+.hero-description {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero {
+  background: linear-gradient(
+      rgba(11, 122, 59, 0.8),
+      rgba(6, 90, 44, 0.8)
+    ),
+    url("img/hero.jpg") center/cover no-repeat;
+  color: var(--white);
+  text-align: center;
+  padding: 7rem 0;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+.btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--green-dark);
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   SECTIONS
+========================================== */
+.section {
+  padding: 4rem 0;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--green-dark);
+}
+
+.bg-light {
+  background: var(--off-white);
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+/* Leadership Images */
+.card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--gold);
+  display: block;
+  margin: 0 auto 1rem;
+  text-align: center;
+}
+
+/* Center content inside leadership cards */
+
+.card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--shadow);
+  border-top: 4px solid var(--gold);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  color: var(--green-dark);
+  text-align: center;
+  margin: 0 0 0.5rem;
+}
+
+.card p {
+  margin: 0;
+  text-align: center;
+}
+.container {
+  text-align: center;
+}
+/* ==========================================
+   FOOTER
+========================================== */
+footer {
+  background: var(--green-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 5rem 0;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+}
