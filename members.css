@@ -1,0 +1,217 @@
+/* ==========================================
+   ROOT VARIABLES
+========================================== */
+:root {
+    --gold: #c9a227;
+    --gold-light: #e8c96a;
+    --green: #0b7a3b;
+    --green-dark: #065a2c;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --shadow: rgba(0, 0, 0, 0.12);
+  }
+  
+  /* ==========================================
+     RESET
+  ========================================== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ==========================================
+     GLOBAL
+  ========================================== */
+  body {
+    font-family: "Poppins", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: var(--white);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  h1, h2, h3, h4 {
+    font-family: "Merriweather", serif;
+  }
+  
+  /* ==========================================
+     CONTAINER (MATCH INDEX)
+  ========================================== */
+  .container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  /* ==========================================
+     NAVBAR (FIXED + CONSISTENT WITH INDEX)
+  ========================================== */
+  header {
+    background: var(--green);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 10px var(--shadow);
+    width: 100%;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    color: var(--white);
+  }
+  
+  .cyon-logo {
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.2rem;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: var(--gold-light);
+  }
+  
+  /* ==========================================
+     MEMBERS SECTION
+  ========================================== */
+  .members-section {
+    padding: 4rem 0;
+    background: #f4f6f8;
+  }
+  
+  .members-container {
+    text-align: center;
+  }
+  
+  /* TITLE */
+  .members-title {
+    color: var(--green-dark);
+    margin-bottom: 25px;
+  }
+  
+  /* SEARCH */
+  .members-search {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px;
+    border: 2px solid var(--green);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    outline: none;
+  }
+  
+  /* STATS BOX */
+  .members-stats-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  
+  .members-stats-box h3 {
+    color: var(--green);
+  }
+  
+  #membersTotalCountV2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* ==========================================
+     GRID (TRUE 6-COLUMN RESPONSIVE SYSTEM)
+  ========================================== */
+  .members-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+  }
+  
+  /* TABLET */
+  @media (max-width: 1200px) {
+    .members-grid-v2 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  /* SMALL TABLET */
+  @media (max-width: 900px) {
+    .members-grid-v2 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  /* PHONE */
+  @media (max-width: 600px) {
+    .members-grid-v2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* SMALL PHONE */
+  @media (max-width: 400px) {
+    .members-grid-v2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ==========================================
+     MEMBER CARD
+  ========================================== */
+  .member-card-v2 {
+    background: white;
+    padding: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px var(--shadow);
+    border-top: 4px solid var(--gold);
+    text-align: center;
+    transition: 0.3s;
+    width: 100%;
+  }
+  
+  .member-card-v2:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* PHOTO */
+  .member-photo-v2 {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
