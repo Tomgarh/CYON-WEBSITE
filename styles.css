@@ -238,11 +238,106 @@ section {
 /* ==========================================
    CONTACT
 ========================================== */
-#contact p {
-  margin-top: 10px;
+.contact-links {
+  margin-top: 15px;
+}
+
+.social-btn {
+  display: inline-block;
+  margin: 6px 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* WhatsApp Green */
+.whatsapp-btn {
+  background: #25D366;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+  transform: translateY(-2px);
+}
+
+/* Instagram Gradient */
+.instagram-btn {
+  background: linear-gradient(
+    45deg,
+    #f58529,
+    #dd2a7b,
+    #8134af,
+    #515bd4
+  );
+}
+
+.instagram-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* TikTok Black with Red Accent */
+.tiktok-btn {
+  background: linear-gradient(45deg, #000000, #ff0050);
+}
+
+.tiktok-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+.contact-wrapper {
+  text-align: center;
+}
+
+.contact-text {
+  margin-bottom: 20px;
   font-size: 1.05rem;
 }
 
+.contact-box {
+  margin: 20px 0;
+}
+
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.social-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+/* WhatsApp */
+.whatsapp-btn {
+  background: #25D366;
+}
+
+/* Instagram */
+.instagram-btn {
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+}
+
+/* TikTok */
+.tiktok-btn {
+  background: linear-gradient(45deg, #000000, #ff0050);
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
 /* ==========================================
    FOOTER
 ========================================== */
