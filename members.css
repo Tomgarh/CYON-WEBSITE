@@ -251,16 +251,30 @@
   /* ==========================================
      MEMBER CARD
   ========================================== */
-  .member-card-v2 {
-    background: white;
-    padding: 1.2rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px var(--shadow);
-    border-top: 4px solid var(--gold);
-    text-align: center;
-    transition: 0.3s;
-    width: 100%;
-  }
+.member-card-v2 {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px var(--shadow);
+  border-top: 4px solid var(--gold);
+  text-align: center;
+  transition: 0.3s;
+  width: 100%;
+}
+
+/* IMAGE FIX */
+.member-card-v2 img {
+  width: 110px;
+  height: 110px;
+
+  object-fit: cover;
+  object-position: center 25%; /* better face framing */
+
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  margin: 0 auto 12px;
+  display: block;
+}
   
   .member-card-v2:hover {
     transform: translateY(-5px);
