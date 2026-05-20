@@ -3,52 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Probation Registration</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Probation Registration - CYON</title>
+  <link rel="stylesheet" href="probation.css">
 </head>
 
 <body>
 
+<section id="probation" class="section">
+  <div class="container">
 
-      <section id="probation" class="section">
-        <div class="container">
-      
-          <h2>Probation Registration</h2>
-      
-          <form id="probation-form" class="form">
+    <h2>Probation Registration</h2>
 
-            <label>Full Name</label>
-            <input type="text" id="fullname" required>
-          
-            <label>Phone Number</label>
-            <input type="tel" id="phone" required>
-          
-            <label>Email</label>
-            <input type="email" id="email" required>
-          
-            <label>Age</label>
-            <input type="number" id="age" min="18" required>
-          
-            <label>Why do you want to join?</label>
-            <textarea id="reason" rows="4"></textarea>
-          
-            <button id="submitBtn" type="submit">Submit Registration</button>
-          
-            <p id="error-message" style="display:none; color:red;"></p>
-          
-            <div id="success-box" style="display:none; color:green; margin-top:10px;">
-              <h3>Application Submitted ✔</h3>
-              <p>Status: Pending Approval</p>
-            </div>
+    <form id="probation-form" class="form">
 
-            <div id="success-box" style="display:none;">
-                ...
-                <button id="downloadPdfBtn">Download PDF</button>
-              </div>
-          </form>
-        </div>
-      </section>
-  <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <!-- BASIC INFO -->
+      <label>Full Name</label>
+      <input type="text" id="fullname" required>
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>Age</label>
+      <input type="number" id="age" min="18" required>
+
+      <label>Why do you want to join?</label>
+      <textarea id="reason" rows="4"></textarea>
+
+      <!-- REFERRAL SYSTEM (IMPORTANT PART) -->
+      <label for="referralType">
+        Were you brought in by an existing CYON member?
+      </label>
+
+      <select id="referralType" required>
+        <option value="">-- Select an option --</option>
+        <option value="yes">Yes, I was brought in by a member</option>
+        <option value="no">No, I joined on my own</option>
+      </select>
+
+      <div id="referralNameBox" style="display:none; margin-top:10px;">
+        <label>Who brought you in? (Full name of member)</label>
+        <input type="text" id="referralName" placeholder="Enter member name">
+      </div>
+
+      <p class="info-text">
+        If you were brought in by a member, you will join their group.
+        If not, you will be randomly assigned (balloted) into a CYON group.
+      </p>
+
+      <!-- SUCCESS BOX -->
+      <div id="success-box" style="display:none; color:green; margin-top:15px;">
+        <h3>Application Submitted ✔</h3>
+
+        <p>Status: Pending Approval</p>
+
+        <p id="assignedGroup"></p>
+
+        <button id="downloadPdfBtn" type="button">
+          Download PDF
+        </button>
+      </div>
+
+      <!-- ERROR -->
+      <p id="error-message" style="display:none; color:red;"></p>
+
+      <!-- SUBMIT -->
+      <button id="submitBtn" type="submit">
+        Submit Registration
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
