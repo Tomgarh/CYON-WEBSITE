@@ -275,3 +275,16 @@ footer {
     font-size: 1.6rem;
   }
 }
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 180px; /* larger because navbar stacks on mobile */
+  }
+
+  #home,
+  #about,
+  #events,
+  #leadership,
+  #contact {
+    scroll-margin-top: 180px;
+  }
+}
