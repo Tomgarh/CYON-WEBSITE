@@ -149,6 +149,16 @@
   #referralNameBox {
     margin-top: 10px;
   }
+  .download-btn {
+    background: #008000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
   
   /* ==========================================
      MOBILE
