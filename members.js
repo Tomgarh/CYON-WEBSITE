@@ -1,51 +1,54 @@
 // ==========================
 // ELEMENTS
 // ==========================
+const searchInput = document.getElementById("membersSearchInputV2");
 const membersGrid = document.getElementById("membersGridV2");
 const totalCount = document.getElementById("membersTotalCountV2");
-const searchInput = document.getElementById("membersSearchInputV2");
 
 // ==========================
-// GET ALL CARDS FROM HTML
+// GET ALL MANUAL CARDS
 // ==========================
 const cards = Array.from(document.querySelectorAll(".member-card-v2"));
 
 // ==========================
-// UPDATE TOTAL COUNT
+// UPDATE COUNT
 // ==========================
-function updateCount() {
+function updateMemberCount() {
+  const visibleCards = cards.filter(card => card.style.display !== "none");
+
   if (totalCount) {
-    totalCount.textContent = cards.length;
+    totalCount.textContent = visibleCards.length;
   }
 }
 
 // ==========================
 // SEARCH FUNCTION
 // ==========================
-function filterMembers(value) {
-  const query = value.toLowerCase();
+function filterMembers() {
+  const query = searchInput.value.toLowerCase();
 
   cards.forEach(card => {
-    const name = card.querySelector(".member-name-v2")?.textContent.toLowerCase() || "";
-    const group = card.textContent.toLowerCase();
+    const text = card.innerText.toLowerCase();
 
-    if (name.includes(query) || group.includes(query)) {
-      card.style.display = "block";
+    if (text.includes(query)) {
+      card.style.display = "";
     } else {
       card.style.display = "none";
     }
   });
+
+  updateMemberCount();
 }
 
 // ==========================
 // INIT
 // ==========================
 document.addEventListener("DOMContentLoaded", function () {
-  updateCount();
+  if (!searchInput) return;
 
-  if (searchInput) {
-    searchInput.addEventListener("input", function () {
-      filterMembers(this.value);
-    });
-  }
+  // initial count (all visible)
+  updateMemberCount();
+
+  // live search
+  searchInput.addEventListener("input", filterMembers);
 });
