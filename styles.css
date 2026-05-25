@@ -218,48 +218,6 @@ header {
   color: white;
 }
 
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 768px) {
-
-  .hamburger {
-    display: block;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 70px;
-    left: 0;
-    right: 0;
-
-    background: var(--green);
-    flex-direction: column;
-    display: none;
-    padding: 1rem 0;
-    text-align: center;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .nav-links li {
-    padding: 10px 0;
-  }
-
-  /* dropdown on mobile becomes static */
-  .dropdown-menu {
-    position: static;
-    background: transparent;
-    box-shadow: none;
-    display: none;
-  }
-
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-}
 
 /* ==========================================
    HERO
