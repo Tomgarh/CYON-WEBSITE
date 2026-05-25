@@ -319,14 +319,12 @@ section {
   text-align: center;
   transition: 0.3s;
 }
-.meeting img {
-  object-fit: cover;
+.card.meeting img {
   object-position: left center;
 }
 
-/* mobile fix */
 @media (max-width: 768px) {
-  .meeting img {
+  .card.meeting img {
     object-position: center;
   }
 }
