@@ -46,7 +46,133 @@
     max-width: 1100px;
     margin: 0 auto;
   }
-  
+  /* ==========================================
+   HEADER / NAVBAR
+========================================== */
+
+header {
+  background: var(--green);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+  margin: 0;
+}
+
+.cyon-logo {
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--gold-light);
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: black;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 220px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  display: none;
+  z-index: 999;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: var(--green);
+  color: white;
+}
+
+/* HAMBURGER (currently unused) */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* MOBILE HEADER */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
   /* ==========================================
      NAVBAR (FIXED + CONSISTENT WITH INDEX)
   ========================================== */
@@ -194,87 +320,88 @@
    and reduce overall page width on phones
 ========================================== */
 @media (max-width: 768px) {
-  /* Reduce side padding so content fits better */
-  .members-container {
-    width: 95%;
-    padding: 0 10px;
+    /* Reduce side padding so content fits better */
+    .members-container {
+      width: 95%;
+      padding: 0 10px;
+    }
+  
+    /* Smaller section padding on mobile */
+    .members-section {
+      padding: 2.5rem 0;
+    }
+  
+    /* Make cards slightly smaller and add breathing room */
+    .members-grid-v2 {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      align-items: start; /* prevents card tops from appearing cut */
+    }
+  
+    /* Reduce card padding */
+    .member-card-v2 {
+      padding: 12px;
+      max-width: none;
+      width: 100%;
+    }
+  
+    /* Smaller photos so cards are not too tall */
+    .member-photo-v2 {
+      height: 140px;
+    }
+  
+    /* Slightly smaller text */
+    .member-card-v2 h3,
+    .member-name {
+      font-size: 0.95rem;
+    }
+  
+    .member-card-v2 p,
+    .member-info {
+      font-size: 0.8rem;
+    }
+  
+    /* Search input fits neatly */
+    .members-search {
+      width: 100%;
+      max-width: 100%;
+    }
+  
+    /* Stats box fits the screen */
+    .members-stats-box {
+      width: 100%;
+      max-width: 100%;
+    }
   }
-
-  /* Smaller section padding on mobile */
-  .members-section {
-    padding: 2.5rem 0;
-  }
-
-  /* Make cards slightly smaller and add breathing room */
-  .members-grid-v2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 16px;
-    align-items: start; /* prevents card tops from appearing cut */
-  }
-
-  /* Reduce card padding */
-  .member-card-v2 {
-    padding: 12px;
-    max-width: none;
-    width: 100%;
-  }
-
-  /* Smaller photos so cards are not too tall */
-  .member-photo-v2 {
-    height: 140px;
-  }
-
-  /* Slightly smaller text */
-  .member-card-v2 h3,
-  .member-name {
-    font-size: 0.95rem;
-  }
-
-  .member-card-v2 p,
-  .member-info {
-    font-size: 0.8rem;
-  }
-
-  /* Search input fits neatly */
-  .members-search {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Stats box fits the screen */
-  .members-stats-box {
-    width: 100%;
-    max-width: 100%;
-  }
-}
+  
   /* ==========================================
      MEMBER CARD
   ========================================== */
-.member-card-v2 {
-  background: white;
-  padding: 1.2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px var(--shadow);
-  border-top: 4px solid var(--gold);
-  text-align: center;
-  transition: 0.3s;
-  width: 100%;
-}
-
-/* IMAGE FIX */
-.member-card-v2 img {
-  width: 110px;
-  height: 110px;
-
-  object-fit: cover;
-  object-position: center 25%; /* better face framing */
-
-  border-radius: 50%;
-  border: 3px solid var(--gold);
-  margin: 0 auto 12px;
-  display: block;
-}
+  .member-card-v2 {
+    background: white;
+    padding: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px var(--shadow);
+    border-top: 4px solid var(--gold);
+    text-align: center;
+    transition: 0.3s;
+    width: 100%;
+  }
+  
+  /* IMAGE FIX */
+  .member-card-v2 img {
+    width: 110px;
+    height: 110px;
+  
+    object-fit: cover;
+    object-position: center 25%; /* better face framing */
+  
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    margin: 0 auto 12px;
+    display: block;
+  }
   
   .member-card-v2:hover {
     transform: translateY(-5px);
