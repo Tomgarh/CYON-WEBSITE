@@ -12,25 +12,46 @@
 <body>
   <header>
     <nav class="container navbar">
-      <a href="#home" class="brand">
-        <img src="cyon_logo.jpeg" class="cyon-logo" width="50" height="50" />
-      
+
+      <!-- BRAND -->
+      <a href="index.html" class="brand">
+        <img src="cyon_logo.jpeg" class="cyon-logo" width="50" height="50" alt="CYON Logo" />
+    
         <div class="brand-text">
           <h1 class="logo">CYON</h1>
           <p class="brand-subtitle">St. Bernard’s Parish, Calabar</p>
         </div>
       </a>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#leadership">Leadership</a></li>
+    
+      <!-- HAMBURGER ICON -->
+      <div class="hamburger" id="hamburger">
+        ☰
+      </div>
+    
+      <!-- NAV LINKS -->
+      <ul class="nav-links" id="navLinks">
+    
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#events">Events</a></li>
+    
+        <li class="dropdown">
+          <a href="enlargeexcos.html">Enlarged Executives ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="enlargeexcos.html#leadership">Core Executives</a></li>
+            <li><a href="enlargeexcos.html#unit-heads">Unit Heads</a></li>
+            <li><a href="enlargeexcos.html#groups-section">CYON Groups</a></li>
+          </ul>
+        </li>
+    
         <li><a href="members.html">Members</a></li>
         <li><a href="probation.html" target="_blank">New Members</a></li>
-        <li><a href="retrieve.html">Retrieve Card</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#about">About</a></li>
+    
       </ul>
+    
     </nav>
+   
   </header>
 
   <section id="home" class="hero">
@@ -54,117 +75,66 @@
       <a href="#about" class="btn">Learn More</a>
     </div>
   </section>
-  <section id="about" class="section">
-    <div class="container">
-      <h2>About Us</h2>
-      <p>
-        The Catholic Youth Organization is a community of young Catholics
-        dedicated to spiritual growth, leadership, and fellowship.
-      </p>
-    </div>
-  </section>
 
   <section id="events" class="section bg-light">
     <div class="container">
       <h2>Upcoming Events</h2>
+  
       <div class="cards">
+  
         <div class="card">
           <h3>Monthly Youth Meeting</h3>
           <p>Every third Sunday at the Nursery School Block after 8am Mass.</p>
         </div>
         <div class="card">
+          <img src="nyd.jpeg" alt="National Youth Day 2026">
+          <h3>National Youth Day (NYD) 2026</h3>
+            <p>
+              Registration for NYD Jos 2026 is ongoing.
+              Interested members should register through
+              their respective dioceses before the deadline.
+          </p>
+          <p class="deadline">
+            Registration closes next week.
+          </p>
+        </div>
+  
+  
+        <a href="inhouse.html" class="card">
+          <img src="inhouseposter.png" alt="">
           <h3>In-house Talent</h3>
-          <p></p>
-        </div>
-        <div class="card">
-          <h3>NYD</h3>
-          <p>A weekend of prayer, reflection, and fellowship.</p>
-        </div>
+          <p>Click to view details about the talent event.</p>
+        </a>
+  
+        
       </div>
     </div>
   </section>
 
-  <section id="leadership" class="section">
+  <section id="about" class="section">
     <div class="container">
-      <h2>Leadership</h2>
-  
-      <div class="cards">
-        <div class="card">
-          <img src="ralphetim.jpeg" alt="Ralphael Etim">
-          <h3>President</h3>
-          <p>Mr. Ralphael Etim</p>
-        </div>
-  
-        <div class="card">
-          <img src="joepeter.jpeg" alt="Josephine Peter">
-          <h3>Vice President</h3>
-          <p>Miis. Josephine Peter</p>
-        </div>
-  
-        <div class="card">
-          <img src="peaceadoga.jpeg" alt="Peace Adoga">
-          <h3>Secretary</h3>
-          <p>Miss. Peace Adoga</p>
-        </div>
-  
-        <div class="card">
-          <img src="utibeakpan.jpeg" alt="Utibe Akpan">
-          <h3>Asst. Secretary</h3>
-          <p>Mr. Utibe Akpan</p>
-        </div>
-  
-        <div class="card">
-          <img src="princeebi.jpeg" alt="Prince Ebi">
-          <h3>Provost I</h3>
-          <p>Mr. Prince Ebi</p>
-        </div>
-  
-        <div class="card">
-          <img src="patinah.jpeg" alt="Patrick Inah">
-          <h3>Provost II</h3>
-          <p>Mr. Patrick Inah</p>
-        </div>
-  
-        <div class="card">
-          <img src="savlinus.jpeg" alt="Saviour Linus">
-          <h3>Financial Secretary</h3>
-          <p>Mr. Saviour Linus</p>
-        </div>
-  
-        <div class="card">
-          <img src="sampsonimbi.jpeg" alt="Sampson Imbi">
-          <h3>Treasurer</h3>
-          <p>Mr. Sampson Imbi</p>
-        </div>
-  
-        <div class="card">
-          <img src="okomoday.jpeg" alt="Oko Monday">
-          <h3>DOS I</h3>
-          <p>Mr. Oko Monday</p>
-        </div>
-  
-        <div class="card">
-          <img src="olokomike.jpeg" alt="Michael Oloko">
-          <h3>DOS II</h3>
-          <p>Mr. Michael Oloko</p>
-        </div>
-  
-        <div class="card">
-          <img src="agnesadie.jpeg" alt="Miss Agnes Adie">
-          <h3>Welfare Officer I</h3>
-          <p>Miss. Agnes Adie</p>
-        </div>
-  
-        <div class="card">
-          <img src="rofempaul.jpeg" alt="Rofem Paul">
-          <h3>Welfare Officer II</h3>
-          <p>Mr. Rofem Paul</p>
-        </div>
-      </div>
+      <h2>About Us</h2>
+      <p>
+        The Catholic Youth Organization of Nigeria (CYON),
+        St. Bernard’s Parish, Marian Hill, Calabar,
+        is a vibrant community of young Catholics committed
+        to spiritual growth, leadership, unity, and service.
+      
+        Through prayer, fellowship, outreach programs,
+        talent development, and youth-centered activities,
+        we strive to build responsible Christian leaders
+        who positively impact both the Church and society.
+      
+        Guided by our motto,
+        <strong>“For God And For Youth — Through Christ!”</strong>,
+        we continue to encourage young people
+        to live out their faith boldly while growing
+        in friendship, discipline, and purpose.
+      </p>
     </div>
   </section>
 
- <section id="contact" class="section bg-light">
+  <section id="contact" class="section bg-light">
     <div class="container contact-wrapper">
       <h2>Contact Us</h2>
   
@@ -205,7 +175,7 @@
       </div>
     </div>
   </section>
-
+          
   <footer>
     <div class="container">
       <p>&copy; 2026 Catholic Youth Organization. All rights reserved.</p>
@@ -215,4 +185,3 @@
   
 </body>
 </html>
-
