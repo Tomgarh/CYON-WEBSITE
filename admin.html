@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CYON Admin Dashboard</title>
+
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="admin.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="container navbar">
+
+      <a href="index.html" class="brand">
+        <img src="img/cyon_logo.jpeg" class="cyon-logo" width="50" height="50" alt="CYON Logo" />
+
+        <div class="brand-text">
+          <h1 class="logo">CYON</h1>
+          <p class="brand-subtitle">St. Bernard’s Parish, Calabar</p>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="addmember.html">Add Members</a></li>
+        <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <!-- DASHBOARD -->
+  <section class="admin-section">
+
+    <div class="container">
+
+      <h2 class="page-title">Admin Dashboard</h2>
+
+      <!-- STATS -->
+      <div class="stats-box">
+        <h3>Pending Registrations</h3>
+        <p id="pendingCount">0</p>
+      </div>
+
+      <!-- PENDING LIST -->
+      <div id="pendingList" class="grid"></div>
+
+    </div>
+
+  </section>
+
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+  <script src="admin.js"></script>
+
+
+</body>
+</html>
