@@ -335,15 +335,18 @@
     .brand-subtitle {
       font-size: 0.7rem;
     }
-  
-    .group-cards {
-      grid-template-columns: repeat(2, 1fr); /* your requirement */
-      gap: 12px;
-    }
-    .cards {
-      grid-template-columns: repeat(2, 1fr); /* your requirement */
-      gap: 12px;
-    }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .group-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+}
   
     .group-card {
       padding: 1.2rem;
