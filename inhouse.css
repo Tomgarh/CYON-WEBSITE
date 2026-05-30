@@ -195,6 +195,37 @@ header {
   border-radius: 12px;
   backdrop-filter: blur(6px);
 }
+.fixture-btn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background: #0b7a3b;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.fixture-btn:hover {
+  background: #065a2c;
+}
+
+.fixtures {
+  margin-top: 15px;
+  text-align: left;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.hidden {
+  display: none;
+}
+
+.fixtures h4 {
+  margin-top: 10px;
+  color: #0b7a3b;
+}
 
 /* ==========================================
    CONTAINER
