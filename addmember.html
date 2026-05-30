@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Add Official Member</title>
+
+  <link rel="stylesheet" href="addmember.css"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+
+    <nav class="container navbar">
+
+      <a href="index.html" class="brand">
+
+        <img
+          src="img/cyon_logo.jpeg"
+          class="cyon-logo"
+          width="50"
+          height="50"
+          alt="CYON Logo"
+        />
+
+        <div class="brand-text">
+          <h1 class="logo">CYON</h1>
+          <p class="brand-subtitle">
+            St. Bernard’s Parish, Calabar
+          </p>
+        </div>
+
+      </a>
+
+      <ul class="nav-links">
+
+        <li><a href="index.html">Home</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="probation.html">Probation</a></li>
+
+      </ul>
+
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="container">
+
+      <h1>Official Member Registration</h1>
+
+      <p>
+        Register approved CYON members into the official members directory.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section">
+
+    <div class="container">
+
+      <div class="form-card">
+
+        <h2>Add Member</h2>
+
+        <form id="addMemberForm">
+
+          <!-- NAME -->
+          <div class="form-group">
+            <label>Full Name</label>
+
+            <input
+              type="text"
+              id="fullname"
+              required
+            />
+          </div>
+
+          <!-- PHONE -->
+          <div class="form-group">
+            <label>Phone Number</label>
+
+            <input
+              type="tel"
+              id="phone"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+
+            <label>Birthday</label>
+          
+            <input
+              type="text"
+              id="birthday"
+              placeholder="Example: May 31"
+              required
+            />
+          
+          </div>
+          <!-- GROUP -->
+          <div class="form-group">
+
+            <label>CYON Group</label>
+
+            <select id="group" required>
+
+              <option value="">Select Group</option>
+
+              <option>Archbishop Usanga Group</option>
+
+              <option>Pope John Paul II Group</option>
+
+              <option>Dominic Cardinal Ekanem Group</option>
+
+              <option>Blessed Tansi Group</option>
+
+              <option>St. John Bosco Group</option>
+
+              <option>St. Charles Lwanga Group</option>
+
+              <option>Bishop James Moynagh Group</option>
+
+              <option>St. Theresa Group</option>
+
+            </select>
+
+          </div>
+
+          <!-- ROLE -->
+          <div class="form-group">
+
+            <label>Member Role</label>
+
+            <select id="role" required>
+
+              <option value="">Select Role</option>
+
+              <option>Member</option>
+
+              <option>Group Leader</option>
+
+              <option>Secretary</option>
+
+              <option>Executive</option>
+
+              <option>Unit Head</option>
+
+              <option>Member</option>
+
+            </select>
+
+          </div>
+
+
+          <!-- BUTTON -->
+          <button type="submit" id="submitBtn">
+            Add Member
+          </button>
+
+        </form>
+
+        <!-- SUCCESS -->
+        <div id="successBox"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="addmember.js"></script>
+
+</body>
+</html>
