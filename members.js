@@ -1,54 +1,96 @@
-// ==========================
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-ADpygB1KELcBI3x2TtoOUpumKLa2zuw",
+  authDomain: "cyon-stbernard.firebaseapp.com",
+  projectId: "cyon-stbernard",
+  storageBucket: "cyon-stbernard.firebasestorage.app",
+  messagingSenderId: "747151921456",
+  appId: "1:747151921456:web:43f8bb21e9b0a4f4abf8f5"
+};
+
+// INIT FIREBASE
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
 // ELEMENTS
-// ==========================
 const searchInput = document.getElementById("membersSearchInputV2");
 const membersGrid = document.getElementById("membersGridV2");
 const totalCount = document.getElementById("membersTotalCountV2");
 
-// ==========================
-// GET ALL MANUAL CARDS
-// ==========================
-const cards = Array.from(document.querySelectorAll(".member-card-v2"));
+let allMembers = [];
 
 // ==========================
-// UPDATE COUNT
+// LOAD MEMBERS FROM FIREBASE
 // ==========================
-function updateMemberCount() {
-  const visibleCards = cards.filter(card => card.style.display !== "none");
+async function loadMembers() {
+  try {
+    const snapshot = await db
+      .collection("members")
+      .orderBy("createdAt", "desc")
+      .get();
 
-  if (totalCount) {
-    totalCount.textContent = visibleCards.length;
+    allMembers = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    renderMembers(allMembers);
+
+  } catch (error) {
+    console.error(error);
+    membersGrid.innerHTML = "<p>Error loading members</p>";
   }
+}
+
+// ==========================
+// RENDER MEMBERS
+// ==========================
+function renderMembers(data) {
+  membersGrid.innerHTML = "";
+
+  if (data.length === 0) {
+    membersGrid.innerHTML = "<p>No members found</p>";
+    totalCount.textContent = 0;
+    return;
+  }
+
+  data.forEach(member => {
+    membersGrid.innerHTML += `
+      <div class="member-card-v2">
+
+        <div class="member-avatar">
+  ${member.name.charAt(0).toUpperCase()}
+</div>
+
+        <h3>${member.name}</h3>
+
+        <p><strong>Group:</strong> ${member.group}</p>
+        <p><strong>Role:</strong> ${member.role || "Member"}</p>
+
+      </div>
+    `;
+  });
+
+  totalCount.textContent = data.length;
 }
 
 // ==========================
 // SEARCH FUNCTION
 // ==========================
-function filterMembers() {
+searchInput.addEventListener("input", function () {
   const query = searchInput.value.toLowerCase();
 
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
+  const filtered = allMembers.filter(member =>
+    (member.name + " " + member.group + " " + member.role)
+      .toLowerCase()
+      .includes(query)
+  );
 
-    if (text.includes(query)) {
-      card.style.display = "";
-    } else {
-      card.style.display = "none";
-    }
-  });
-
-  updateMemberCount();
-}
+  renderMembers(filtered);
+});
 
 // ==========================
 // INIT
 // ==========================
-document.addEventListener("DOMContentLoaded", function () {
-  if (!searchInput) return;
-
-  // initial count (all visible)
-  updateMemberCount();
-
-  // live search
-  searchInput.addEventListener("input", filterMembers);
-});
+document.addEventListener("DOMContentLoaded", loadMembers);
