@@ -25,4 +25,17 @@ function updateCountdown() {
 document.addEventListener("DOMContentLoaded", function () {
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  
+});
+const toggleBtn = document.getElementById("toggleFixtures");
+const fixturesBox = document.getElementById("fixturesBox");
+
+toggleBtn.addEventListener("click", () => {
+  fixturesBox.classList.toggle("hidden");
+
+  if (fixturesBox.classList.contains("hidden")) {
+    toggleBtn.textContent = "View Fixtures 🔥";
+  } else {
+    toggleBtn.textContent = "Hide Fixtures ❌";
+  }
 });
