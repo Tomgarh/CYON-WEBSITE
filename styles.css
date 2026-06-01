@@ -610,18 +610,31 @@ footer {
   }
 }
 @media (max-width: 768px) {
+
   .dropdown-menu {
     position: static;
     display: none;
     box-shadow: none;
     background: transparent;
+    min-width: 100%;
+    padding: 0;
   }
 
-  .dropdown:hover .dropdown-menu {
+  .dropdown.active .dropdown-menu {
     display: block;
   }
 
   .dropdown-menu a {
-    padding-left: 20px;
+    display: block;
+    padding: 10px 20px;
+  }
+
+  /* Disable hover behavior on mobile */
+  .dropdown:hover .dropdown-menu {
+    display: none;
+  }
+
+  .dropdown.active:hover .dropdown-menu {
+    display: block;
   }
 }
