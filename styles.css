@@ -182,26 +182,31 @@ header {
   list-style: none;
 }
 
-/* DROPDOWN (same as before) */
 .dropdown {
   position: relative;
 }
 
+/* desktop dropdown */
 .dropdown-menu {
-  position: absolute;
+  position: relative;
   top: 100%;
   left: 0;
+
   background: white;
   list-style: none;
   padding: 10px 0;
   margin: 0;
+
   min-width: 220px;
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   border-radius: 10px;
+
   display: none;
   z-index: 999;
 }
 
+/* show on hover (desktop only) */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
@@ -578,50 +583,38 @@ footer {
    MOBILE FIX
 ========================================== */
 @media (max-width: 768px) {
+
   .navbar {
     flex-direction: column;
     gap: 10px;
   }
 
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .hero {
-    padding: 5rem 0;
+  /* override desktop hover */
+  .dropdown:hover .dropdown-menu {
+    display: none;
   }
 
-  .hero h2 {
-    font-size: 1.6rem;
-  }
-}
-@media (max-width: 768px) {
-  html {
-    scroll-padding-top: 180px; /* larger because navbar stacks on mobile */
-  }
-
-  #home,
-  #about,
-  #events,
-  #leadership,
-  #contact {
-    scroll-margin-top: 180px;
-  }
-}
-@media (max-width: 768px) {
-
+  /* hidden by default on mobile */
   .dropdown-menu {
     position: static;
-    display: block;
+    display: none;
     box-shadow: none;
     background: transparent;
     min-width: 100%;
     padding: 0;
   }
 
-  .dropdown-menu a {
+  /* THIS is what JS toggles */
+  .dropdown.active .dropdown-menu {
     display: block;
+  }
+
+  .dropdown-menu a {
     padding: 10px 20px;
   }
 }
