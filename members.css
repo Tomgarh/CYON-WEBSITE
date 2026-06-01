@@ -181,15 +181,34 @@ header {
 @media (max-width: 768px) {
 
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap; /* allows wrapping instead of stacking */
+    justify-content: center;
     gap: 10px;
   }
 
+    
+
+  
   .nav-links {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;   /* key fix */
+    justify-content: center;
     gap: 10px;
   }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* override desktop hover */
+  .dropdown:hover .dropdown-menu {
+    display: none;
+  }
+  .nav-links li {
+    display: inline-block;
+  }
+
 
   /* disable hover on mobile */
   .dropdown:hover .dropdown-menu {
