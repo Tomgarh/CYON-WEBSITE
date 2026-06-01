@@ -32,7 +32,7 @@ body {
 
 html {
   scroll-behavior: smooth;
-  
+  scroll-padding-top: 120px;
 }
 
 .container {
@@ -43,6 +43,7 @@ html {
 
 section {
   padding: 4rem 0;
+  scroll-margin-top: 120px;
 }
 
 h1, h2, h3, h4 {
@@ -417,6 +418,12 @@ section {
 @media (max-width: 768px) {
   .card.meeting img {
     object-position: center;
+  }
+  html {
+    scroll-padding-top: 160px;
+  }
+  section {
+    scroll-margin-top: 160px;
   }
 }
 /* ==========================================
