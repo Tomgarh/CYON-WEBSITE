@@ -1,180 +1,252 @@
-/* ==========================================
-   ROOT VARIABLES (needed for consistency)
-========================================== */
-:root {
-    --gold: #c9a227;
-    --gold-light: #e8c96a;
-    --green: #0b7a3b;
-    --green-dark: #065a2c;
-    --white: #ffffff;
-    --text-dark: #333333;
-    --shadow: rgba(0, 0, 0, 0.12);
-  }
-  
-  /* ==========================================
-     RESET
-  ========================================== */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* ==========================================
-     GLOBAL
-  ========================================== */
-  body {
-    font-family: "Poppins", Arial, sans-serif;
-    background: var(--white);
-    color: var(--text-dark);
-    line-height: 1.6;
-  }
-  
-  .container {
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
-  }
-  
-  .section {
-    padding: 4rem 0;
-  }
-  
-  h1, h2, h3 {
-    font-family: "Merriweather", serif;
-  }
-  
-  /* ==========================================
-     PAGE TITLE
-  ========================================== */
-  #probation h2 {
-    text-align: center;
-    color: var(--green-dark);
-    margin-bottom: 2rem;
-  }
-  
-  /* ==========================================
-     FORM CARD
-  ========================================== */
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: #fff;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px var(--shadow);
-  }
-  
-  /* LABELS */
-  .form label {
-    font-weight: 600;
-    color: var(--green-dark);
-    margin-top: 8px;
-  }
-  
-  /* INPUTS */
-  .form input,
-  .form textarea,
-  .form select {
-    padding: 12px 14px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
-  }
-  
-  .form input:focus,
-  .form textarea:focus,
-  .form select:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.15);
-  }
-  
-  /* INFO TEXT */
-  .info-text {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 10px;
-  }
-  
-  /* ==========================================
-     BUTTON
-  ========================================== */
-  #submitBtn {
-    margin-top: 15px;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: var(--green);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  #submitBtn:hover {
-    background: var(--green-dark);
-    transform: translateY(-2px);
-  }
-  
-  /* ==========================================
-     SUCCESS BOX
-  ========================================== */
-  #success-box {
-    background: #f0fff4;
-    color: #2f855a;
-    border-left: 4px solid #38a169;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-top: 15px;
-  }
-  
-  /* ==========================================
-     ERROR MESSAGE
-  ========================================== */
-  #error-message {
-    background: #fff5f5;
-    color: #c53030;
-    border-left: 4px solid #e53e3e;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
-  
-  /* ==========================================
-     REFERRAL BOX
-  ========================================== */
-  #referralNameBox {
-    margin-top: 10px;
-  }
-  .download-btn {
-    background: #008000;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 1rem;
-  }
-  
-  .download-btn:hover {
-    background: #006400;
-  }
-  
-  /* ==========================================
-     MOBILE
-  ========================================== */
-  @media (max-width: 768px) {
-    .form {
-      padding: 20px;
+// ==========================
+// LOAD MEMBERS
+// ==========================
+let members = JSON.parse(localStorage.getItem("cyon_members")) || [];
+
+// ==========================
+// SAVE TO STORAGE
+// ==========================
+function updateStorage() {
+  localStorage.setItem("cyon_members", JSON.stringify(members));
+}
+
+// ==========================
+// ID GENERATOR
+// ==========================
+function generateMemberId() {
+  const ids = members.map(m =>
+    parseInt((m.id || "").split("-")[1] || 0)
+  );
+
+  const maxId = ids.length ? Math.max(...ids) : 0;
+  return "CYON-" + String(maxId + 1).padStart(4, "0");
+}
+
+// ==========================
+// DATA
+// ==========================
+const groups = [
+  "Blessed Tansi Group",
+  "Dominic Cardinal Ekanem Group",
+  "St. John Bosco Group",
+  "Pope John Paul II Group"
+];
+
+const units = [
+  "Media",
+  "Security",
+  "Sanitation",
+  "Publicity",
+  "Sunday School"
+];
+
+const unitHeads = {
+  Media: "Mr. Bernard Asuquo",
+  Security: "Mr. Israel Linus",
+  Sanitation: "Mr. Bernard Umoh",
+  Publicity: "Miss Josephine Peter",
+  "Sunday School": "Miss Josephine Peter"
+};
+
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// ==========================
+// ERROR DISPLAY
+// ==========================
+function showError(msg) {
+  const errorMsg = document.getElementById("error-message");
+  if (!errorMsg) return;
+  errorMsg.textContent = msg;
+  errorMsg.style.display = "block";
+}
+
+// ==========================
+// FORM HANDLER
+// ==========================
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("probation-form");
+  const successBox = document.getElementById("success-box");
+  const errorMsg = document.getElementById("error-message");
+  const btn = document.getElementById("submitBtn");
+
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (errorMsg) errorMsg.style.display = "none";
+    if (successBox) successBox.style.display = "none";
+
+    const name = document.getElementById("fullname").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+
+    // VALIDATION
+    if (name.length < 3) return showError("Enter valid full name");
+    if (phone.length < 10) return showError("Enter valid phone number");
+
+    const exists = members.find(m => m.phone === phone);
+    if (exists) return showError("Member already exists");
+
+    btn.textContent = "Saving...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.textContent = "Submit Registration";
+      btn.disabled = false;
+
+      const newMember = {
+        id: generateMemberId(),
+        name,
+        phone,
+        status: "Probation Member",
+        photo: "img/default-user.png",
+        assignedUnit: random(units),
+        assignedGroup: random(groups),
+      };
+
+      newMember.unitHead = unitHeads[newMember.assignedUnit];
+
+      members.push(newMember);
+      updateStorage();
+
+      form.reset();
+
+      // SUCCESS UI
+      successBox.innerHTML = `
+        <div class="success-card">
+          <h2>✔ Registration Successful</h2>
+
+          <p><strong>Name:</strong> ${newMember.name}</p>
+          <p><strong>ID:</strong> ${newMember.id}</p>
+          <p><strong>Phone:</strong> ${newMember.phone}</p>
+          <p><strong>Status:</strong> ${newMember.status}</p>
+          <p><strong>Unit:</strong> ${newMember.assignedUnit}</p>
+          <p><strong>Unit Head:</strong> ${newMember.unitHead}</p>
+          <p><strong>Group:</strong> ${newMember.assignedGroup}</p>
+
+          <button class="download-btn" onclick="downloadCard('${newMember.id}')">
+            Download CYON Card
+          </button>
+        </div>
+      `;
+
+      successBox.style.display = "block";
+    }, 700);
+  });
+});
+
+// ==========================
+// SEARCH + COUNT (for members.html)
+// ==========================
+document.addEventListener("DOMContentLoaded", function () {
+  const grid = document.getElementById("membersGridV2");
+  const search = document.getElementById("membersSearchInputV2");
+  const count = document.getElementById("membersTotalCountV2");
+
+  function render(data) {
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    if (!data.length) {
+      grid.innerHTML = "<p>No members found</p>";
+      return;
     }
-  
-    #probation h2 {
-      font-size: 1.6rem;
+
+    data.forEach(m => {
+      const div = document.createElement("div");
+      div.className = "member-card-v2";
+
+      div.innerHTML = `
+        <img src="${m.photo}" class="member-photo-v2" />
+        <h3>${m.name}</h3>
+        <p><strong>ID:</strong> ${m.id}</p>
+        <p><strong>Status:</strong> ${m.status}</p>
+        <p><strong>Unit:</strong> ${m.assignedUnit}</p>
+        <p><strong>Group:</strong> ${m.assignedGroup}</p>
+      `;
+
+      grid.appendChild(div);
+    });
+
+    if (count) count.textContent = data.length;
+  }
+
+  render(members);
+
+  if (search) {
+    search.addEventListener("input", function () {
+      const q = this.value.toLowerCase();
+
+      const filtered = members.filter(m =>
+        (m.name || "").toLowerCase().includes(q) ||
+        (m.id || "").toLowerCase().includes(q) ||
+        (m.phone || "").toLowerCase().includes(q)
+      );
+
+      render(filtered);
+    });
+  }
+});
+
+// ==========================
+// DOWNLOAD CYON CARD (FIXED)
+// ==========================
+async function downloadCard(id) {
+  const m = members.find(x => x.id === id);
+
+  if (!m) {
+    alert("Member not found");
+    return;
+  }
+
+  const card = document.querySelector(".success-card");
+
+  if (!card) {
+    alert("Card not found");
+    return;
+  }
+
+  const btn = card.querySelector(".download-btn");
+  const original = btn?.textContent;
+
+  if (btn) {
+    btn.textContent = "PDF Generated...";
+    btn.disabled = true;
+  }
+  try {
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("p", "mm", "a4");
+
+    const pageWidth = 210;
+    const margin = 10;
+
+    let imgWidth = pageWidth - margin * 2;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    doc.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
+
+    doc.save(`${m.id}-CYON-CARD.pdf`);
+
+  } catch (err) {
+    console.error(err);
+    alert("Unable to generate PDF");
+  } finally {
+    if (btn) {
+      btn.textContent = original;
+      btn.disabled = false;
     }
   }
+}
 
 
