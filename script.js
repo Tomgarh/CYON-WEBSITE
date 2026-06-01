@@ -248,5 +248,31 @@ async function downloadCard(id) {
     }
   }
 }
+// ==========================
+// MOBILE DROPDOWN FIX
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".dropdown");
+  const dropdownLink = dropdown?.querySelector("a");
+
+  if (!dropdown || !dropdownLink) return;
+
+  dropdownLink.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle("active");
+    }
+  });
+
+  // Close when tapping outside
+  document.addEventListener("click", (e) => {
+    if (
+      window.innerWidth <= 768 &&
+      !dropdown.contains(e.target)
+    ) {
+      dropdown.classList.remove("active");
+    }
+  });
+});
 
 
