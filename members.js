@@ -67,6 +67,7 @@ function renderMembers(data) {
 
         <p><strong>Group:</strong> ${member.group}</p>
         <p><strong>Role:</strong> ${member.role || "Member"}</p>
+        <p><strong>Birthday:</strong> ${member.birthday || "N/A"}</p>
 
       </div>
     `;
