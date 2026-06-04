@@ -277,7 +277,7 @@ header {
 }
 
 #scoreTable {
-  width: 400px;
+  width: 300px;
   min-width: 650px;
   border-collapse: separate;
   border-spacing: 0;
@@ -403,7 +403,7 @@ header {
   #scoreTable {
     font-size: 0.75rem;
     min-width: 550px;
-    width: 400px;
+    width: 300px;
 
   }
 }
