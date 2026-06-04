@@ -297,6 +297,15 @@ header {
   white-space: nowrap;
 }
 
+#scoreTable th:first-child,
+#scoreTable td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--green);
+  color: white;
+}
+
 /* ==========================================
    FOOTER
 ========================================== */
