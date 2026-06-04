@@ -278,7 +278,7 @@ header {
 }
 
 #scoreTable {
-  width: 100%;
+  width: 700px;
   border-collapse: collapse;
   min-width: 600px;
   color: white;
