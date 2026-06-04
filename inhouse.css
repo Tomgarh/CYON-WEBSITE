@@ -186,7 +186,7 @@ header {
 }
 
 /* ==========================================
-   FOOTBALL SECTION (FIXED)
+   FOOTBALL SECTION (FIXED + STABLE)
 ========================================== */
 .football-section {
   background: url("football-banner.jpg") center/cover no-repeat;
@@ -220,12 +220,12 @@ header {
   color: white;
   padding: 20px;
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
 }
 
-/* FIX FOOTBALL CARD WIDTH ISSUE */
+/* FIX FIXTURES CARD WIDTH */
 .football-card {
-  min-width: 320px;
+  min-width: 280px;
 }
 
 /* ==========================================
@@ -269,16 +269,18 @@ header {
 }
 
 /* ==========================================
-   TABLE FIX (IMPORTANT)
+   TABLE FIX (FINAL STABLE VERSION)
 ========================================== */
 .standings-card {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 400px;
 }
 
 #scoreTable {
   width: 100%;
-  min-width: 600px;
   border-collapse: collapse;
+  min-width: 600px;
   color: white;
 }
 
@@ -286,12 +288,14 @@ header {
   background: var(--green);
   color: white;
   padding: 10px;
+  white-space: nowrap;
 }
 
 #scoreTable td {
   text-align: center;
   padding: 10px;
   border-bottom: 1px solid rgba(255,255,255,0.2);
+  white-space: nowrap;
 }
 
 /* ==========================================
@@ -312,7 +316,7 @@ header {
 }
 
 /* ==========================================
-   MOBILE FIX (MAIN ISSUE SOLVED)
+   MOBILE FIX (CLEAN + SAFE)
 ========================================== */
 @media (max-width: 768px) {
 
@@ -340,6 +344,6 @@ header {
 
   #scoreTable {
     font-size: 0.75rem;
-    min-width: 500px;
+    min-width: 550px;
   }
 }
