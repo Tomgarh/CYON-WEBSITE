@@ -21,21 +21,15 @@ function updateCountdown() {
   timer.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
-// IMPORTANT: wait for page to load
 document.addEventListener("DOMContentLoaded", function () {
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-  
-});
-const toggleBtn = document.getElementById("toggleFixtures");
-const fixturesBox = document.getElementById("fixturesBox");
 
-toggleBtn.addEventListener("click", () => {
-  fixturesBox.classList.toggle("hidden");
+  const btn = document.getElementById("toggleFixtures");
+  const box = document.getElementById("fixturesBox");
 
-  if (fixturesBox.classList.contains("hidden")) {
-    toggleBtn.textContent = "View Fixtures 🔥";
-  } else {
-    toggleBtn.textContent = "Hide Fixtures ❌";
-  }
+  if (!btn || !box) return;
+
+  btn.addEventListener("click", () => {
+    box.classList.toggle("show");
+  });
+
 });
