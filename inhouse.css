@@ -112,7 +112,7 @@ header {
 }
 
 /* ==========================================
-   HERO (INHOUSE PAGE)
+   HERO
 ========================================== */
 .inhouse-hero {
   display: flex;
@@ -126,10 +126,9 @@ header {
 
   color: white;
 
-  background: 
+  background:
     linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
     url("inhouseposter.png") center/cover no-repeat;
-    margin-top: 0.05rem;
 }
 
 .inhouse-hero h1 {
@@ -180,16 +179,14 @@ header {
 .event-details .card h3 {
   color: var(--green-dark);
   margin-bottom: 0.8rem;
-  font-size: 1.3rem;
 }
 
 .event-details .card p {
   color: #555;
-  font-size: 0.95rem;
 }
 
 /* ==========================================
-   FOOTBALL SECTION
+   FOOTBALL SECTION (FIXED)
 ========================================== */
 .football-section {
   background: url("football-banner.jpg") center/cover no-repeat;
@@ -197,7 +194,6 @@ header {
   position: relative;
 }
 
-/* dark overlay so text is readable */
 .football-section::before {
   content: "";
   position: absolute;
@@ -205,82 +201,44 @@ header {
   background: rgba(0,0,0,0.6);
 }
 
-
 .overlay {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   gap: 20px;
   align-items: flex-start;
   justify-content: center;
-  flex-wrap: wrap; /* important for mobile */
+  flex-wrap: wrap;
 }
 
-/* make cards glass-like */
+/* CARDS */
 .card {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.12);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   color: white;
   padding: 20px;
-}
-.section-banner img {
-  width: 100%;
-  max-width: 700px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin: 1rem auto;
-  display: block;
-}
-#footballCard {
-  max-width: 750px;
-  margin: 2rem auto;
-}
-.football-card {
-  flex: 1;
-  min-width: 400px;
-}
-
-.standings-card {
   flex: 1;
   min-width: 300px;
 }
-.football-section {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  margin-top: 3rem;
-}
 
-.football-section .card {
-  background: white;
-  border-radius: 18px;
-  padding: 1.8rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-#scoreTable {
-  width: 100%;
-  background: white;
-  color: #222;
-  border-radius: 10px;
-  overflow: hidden;
-}
-@media (max-width: 768px) {
-  .overlay {
-    flex-direction: column;
-  }
+/* FIX FOOTBALL CARD WIDTH ISSUE */
+.football-card {
+  min-width: 320px;
 }
 
 /* ==========================================
    FIXTURES
 ========================================== */
 .football-card h3 {
-  color: var(--green);
+  color: var(--gold-light);
   margin-bottom: 0.5rem;
 }
 
 .football-card p {
   margin-bottom: 1rem;
-  color: #555;
+  color: #eee;
 }
 
 .fixture-btn {
@@ -291,7 +249,6 @@ header {
   border-radius: 8px;
   cursor: pointer;
   margin-bottom: 1rem;
-  transition: 0.3s;
 }
 
 .fixture-btn:hover {
@@ -300,55 +257,41 @@ header {
 
 .fixtures {
   margin-top: 1rem;
-  padding: 1rem 1.2rem;
-  border-left: 5px solid var(--gold);
-  background: #f7f7f7;
+  padding: 1rem;
+  border-left: 4px solid var(--gold);
+  background: rgba(255,255,255,0.08);
   border-radius: 10px;
-}
-.fixtures h2{
-  color: #222;
 }
 
 .fixtures h4 {
   margin-top: 1rem;
-  color: var(--green);
+  color: var(--gold-light);
 }
 
 /* ==========================================
-   STANDINGS
+   TABLE FIX (IMPORTANT)
 ========================================== */
-.standings-card h3 {
-  color: var(--green);
-  margin-bottom: 1rem;
+.standings-card {
+  overflow-x: auto;
 }
 
 #scoreTable {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 1rem;
+  color: white;
 }
 
 #scoreTable th {
   background: var(--green);
   color: white;
   padding: 10px;
-  font-size: 0.9rem;
 }
 
 #scoreTable td {
   text-align: center;
   padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-#scoreTable tr:nth-child(even) {
-  background: #f8f8f8;
-}
-
-#scoreTable tbody tr:first-child {
-  font-weight: bold;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 /* ==========================================
@@ -359,16 +302,6 @@ header {
   color: var(--white);
   text-align: center;
   padding: 2rem 1rem;
-  margin-top: 0.05rem;
-}
-
-.footer p {
-  margin: 5px 0;
-}
-
-.footer-copy {
-  font-size: 0.85rem;
-  opacity: 0.8;
 }
 
 /* ==========================================
@@ -379,9 +312,10 @@ header {
 }
 
 /* ==========================================
-   MOBILE
+   MOBILE FIX (MAIN ISSUE SOLVED)
 ========================================== */
 @media (max-width: 768px) {
+
   .navbar {
     flex-direction: column;
     gap: 10px;
@@ -396,20 +330,16 @@ header {
     font-size: 2rem;
   }
 
-  .football-section {
-    gap: 1.5rem;
+  .overlay {
+    flex-direction: column;
   }
 
-  .football-section .card {
-    padding: 1.2rem;
+  .card {
+    min-width: 100%;
   }
 
   #scoreTable {
-    font-size: 0.78rem;
-  }
-
-  #scoreTable th,
-  #scoreTable td {
-    padding: 6px;
+    font-size: 0.75rem;
+    min-width: 500px;
   }
 }
