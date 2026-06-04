@@ -344,6 +344,7 @@ header {
 
   #scoreTable {
     font-size: 0.75rem;
-    min-width: 550px;
+    min-width: 400px;
+    max-width: 500px;
   }
 }
