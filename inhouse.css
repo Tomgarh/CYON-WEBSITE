@@ -267,8 +267,8 @@ header {
   color: var(--gold-light);
 }
 
-/* ==========================================
-   TABLE (FIXED PROPERLY)
+* ==========================================
+   TABLE (LIVE SCORE STYLE)
 ========================================== */
 .standings-card {
   overflow-x: auto;
@@ -279,17 +279,24 @@ header {
 #scoreTable {
   width: 100%;
   min-width: 650px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   color: white;
 }
 
+/* Header Row */
 #scoreTable th {
   background: var(--green);
   color: white;
   padding: 10px;
   white-space: nowrap;
+
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
+/* Table Cells */
 #scoreTable td {
   text-align: center;
   padding: 10px;
@@ -297,14 +304,57 @@ header {
   white-space: nowrap;
 }
 
-#scoreTable th:first-child,
+/* Sticky Team Column */
+/* Sticky Team Column */
 #scoreTable td:first-child {
   position: sticky;
   left: 0;
   z-index: 2;
-  background: var(--green);
+  background: var(--green-dark);
   color: white;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.25);
 }
+/* Top-left corner (Team header) */
+#scoreTable thead th:first-child {
+  z-index: 5;
+  background: var(--green);
+}
+#scoreTable td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--green-dark);
+  color: white;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.25);
+}
+
+/* Top-left corner (Team header) */
+#scoreTable thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: var(--green);
+}
+
+/* Other headers */
+#scoreTable th:not(:first-child) {
+  z-index: 3;
+}
+
+/* Other headers */
+#scoreTable th:not(:first-child) {
+  z-index: 3;
+}
+.standings-card h3 {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: none;
+  color: white;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.25);
+ 
+}
+
 
 /* ==========================================
    FOOTER
