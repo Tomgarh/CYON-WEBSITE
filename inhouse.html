@@ -10,7 +10,7 @@
   <header>
     <nav class="container navbar">
       <a href="#home" class="brand">
-        <img src="cyon_logo.jpeg" class="cyon-logo" width="50" height="50" />
+        <img src="img/cyon_logo.jpeg" class="cyon-logo" width="50" height="50" />
       
         <div class="brand-text">
           <h1 class="logo">CYON</h1>
@@ -70,6 +70,58 @@
   <section class="football-section">
 
     <div class="overlay">
+      <div class="card tournament-info">
+
+        <h2>🏆 2026 CYON SBP In-House Football Competition</h2>
+      
+        <h3>📋 Group Placement</h3>
+      
+        <div class="groups-grid">
+      
+          <div class="group-box">
+            <h4>Group A</h4>
+            <ul>
+              <li>St. John Bosco</li>
+              <li>St. Charles L'Wanga</li>
+              <li>St. Theresa</li>
+              <li>Dominic Cardinal Ekanem</li>
+            </ul>
+          </div>
+      
+          <div class="group-box">
+            <h4>Group B</h4>
+            <ul>
+              <li>Bishop James M.</li>
+              <li>Archbishop Brian U.</li>
+              <li>Pope John Paul II</li>
+              <li>Blessed Tansi</li>
+            </ul>
+          </div>
+      
+        </div>
+      
+        <h3>📖 Tournament Rules</h3>
+      
+        <ol class="tournament-rules">
+          <li>Competition will be played using a league format.</li>
+          <li>Group winners advance to the final, while second-placed teams compete for third place.</li>
+          <li>Drawn matches during the group stage remain draws and earn 1 point each.</li>
+          <li>Tiebreakers: Goal Difference → Goals For → Head-to-Head → Penalty Shootout.</li>
+          <li>No favoritism will be tolerated during the competition.</li>
+          <li>Matches will be played 6-a-side with up to 4 substitutes.</li>
+          <li>Each match consists of two 30-minute halves with a 5-minute halftime break.</li>
+          <li>The offside rule will not apply.</li>
+          <li>Maximum of 4 substitutions per game.</li>
+          <li>Late arrival results in a one-goal penalty. More than 20 minutes late results in a 0–3 forfeiture.</li>
+          <li>Red card fine: ₦500.</li>
+          <li>Yellow card fine: ₦300.</li>
+          <li>Points system: Win = 3, Draw = 1, Loss = 0.</li>
+          <li>Players are encouraged to wear shin guards and proper equipment.</li>
+          <li>Violent conduct may lead to team disqualification.</li>
+          <li>Referees' and organizers' decisions are final.</li>
+        </ol>
+      
+      </div>
   
       <div class="card football-card" id="footballCard">
   
@@ -111,8 +163,10 @@
       </div>
   
       <div class="card standings-card">
-        <h3>📊 League Table</h3>
-        <table id="scoreTable">
+
+        <h3>📊 Group A Standings</h3>
+      
+        <table class="scoreTable">
           <thead>
             <tr>
               <th>Team</th>
@@ -120,59 +174,89 @@
               <th>W</th>
               <th>D</th>
               <th>L</th>
+              <th>GD</th>
+
               <th>GF</th>
               <th>GA</th>
               <th>PTS</th>
             </tr>
           </thead>
-    
+      
+          <tbody>
+            <tr>
+              <td>St. John Bosco</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+      
+            <tr>
+              <td>St. Charles L'Wanga</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+      
+            <tr>
+              <td>St. Theresa</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+      
+            <tr>
+              <td>Dominic Cardinal Ekanem</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      
+        <br><br>
+      
+        <h3>📊 Group B Standings</h3>
+      
+        <table class="scoreTable">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>GD</th>
+              <th>GF</th>
+              <th>GA</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+      
           <tbody>
             <tr>
               <td>Bishop James M.</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+             
             </tr>
-    
+      
+            <tr>
+              <td>Archbishop Brian U.</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+      
+            <tr>
+              <td>Pope John Paul II</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
+            </tr>
+      
             <tr>
               <td>Blessed Tansi</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
+              <td>0</td><td>0</td><td>0</td>
             </tr>
-    
-            <tr>
-              <td>St. John Bosco</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
-            <tr>
-              <td>St. Charles</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
-            <tr>
-              <td>Archbishop Brian</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
-            <tr>
-              <td>Pope John Paul</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
-            <tr>
-              <td>Dominic Cardinal E.</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
-            <tr>
-              <td>St. Theresa</td>
-              <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-            </tr>
-    
           </tbody>
-    
         </table>
+      
       </div>
-  
-    </div>
   
   </section>
   
