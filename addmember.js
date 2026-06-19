@@ -43,6 +43,9 @@ form.addEventListener("submit", async function (e) {
   const role =
     document.getElementById("role").value;
 
+  const photoURL =
+    document.getElementById("photoURL").value.trim();
+
   // =========================
   // VALIDATION
   // =========================
@@ -101,6 +104,7 @@ form.addEventListener("submit", async function (e) {
         birthday: birthday,
         group: group,
         role: role,
+        photoURL: photoURL,
 
         status: "pending",
 
