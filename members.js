@@ -1,4 +1,3 @@
-
 const firebaseConfig = {
   apiKey: "AIzaSyC-ADpygB1KELcBI3x2TtoOUpumKLa2zuw",
   authDomain: "cyon-stbernard.firebaseapp.com",
@@ -47,6 +46,7 @@ async function loadMembers() {
 // RENDER MEMBERS
 // ==========================
 function renderMembers(data) {
+
   membersGrid.innerHTML = "";
 
   if (data.length === 0) {
@@ -56,18 +56,41 @@ function renderMembers(data) {
   }
 
   data.forEach(member => {
+
+    const avatarHTML = member.photoURL
+      ? `
+        <div class="member-avatar">
+          <img
+            src="${member.photoURL}"
+            alt="${member.name}"
+            onerror="this.parentElement.innerHTML='${member.name.charAt(0).toUpperCase()}'"
+          >
+        </div>
+      `
+      : `
+        <div class="member-avatar">
+          ${member.name.charAt(0).toUpperCase()}
+        </div>
+      `;
+
     membersGrid.innerHTML += `
       <div class="member-card-v2">
 
-        <div class="member-avatar">
-  ${member.name.charAt(0).toUpperCase()}
-</div>
+        ${avatarHTML}
 
         <h3>${member.name}</h3>
 
         <p><strong>Group:</strong> ${member.group}</p>
-        <p><strong>Role:</strong> ${member.role || "Member"}</p>
-        <p><strong>Birthday:</strong> ${member.birthday || "N/A"}</p>
+
+        <p>
+          <strong>Role:</strong>
+          ${member.role || "Member"}
+        </p>
+
+        <p>
+          <strong>Birthday:</strong>
+          ${member.birthday || "N/A"}
+        </p>
 
       </div>
     `;
@@ -80,31 +103,57 @@ function renderMembers(data) {
 // SEARCH FUNCTION
 // ==========================
 searchInput.addEventListener("input", function () {
-  const query = searchInput.value.toLowerCase();
+
+  const query =
+    searchInput.value.toLowerCase();
 
   const filtered = allMembers.filter(member =>
-    (member.name + " " + member.group + " " + member.role)
+    (
+      (member.name || "") + " " +
+      (member.group || "") + " " +
+      (member.role || "")
+    )
       .toLowerCase()
       .includes(query)
   );
 
   renderMembers(filtered);
+
 });
 
 // ==========================
 // INIT
 // ==========================
-document.addEventListener("DOMContentLoaded", loadMembers);
-document.addEventListener("DOMContentLoaded", () => {
-  const dropdown = document.querySelector(".dropdown");
-  const link = dropdown?.querySelector("a");
+document.addEventListener(
+  "DOMContentLoaded",
+  loadMembers
+);
 
-  if (!dropdown || !link) return;
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  link.addEventListener("click", (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      dropdown.classList.toggle("active");
-    }
-  });
-});
+    const dropdown =
+      document.querySelector(".dropdown");
+
+    const link =
+      dropdown?.querySelector("a");
+
+    if (!dropdown || !link) return;
+
+    link.addEventListener("click", (e) => {
+
+      if (window.innerWidth <= 768) {
+
+        e.preventDefault();
+
+        dropdown.classList.toggle(
+          "active"
+        );
+
+      }
+
+    });
+
+  }
+);
