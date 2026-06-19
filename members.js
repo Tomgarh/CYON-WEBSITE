@@ -9,7 +9,6 @@ const firebaseConfig = {
 
 // INIT FIREBASE
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
 
 // ELEMENTS
@@ -20,7 +19,7 @@ const totalCount = document.getElementById("membersTotalCountV2");
 let allMembers = [];
 
 // ==========================
-// LOAD MEMBERS FROM FIREBASE
+// LOAD MEMBERS
 // ==========================
 async function loadMembers() {
   try {
@@ -43,10 +42,23 @@ async function loadMembers() {
 }
 
 // ==========================
+// FORMAT BIRTHDAY (NEW FIXED VERSION)
+// ==========================
+function formatBirthday(month, day) {
+  if (!month || !day) return "N/A";
+
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  return `${months[Number(month) - 1]} ${day}`;
+}
+
+// ==========================
 // RENDER MEMBERS
 // ==========================
 function renderMembers(data) {
-
   membersGrid.innerHTML = "";
 
   if (data.length === 0) {
@@ -57,40 +69,29 @@ function renderMembers(data) {
 
   data.forEach(member => {
 
-    const avatarHTML = member.photoURL
-      ? `
-        <div class="member-avatar">
-          <img
-            src="${member.photoURL}"
-            alt="${member.name}"
-            onerror="this.parentElement.innerHTML='${member.name.charAt(0).toUpperCase()}'"
-          >
-        </div>
-      `
-      : `
-        <div class="member-avatar">
-          ${member.name.charAt(0).toUpperCase()}
-        </div>
-      `;
+    const avatar = member.name
+      ? member.name.charAt(0).toUpperCase()
+      : "?";
+
+    const birthdayText = formatBirthday(
+      member.birthMonth,
+      member.birthDay
+    );
 
     membersGrid.innerHTML += `
       <div class="member-card-v2">
 
-        ${avatarHTML}
+        <div class="member-avatar">
+          ${avatar}
+        </div>
 
-        <h3>${member.name}</h3>
+        <h3>${member.name || "Unknown"}</h3>
 
-        <p><strong>Group:</strong> ${member.group}</p>
+        <p><strong>Group:</strong> ${member.group || "N/A"}</p>
 
-        <p>
-          <strong>Role:</strong>
-          ${member.role || "Member"}
-        </p>
+        <p><strong>Role:</strong> ${member.role || "Member"}</p>
 
-        <p>
-          <strong>Birthday:</strong>
-          ${member.birthday || "N/A"}
-        </p>
+        <p><strong>Birthday:</strong> ${birthdayText}</p>
 
       </div>
     `;
@@ -103,9 +104,7 @@ function renderMembers(data) {
 // SEARCH FUNCTION
 // ==========================
 searchInput.addEventListener("input", function () {
-
-  const query =
-    searchInput.value.toLowerCase();
+  const query = searchInput.value.toLowerCase();
 
   const filtered = allMembers.filter(member =>
     (
@@ -118,42 +117,24 @@ searchInput.addEventListener("input", function () {
   );
 
   renderMembers(filtered);
-
 });
 
 // ==========================
 // INIT
 // ==========================
-document.addEventListener(
-  "DOMContentLoaded",
-  loadMembers
-);
+document.addEventListener("DOMContentLoaded", loadMembers);
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+// MOBILE DROPDOWN FIX
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".dropdown");
+  const link = dropdown?.querySelector("a");
 
-    const dropdown =
-      document.querySelector(".dropdown");
+  if (!dropdown || !link) return;
 
-    const link =
-      dropdown?.querySelector("a");
-
-    if (!dropdown || !link) return;
-
-    link.addEventListener("click", (e) => {
-
-      if (window.innerWidth <= 768) {
-
-        e.preventDefault();
-
-        dropdown.classList.toggle(
-          "active"
-        );
-
-      }
-
-    });
-
-  }
-);
+  link.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle("active");
+    }
+  });
+});
