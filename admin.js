@@ -54,6 +54,10 @@ async function loadPending() {
       `;
       return;
     }
+    const months = [
+      "Jan","Feb","Mar","Apr","May","Jun",
+      "Jul","Aug","Sep","Oct","Nov","Dec"
+    ];
 
     pendingList.innerHTML = "";
 
@@ -68,7 +72,13 @@ async function loadPending() {
 
         <p><strong>Group:</strong> ${m.group}</p>
         <p><strong>Phone:</strong> ${m.phone || "N/A"}</p>
-        <p><strong>Birthday:</strong> ${m.birthday || "N/A"}</p>
+        <p><strong>Birthday:</strong>
+  ${
+    m.birthMonth && m.birthDay
+      ? `${months[m.birthMonth - 1]} ${m.birthDay}`
+      : "N/A"
+  }
+</p>
 
         ${
           m.photoURL
@@ -141,16 +151,18 @@ async function approveMember(id) {
     await db.collection("members").add({
       name: data.name,
       phone: data.phone || "",
-      birthday: data.birthday || "",
+    
+      birthMonth: Number(data.birthMonth) || null,
+      birthDay: Number(data.birthDay) || null,
+    
       group: data.group || "",
       role: data.role || "Member",
       photoURL: data.photoURL || null,
-
+    
       status: "approved",
       approvedAt: new Date(),
       createdAt: data.createdAt || new Date()
     });
-
     await pendingRef.delete();
 
     alert("Member approved successfully ✅");
