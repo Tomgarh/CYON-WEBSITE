@@ -63,7 +63,7 @@ function showError(msg) {
 }
 
 // ==========================
-// PROBATION FORM (UNCHANGED)
+// PROBATION FORM
 // ==========================
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("probation-form");
@@ -136,27 +136,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// FIREBASE INIT (OFFICIAL MEMBERS ONLY)
+// FIREBASE INIT
 // ==========================
 const firebaseConfig = {
   apiKey: "AIzaSyC-ADpygB1KELcBI3x2TtoOUpumKLa2zuw",
   authDomain: "cyon-stbernard.firebaseapp.com",
   projectId: "cyon-stbernard",
-  storageBucket: "cyon-stbernard.firebasestorage.app",
+  storageBucket: "cyon-stbernard.appspot.com",
   messagingSenderId: "747151921456",
   appId: "1:747151921456:web:43f8bb21e9b0a4f4abf8f5"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
 
 // ==========================
-// OFFICIAL MEMBERS (FIRESTORE)
+// FIRESTORE MEMBERS
 // ==========================
 let firestoreMembers = [];
 
 async function loadMembers() {
-  const snapshot = await db.collection("members").orderBy("createdAt", "desc").get();
+  const snapshot = await db.collection("members")
+    .orderBy("createdAt", "desc")
+    .get();
 
   firestoreMembers = snapshot.docs.map(doc => ({
     id: doc.id,
@@ -202,13 +205,15 @@ function renderMembers(data) {
 }
 
 // ==========================
-// SEARCH (FIRESTORE ONLY)
+// SEARCH + INIT
 // ==========================
 document.addEventListener("DOMContentLoaded", () => {
   const search = document.getElementById("membersSearchInputV2");
 
   loadMembers();
   loadTodayBirthdays();
+  loadUpcomingBirthdays();
+  initBirthdayNotifications(); // 👈 NEW
 
   if (search) {
     search.addEventListener("input", function () {
@@ -226,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==========================
-// BIRTHDAYS (FIXED)
+// BIRTHDAYS (TODAY)
 // ==========================
 async function loadTodayBirthdays() {
   const today = new Date();
@@ -244,38 +249,66 @@ async function loadTodayBirthdays() {
     );
 
   renderBirthdays(birthdaysToday);
+  handleBirthdayNotifications(birthdaysToday); // 👈 IMPORTANT
 }
 
+// ==========================
+// NOTIFICATIONS (ONCE PER DAY)
+// ==========================
+function getTodayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+}
+
+function initBirthdayNotifications() {
+  if ("Notification" in window) {
+    Notification.requestPermission();
+  }
+}
+
+function handleBirthdayNotifications(list) {
+  const todayKey = getTodayKey();
+  const lastSent = localStorage.getItem("birthday_notified_date");
+
+  if (lastSent === todayKey) return;
+
+  if (Notification.permission !== "granted") return;
+
+  list.forEach(m => {
+    new Notification("🎂 Birthday Alert!", {
+      body: `${m.name} has a birthday today 🎉`,
+      icon: m.photoURL || "/img/default-user.png"
+    });
+  });
+
+  localStorage.setItem("birthday_notified_date", todayKey);
+}
+
+// ==========================
+// RENDER BIRTHDAYS
+// ==========================
 function renderBirthdays(list) {
   const banner = document.getElementById("birthdayBanner");
-
   if (!banner) return;
 
   if (list.length === 0) {
-    banner.innerHTML = `
-      <div class="birthday-empty">
-        <p>No birthdays today 🎉</p>
-      </div>
-    `;
+    banner.innerHTML = `<div class="birthday-empty"><p>No birthdays today 🎉</p></div>`;
     return;
   }
 
   banner.innerHTML = `
     <div class="birthday-section">
       <h3>🎂 Today’s Birthdays</h3>
-
       <div class="birthday-grid">
         ${list.map(m => `
           <div class="birthday-card">
             <div class="birthday-avatar">
               ${m.name.charAt(0).toUpperCase()}
             </div>
-
             <div class="birthday-info">
               <h4>${m.name}</h4>
               <p>${m.group || "CYON Member"}</p>
             </div>
-
             <div class="birthday-icon">🎉</div>
           </div>
         `).join("")}
@@ -283,47 +316,39 @@ function renderBirthdays(list) {
     </div>
   `;
 }
-function getDateKey(date) {
-  return `${date.getMonth() + 1}-${date.getDate()}`;
-}
+
+// ==========================
+// UPCOMING BIRTHDAYS (7 DAYS)
+// ==========================
 async function loadUpcomingBirthdays() {
   const today = new Date();
-
   const snapshot = await db.collection("members").get();
-  const members = snapshot.docs.map(doc => doc.data());
 
+  const members = snapshot.docs.map(doc => doc.data());
   const upcoming = [];
 
   for (let i = 1; i <= 7; i++) {
     const d = new Date();
     d.setDate(today.getDate() + i);
 
-    const month = d.getMonth() + 1;
     const day = d.getDate();
+    const month = d.getMonth() + 1;
 
-    members.forEach(member => {
-      if (
-        Number(member.birthDay) === day &&
-        Number(member.birthMonth) === month
-      ) {
-        upcoming.push({
-          ...member,
-          when: `In ${i} day(s)`
-        });
+    members.forEach(m => {
+      if (Number(m.birthDay) === day && Number(m.birthMonth) === month) {
+        upcoming.push({ ...m, when: `In ${i} day(s)` });
       }
     });
   }
 
   renderUpcomingBirthdays(removeDuplicates(upcoming));
 }
+
 function removeDuplicates(list) {
   const seen = new Set();
-
   return list.filter(m => {
     const key = `${m.name}-${m.birthDay}-${m.birthMonth}`;
-
     if (seen.has(key)) return false;
-
     seen.add(key);
     return true;
   });
@@ -331,40 +356,26 @@ function removeDuplicates(list) {
 
 function renderUpcomingBirthdays(list) {
   const banner = document.getElementById("birthdayBanner");
+  if (!banner || list.length === 0) return;
 
-  if (!banner) return;
-
-  if (list.length === 0) {
-    return; // don’t overwrite today section if empty
-  }
-
-  const html = `
+  banner.innerHTML += `
     <div class="birthday-section upcoming">
       <h3>📅 Upcoming Birthdays (Next 7 Days)</h3>
-
       <div class="birthday-grid">
         ${list.map(m => `
           <div class="birthday-card upcoming-card">
             <div class="birthday-avatar">
               ${m.name.charAt(0).toUpperCase()}
             </div>
-
             <div class="birthday-info">
               <h4>${m.name}</h4>
               <p>${m.group || "CYON Member"}</p>
               <small>${m.when}</small>
             </div>
-
             <div class="birthday-icon">🎂</div>
           </div>
         `).join("")}
       </div>
     </div>
   `;
-
-  banner.innerHTML += html;
 }
-document.addEventListener("DOMContentLoaded", () => {
-  loadTodayBirthdays();
-  loadUpcomingBirthdays();
-});
