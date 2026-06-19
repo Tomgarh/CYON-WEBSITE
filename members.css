@@ -314,4 +314,35 @@ header {
   border-radius: 10px;
   margin-bottom: 10px;
 }
+/* ==========================================
+   MEMBER AVATAR / PHOTO
+========================================== */
+
+.member-avatar {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 15px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  background: var(--gold);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  border: 3px solid var(--green);
+}
+
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
