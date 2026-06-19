@@ -1,5 +1,5 @@
 // ==========================
-// LOAD MEMBERS
+// LOAD PROBATION MEMBERS (KEEP THIS SAFE)
 // ==========================
 let members = JSON.parse(localStorage.getItem("cyon_members")) || [];
 
@@ -11,7 +11,7 @@ function updateStorage() {
 }
 
 // ==========================
-// ID GENERATOR
+// ID GENERATOR (PROBATION ONLY)
 // ==========================
 function generateMemberId() {
   const ids = members.map(m =>
@@ -23,7 +23,7 @@ function generateMemberId() {
 }
 
 // ==========================
-// DATA
+// DATA (PROBATION)
 // ==========================
 const groups = [
   "Blessed Tansi Group",
@@ -63,7 +63,7 @@ function showError(msg) {
 }
 
 // ==========================
-// FORM HANDLER
+// PROBATION FORM (UNCHANGED)
 // ==========================
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("probation-form");
@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const name = document.getElementById("fullname").value.trim();
     const phone = document.getElementById("phone").value.trim();
 
-    // VALIDATION
     if (name.length < 3) return showError("Enter valid full name");
     if (phone.length < 10) return showError("Enter valid phone number");
 
@@ -113,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       form.reset();
 
-      // SUCCESS UI
       successBox.innerHTML = `
         <div class="success-card">
           <h2>✔ Registration Successful</h2>
@@ -138,141 +136,235 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// SEARCH + COUNT (for members.html)
+// FIREBASE INIT (OFFICIAL MEMBERS ONLY)
 // ==========================
-document.addEventListener("DOMContentLoaded", function () {
+const firebaseConfig = {
+  apiKey: "AIzaSyC-ADpygB1KELcBI3x2TtoOUpumKLa2zuw",
+  authDomain: "cyon-stbernard.firebaseapp.com",
+  projectId: "cyon-stbernard",
+  storageBucket: "cyon-stbernard.firebasestorage.app",
+  messagingSenderId: "747151921456",
+  appId: "1:747151921456:web:43f8bb21e9b0a4f4abf8f5"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ==========================
+// OFFICIAL MEMBERS (FIRESTORE)
+// ==========================
+let firestoreMembers = [];
+
+async function loadMembers() {
+  const snapshot = await db.collection("members").orderBy("createdAt", "desc").get();
+
+  firestoreMembers = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+
+  renderMembers(firestoreMembers);
+}
+
+// ==========================
+// RENDER MEMBERS
+// ==========================
+function renderMembers(data) {
   const grid = document.getElementById("membersGridV2");
-  const search = document.getElementById("membersSearchInputV2");
   const count = document.getElementById("membersTotalCountV2");
 
-  function render(data) {
-    if (!grid) return;
+  if (!grid) return;
 
-    grid.innerHTML = "";
+  grid.innerHTML = "";
 
-    if (!data.length) {
-      grid.innerHTML = "<p>No members found</p>";
-      return;
-    }
+  data.forEach(m => {
+    grid.innerHTML += `
+      <div class="member-card-v2">
 
-    data.forEach(m => {
-      const div = document.createElement("div");
-      div.className = "member-card-v2";
+        <div class="member-avatar">
+          ${(m.name || "?").charAt(0).toUpperCase()}
+        </div>
 
-      div.innerHTML = `
-        <img src="${m.photo}" class="member-photo-v2" />
-        <h3>${m.name}</h3>
-        <p><strong>ID:</strong> ${m.id}</p>
-        <p><strong>Status:</strong> ${m.status}</p>
-        <p><strong>Unit:</strong> ${m.assignedUnit}</p>
-        <p><strong>Group:</strong> ${m.assignedGroup}</p>
-      `;
+        <h3>${m.name || "Unknown"}</h3>
+        <p><strong>Group:</strong> ${m.group || "N/A"}</p>
+        <p><strong>Role:</strong> ${m.role || "Member"}</p>
+        <p><strong>Birthday:</strong>
+          ${m.birthMonth && m.birthDay
+            ? `${m.birthMonth}/${m.birthDay}`
+            : "N/A"}
+        </p>
 
-      grid.appendChild(div);
-    });
+      </div>
+    `;
+  });
 
-    if (count) count.textContent = data.length;
-  }
+  if (count) count.textContent = data.length;
+}
 
-  render(members);
+// ==========================
+// SEARCH (FIRESTORE ONLY)
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("membersSearchInputV2");
+
+  loadMembers();
+  loadTodayBirthdays();
 
   if (search) {
     search.addEventListener("input", function () {
       const q = this.value.toLowerCase();
 
-      const filtered = members.filter(m =>
+      const filtered = firestoreMembers.filter(m =>
         (m.name || "").toLowerCase().includes(q) ||
-        (m.id || "").toLowerCase().includes(q) ||
-        (m.phone || "").toLowerCase().includes(q)
+        (m.group || "").toLowerCase().includes(q) ||
+        (m.role || "").toLowerCase().includes(q)
       );
 
-      render(filtered);
+      renderMembers(filtered);
     });
   }
 });
 
 // ==========================
-// DOWNLOAD CYON CARD (FIXED)
+// BIRTHDAYS (FIXED)
 // ==========================
-async function downloadCard(id) {
-  const m = members.find(x => x.id === id);
+async function loadTodayBirthdays() {
+  const today = new Date();
 
-  if (!m) {
-    alert("Member not found");
-    return;
-  }
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
 
-  const card = document.querySelector(".success-card");
+  const snapshot = await db.collection("members").get();
 
-  if (!card) {
-    alert("Card not found");
-    return;
-  }
+  const birthdaysToday = snapshot.docs
+    .map(doc => doc.data())
+    .filter(m =>
+      Number(m.birthDay) === day &&
+      Number(m.birthMonth) === month
+    );
 
-  const btn = card.querySelector(".download-btn");
-  const original = btn?.textContent;
-
-  if (btn) {
-    btn.textContent = "PDF Generated...";
-    btn.disabled = true;
-  }
-  try {
-    const canvas = await html2canvas(card, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff"
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF("p", "mm", "a4");
-
-    const pageWidth = 210;
-    const margin = 10;
-
-    let imgWidth = pageWidth - margin * 2;
-    let imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    doc.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
-
-    doc.save(`${m.id}-CYON-CARD.pdf`);
-
-  } catch (err) {
-    console.error(err);
-    alert("Unable to generate PDF");
-  } finally {
-    if (btn) {
-      btn.textContent = original;
-      btn.disabled = false;
-    }
-  }
+  renderBirthdays(birthdaysToday);
 }
-// ==========================
-// MOBILE DROPDOWN FIX
-// ==========================
+
+function renderBirthdays(list) {
+  const banner = document.getElementById("birthdayBanner");
+
+  if (!banner) return;
+
+  if (list.length === 0) {
+    banner.innerHTML = `
+      <div class="birthday-empty">
+        <p>No birthdays today 🎉</p>
+      </div>
+    `;
+    return;
+  }
+
+  banner.innerHTML = `
+    <div class="birthday-section">
+      <h3>🎂 Today’s Birthdays</h3>
+
+      <div class="birthday-grid">
+        ${list.map(m => `
+          <div class="birthday-card">
+            <div class="birthday-avatar">
+              ${m.name.charAt(0).toUpperCase()}
+            </div>
+
+            <div class="birthday-info">
+              <h4>${m.name}</h4>
+              <p>${m.group || "CYON Member"}</p>
+            </div>
+
+            <div class="birthday-icon">🎉</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+function getDateKey(date) {
+  return `${date.getMonth() + 1}-${date.getDate()}`;
+}
+async function loadUpcomingBirthdays() {
+  const today = new Date();
+
+  const snapshot = await db.collection("members").get();
+  const members = snapshot.docs.map(doc => doc.data());
+
+  const upcoming = [];
+
+  for (let i = 1; i <= 7; i++) {
+    const d = new Date();
+    d.setDate(today.getDate() + i);
+
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+
+    members.forEach(member => {
+      if (
+        Number(member.birthDay) === day &&
+        Number(member.birthMonth) === month
+      ) {
+        upcoming.push({
+          ...member,
+          when: `In ${i} day(s)`
+        });
+      }
+    });
+  }
+
+  renderUpcomingBirthdays(removeDuplicates(upcoming));
+}
+function removeDuplicates(list) {
+  const seen = new Set();
+
+  return list.filter(m => {
+    const key = `${m.name}-${m.birthDay}-${m.birthMonth}`;
+
+    if (seen.has(key)) return false;
+
+    seen.add(key);
+    return true;
+  });
+}
+
+function renderUpcomingBirthdays(list) {
+  const banner = document.getElementById("birthdayBanner");
+
+  if (!banner) return;
+
+  if (list.length === 0) {
+    return; // don’t overwrite today section if empty
+  }
+
+  const html = `
+    <div class="birthday-section upcoming">
+      <h3>📅 Upcoming Birthdays (Next 7 Days)</h3>
+
+      <div class="birthday-grid">
+        ${list.map(m => `
+          <div class="birthday-card upcoming-card">
+            <div class="birthday-avatar">
+              ${m.name.charAt(0).toUpperCase()}
+            </div>
+
+            <div class="birthday-info">
+              <h4>${m.name}</h4>
+              <p>${m.group || "CYON Member"}</p>
+              <small>${m.when}</small>
+            </div>
+
+            <div class="birthday-icon">🎂</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  banner.innerHTML += html;
+}
 document.addEventListener("DOMContentLoaded", () => {
-  const dropdown = document.querySelector(".dropdown");
-  const dropdownLink = dropdown?.querySelector("a");
-
-  if (!dropdown || !dropdownLink) return;
-
-  dropdownLink.addEventListener("click", (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      dropdown.classList.toggle("active");
-    }
-  });
-
-  // Close when tapping outside
-  document.addEventListener("click", (e) => {
-    if (
-      window.innerWidth <= 768 &&
-      !dropdown.contains(e.target)
-    ) {
-      dropdown.classList.remove("active");
-    }
-  });
+  loadTodayBirthdays();
+  loadUpcomingBirthdays();
 });
-
-
