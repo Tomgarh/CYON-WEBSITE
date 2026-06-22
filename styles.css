@@ -69,55 +69,12 @@ header {
   padding: 1rem 0;
 }
 
-/* =========================
-   DROPDOWN MENU
-========================= */
 
-.dropdown {
-  position: relative;
-}
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
 
-  background: black;
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
 
-  min-width: 220px;
 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  border-radius: 10px;
 
-  display: none;
-  z-index: 999;
-}
-
-.dropdown-menu li {
-  padding: 0;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 10px 15px;
-  color: var(--text-dark);
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.2s;
-}
-
-.dropdown-menu a:hover {
-  background: var(--green);
-  color: white;
-}
-
-/* SHOW DROPDOWN ON HOVER (DESKTOP) */
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
 .brand {
   display: flex;
   align-items: center;
@@ -169,59 +126,13 @@ header {
    HAMBURGER MENU
 ========================= */
 
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-}
+
 
 /* DEFAULT DESKTOP */
 .nav-links {
   display: flex;
   gap: 15px;
   list-style: none;
-}
-
-.dropdown {
-  position: relative;
-}
-
-/* desktop dropdown */
-.dropdown-menu {
-  position: relative;
-  top: 100%;
-  left: 0;
-
-  background: white;
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
-
-  min-width: 220px;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  border-radius: 10px;
-
-  display: none;
-  z-index: 999;
-}
-
-/* show on hover (desktop only) */
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 10px 15px;
-  color: var(--text-dark);
-  text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-  background: var(--green);
-  color: white;
 }
 
 
@@ -275,6 +186,61 @@ header {
 .hero-description {
   margin: 1.5rem auto;
   max-width: 650px;
+}
+/* =========================
+   DROPDOWN MENU
+========================= */
+
+.dropdown {
+  position: relative;
+}
+
+/* Hide dropdown by default */
+.dropdown-menu {
+  display: none;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  background: #ffffff;
+  min-width: 220px;
+
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+  z-index: 9999;
+}
+
+/* Show on hover (desktop) */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Dropdown items */
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 16px;
+
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background: var(--green);
+  color: white;
 }
 
 /* BUTTON */
