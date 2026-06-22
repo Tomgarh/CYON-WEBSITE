@@ -379,3 +379,22 @@ function renderUpcomingBirthdays(list) {
     </div>
   `;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".dropdown");
+  const link = dropdown?.querySelector("a");
+
+  if (!dropdown || !link) return;
+
+  link.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle("active");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768 && !dropdown.contains(e.target)) {
+      dropdown.classList.remove("active");
+    }
+  });
+});
