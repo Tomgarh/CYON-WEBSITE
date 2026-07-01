@@ -42,7 +42,7 @@ async function loadMembers() {
 }
 
 // ==========================
-// FORMAT BIRTHDAY (NEW FIXED VERSION)
+// FORMAT BIRTHDAY 
 // ==========================
 function formatBirthday(month, day) {
   if (!month || !day) return "N/A";
