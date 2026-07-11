@@ -213,6 +213,11 @@ header {
 
   flex: 1 1 320px;
 }
+.cards a{
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 .tournament-info {
   margin-bottom: 2rem;
 }
@@ -379,11 +384,16 @@ header {
 /* ==========================================
    FOOTER
 ========================================== */
-.footer {
-  background: var(--green-dark);
-  color: var(--white);
-  text-align: center;
-  padding: 2rem 1rem;
+.event-footer{
+  text-align:center;
+  padding:20px;
+  background:#0b5d1e;
+  color:#fff;
+  border-top:3px solid gold;
+}
+
+.event-footer p{
+  margin:5px 0;
 }
 
 /* ==========================================
