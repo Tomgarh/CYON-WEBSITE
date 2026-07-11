@@ -290,7 +290,53 @@ header {
 /* ==========================================
    TABLE (LIVE SCORE STYLE FIXED)
 ========================================== */
+.final-announcement{
+  background: linear-gradient(135deg,#0b5d1e,#198754);
+  color:#fff;
+  padding:25px;
+  margin:25px 0;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 6px 15px rgba(0,0,0,.25);
+}
 
+.final-announcement h2{
+  color:gold;
+  margin-bottom:15px;
+  font-size:2rem;
+}
+
+.final-match{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin:25px 0;
+}
+
+.team{
+  background:#fff;
+  color:#0b5d1e;
+  padding:12px 22px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:1.3rem;
+}
+
+.vs{
+  background:gold;
+  color:#000;
+  padding:10px 18px;
+  border-radius:50px;
+  font-weight:bold;
+  font-size:1.2rem;
+}
+
+.final-text{
+  font-size:1.05rem;
+  line-height:1.6;
+}
 .standings-card {
   width: 100%;
   overflow-x: auto;
