@@ -8,353 +8,353 @@
    HEADER (MATCH INDEX EXACTLY)
 ========================= */
 header {
-    background: var(--green);
-    color: var(--white);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 3px 10px var(--shadow);
-    width: 100%;
-  }
-  
-  /* IMPORTANT: keep same container behavior */
-  .container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  
-  /* NAVBAR */
+  background: var(--green);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 10px var(--shadow);
+  width: 100%;
+}
+
+/* IMPORTANT: keep same container behavior */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+/* LOGO */
+.cyon-logo {
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+  margin: 0;
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--gold-light);
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #a93226;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    width: 100%;
-  }
-  
-  /* BRAND */
-  .brand {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
-    text-decoration: none;
   }
-  
-  /* LOGO */
-  .cyon-logo {
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-  }
-  
-  .logo {
-    font-size: 1.8rem;
-    color: var(--white);
-    line-height: 1;
-    margin: 0;
-  }
-  
-  .brand-subtitle {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.75);
-    margin-top: 2px;
-  }
-  
-  /* NAV LINKS */
+
   .nav-links {
-    display: flex;
-    gap: 1.2rem;
-    list-style: none;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  
-  .nav-links a:hover {
-    color: var(--gold-light);
-  }
-  
-  /* LOGOUT BUTTON */
-  .logout-btn {
-    background: #c0392b;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  .logout-btn:hover {
-    background: #a93226;
-  }
-  
-  /* MOBILE FIX */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
-  /* BRAND */
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-  
-  .cyon-logo {
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-  }
-  
-  /* TEXT */
-  .logo {
-    font-size: 1.8rem;
-    color: var(--white);
-    margin: 0;
-  }
-  
-  .brand-subtitle {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.75);
-  }
-  
-  /* NAV LINKS */
-  .nav-links {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-    align-items: center;
-  }
-  
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  
-  .nav-links a:hover {
-    color: var(--gold-light);
-  }
-  
-  /* =========================
-     LOGOUT BUTTON IN HEADER
-  ========================= */
-  .logout-btn {
-    background: #c0392b;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .logout-btn:hover {
-    background: #a93226;
-    transform: translateY(-2px);
-  }
-  
-  /* =========================
-     MOBILE RESPONSIVE HEADER
-  ========================= */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
+}
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.cyon-logo {
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+}
+
+/* TEXT */
+.logo {
+  font-size: 1.8rem;
+  color: var(--white);
+  margin: 0;
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--gold-light);
+}
+
 /* =========================
-   ADMIN ROOT
+   LOGOUT BUTTON IN HEADER
+========================= */
+.logout-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #a93226;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   MOBILE RESPONSIVE HEADER
+========================= */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+/* =========================
+ ADMIN ROOT
 ========================= */
 :root {
-    --gold: #c9a227;
-    --gold-light: #e8c96a;
-    --green: #0b7a3b;
-    --green-dark: #065a2c;
-    --white: #ffffff;
-    --text-dark: #333333;
-    --shadow: rgba(0, 0, 0, 0.12);
-  }
-  
-  /* =========================
-     BASE
-  ========================= */
-  body {
-    font-family: "Poppins", Arial, sans-serif;
-    margin: 0;
-    background: #f4f6f8;
-    color: var(--text-dark);
-  }
-  
-  /* =========================
-     ADMIN SECTION
-  ========================= */
-  .admin-section {
-    padding: 3rem 0;
-  }
-  
-  /* CENTER CONTENT */
-  .container {
-    width: 90%;
-    max-width: 1100px;
-    margin: auto;
-  }
-  
-  /* TITLE */
-  .page-title {
-    text-align: center;
-    font-family: "Merriweather", serif;
-    color: var(--green-dark);
-    margin-bottom: 2rem;
-  }
-  
-  /* =========================
-     STATS BOX
-  ========================= */
-  .stats-box {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    max-width: 300px;
-    margin: 0 auto 2rem auto;
-    box-shadow: 0 5px 15px var(--shadow);
-    border-top: 4px solid var(--gold);
-  }
-  
-  .stats-box h3 {
-    color: var(--green);
-    margin-bottom: 10px;
-  }
-  
-  #pendingCount {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--text-dark);
-  }
-  
-  /* =========================
-     GRID FOR PENDING USERS
-  ========================= */
+  --gold: #c9a227;
+  --gold-light: #e8c96a;
+  --green: #0b7a3b;
+  --green-dark: #065a2c;
+  --white: #ffffff;
+  --text-dark: #333333;
+  --shadow: rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   BASE
+========================= */
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+  color: var(--text-dark);
+}
+
+/* =========================
+   ADMIN SECTION
+========================= */
+.admin-section {
+  padding: 3rem 0;
+}
+
+/* CENTER CONTENT */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* TITLE */
+.page-title {
+  text-align: center;
+  font-family: "Merriweather", serif;
+  color: var(--green-dark);
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   STATS BOX
+========================= */
+.stats-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto 2rem auto;
+  box-shadow: 0 5px 15px var(--shadow);
+  border-top: 4px solid var(--gold);
+}
+
+.stats-box h3 {
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+#pendingCount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+/* =========================
+   GRID FOR PENDING USERS
+========================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
   .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
-  
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  /* =========================
-     PENDING CARD
-  ========================= */
-  .grid > div {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px var(--shadow);
-    text-align: center;
-    border-top: 3px solid var(--gold);
-  }
-  
-  /* IMAGE */
-  .grid img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 2px solid var(--gold);
-  }
-  
-  /* TEXT */
-  .grid h3 {
-    margin: 10px 0 5px;
-    color: var(--green-dark);
-  }
-  
-  .grid p {
-    margin: 5px 0;
-    font-size: 0.9rem;
-  }
-  
-  /* =========================
-     BUTTONS
-  ========================= */
-  button {
-    padding: 8px 12px;
-    margin: 5px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  
-  /* APPROVE */
-  button:nth-child(3) {
-    background: #0b7a3b;
-    color: white;
-  }
-  
-  button:nth-child(3):hover {
-    background: #065a2c;
-  }
-  
-  /* REJECT */
-  button:nth-child(4) {
-    background: #c0392b;
-    color: white;
-  }
-  
-  button:nth-child(4):hover {
-    background: #a93226;
-  }
-  
-  /* =========================
-     LOGOUT BUTTON
-  ========================= */
-  .logout-btn {
-    background: #c0392b;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .logout-btn:hover {
-    background: #a93226;
-  }
+}
+
+/* =========================
+   PENDING CARD
+========================= */
+.grid > div {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px var(--shadow);
+  text-align: center;
+  border-top: 3px solid var(--gold);
+}
+
+/* IMAGE */
+.grid img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid var(--gold);
+}
+
+/* TEXT */
+.grid h3 {
+  margin: 10px 0 5px;
+  color: var(--green-dark);
+}
+
+.grid p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* APPROVE */
+button:nth-child(3) {
+  background: #0b7a3b;
+  color: white;
+}
+
+button:nth-child(3):hover {
+  background: #065a2c;
+}
+
+/* REJECT */
+button:nth-child(4) {
+  background: #c0392b;
+  color: white;
+}
+
+button:nth-child(4):hover {
+  background: #a93226;
+}
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+.logout-btn {
+  background: #c0392b;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #a93226;
+}
