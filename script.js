@@ -292,31 +292,55 @@ function renderBirthdays(list) {
   if (!banner) return;
 
   if (list.length === 0) {
-    banner.innerHTML = `<div class="birthday-empty"><p>No birthdays today 🎉</p></div>`;
+    banner.innerHTML = `
+      <div class="birthday-empty">
+        <p>No birthdays today 🎉</p>
+      </div>
+    `;
     return;
   }
 
   banner.innerHTML = `
     <div class="birthday-section">
-      <h3>🎂 Today’s Birthdays</h3>
+      <h3>🎂 Today's Birthdays</h3>
+
       <div class="birthday-grid">
+
         ${list.map(m => `
+
           <div class="birthday-card">
-            <div class="birthday-avatar">
-              ${m.name.charAt(0).toUpperCase()}
-            </div>
+
+            ${
+              m.photoURL
+                ? `
+                  <img
+                    src="${m.photoURL}"
+                    class="birthday-avatar"
+                    alt="${m.name}"
+                  >
+                `
+                : `
+                  <div class="birthday-avatar birthday-avatar-placeholder">
+                    ${m.name.charAt(0).toUpperCase()}
+                  </div>
+                `
+            }
+
             <div class="birthday-info">
               <h4>${m.name}</h4>
               <p>${m.group || "CYON Member"}</p>
             </div>
+
             <div class="birthday-icon">🎉</div>
+
           </div>
+
         `).join("")}
+
       </div>
     </div>
   `;
 }
-
 // ==========================
 // UPCOMING BIRTHDAYS (7 DAYS)
 // ==========================
@@ -355,28 +379,55 @@ function removeDuplicates(list) {
 }
 
 function renderUpcomingBirthdays(list) {
+
   const banner = document.getElementById("birthdayBanner");
+
   if (!banner || list.length === 0) return;
 
   banner.innerHTML += `
+
     <div class="birthday-section upcoming">
+
       <h3>📅 Upcoming Birthdays (Next 7 Days)</h3>
+
       <div class="birthday-grid">
+
         ${list.map(m => `
+
           <div class="birthday-card upcoming-card">
-            <div class="birthday-avatar">
-              ${m.name.charAt(0).toUpperCase()}
-            </div>
+
+            ${
+              m.photoURL
+                ? `
+                  <img
+                    src="${m.photoURL}"
+                    class="birthday-avatar"
+                    alt="${m.name}"
+                  >
+                `
+                : `
+                  <div class="birthday-avatar birthday-avatar-placeholder">
+                    ${m.name.charAt(0).toUpperCase()}
+                  </div>
+                `
+            }
+
             <div class="birthday-info">
               <h4>${m.name}</h4>
               <p>${m.group || "CYON Member"}</p>
               <small>${m.when}</small>
             </div>
+
             <div class="birthday-icon">🎂</div>
+
           </div>
+
         `).join("")}
+
       </div>
+
     </div>
+
   `;
 }
 document.addEventListener("DOMContentLoaded", () => {

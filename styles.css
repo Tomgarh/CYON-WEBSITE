@@ -571,19 +571,28 @@ section {
 
 /* Avatar circle */
 .birthday-avatar {
-  width: 40px;
-  height: 40px;
-  background: #ff9800;
-  color: white;
-  font-weight: bold;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--gold);
+
+  display: block;
+  flex-shrink: 0;
 }
 
+.birthday-avatar-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, var(--green), var(--gold));
+  color: white;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+}
 /* Info */
 .birthday-info {
   flex: 1;
