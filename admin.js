@@ -210,3 +210,169 @@ function logout() {
 // INITIAL LOAD
 // =========================
 loadPending();
+loadBirthdayMembers();
+
+// =========================
+// LOAD MEMBERS FOR BIRTHDAY GENERATOR
+// =========================
+async function loadBirthdayMembers() {
+
+    const container = document.getElementById("birthdayMembers");
+
+    const snapshot = await db.collection("members")
+        .orderBy("name")
+        .get();
+
+    container.innerHTML = "";
+
+    snapshot.forEach(doc => {
+
+        const member = doc.data();
+
+        container.innerHTML += `
+
+        <div class="member-card">
+
+            ${
+                member.photoURL
+                ? `<img src="${member.photoURL}" class="pending-photo">`
+                : `<div class="member-avatar">${member.name.charAt(0)}</div>`
+            }
+
+            <h3>${member.name}</h3>
+
+            <p>${member.group || ""}</p>
+
+            <button
+                class="approve-btn"
+                onclick="generateBirthdayCard('${doc.id}')">
+
+                🎂 Generate Birthday Card
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// =========================
+// GENERATE BIRTHDAY CARD
+// =========================
+async function generateBirthdayCard(id){
+
+    try{
+
+        const doc = await db.collection("members").doc(id).get();
+
+        if(!doc.exists){
+            alert("Member not found.");
+            return;
+        }
+
+        const member = doc.data();
+
+        // =====================
+        // Fill Card Details
+        // =====================
+
+        document.getElementById("cardName").textContent =
+            member.name;
+
+        document.getElementById("cardWish").innerHTML = `
+        Wishing you abundant grace,
+        divine favour, happiness,
+        long life and prosperity.
+        <br><br>
+        May God continue to strengthen
+        and bless you always.
+        `;
+
+        const photo =
+            document.getElementById("cardPhoto");
+
+        photo.crossOrigin = "anonymous";
+
+        photo.src = member.photoURL;
+
+        // =====================
+        // Wait for ALL images
+        // =====================
+
+        const images =
+            document.querySelectorAll("#birthdayCard img");
+
+        await Promise.all(
+
+            [...images].map(img=>{
+
+                return new Promise(resolve=>{
+
+                    if(img.complete){
+
+                        resolve();
+
+                    }else{
+
+                        img.onload = resolve;
+                        img.onerror = resolve;
+
+                    }
+
+                });
+
+            })
+
+        );
+
+        // Small delay for fonts
+
+        await new Promise(resolve=>setTimeout(resolve,300));
+
+        // =====================
+        // Create Image
+        // =====================
+
+        const canvas = await html2canvas(
+
+            document.getElementById("birthdayCard"),
+
+            {
+
+                scale:4,
+
+                useCORS:true,
+
+                allowTaint:true,
+
+                backgroundColor:null,
+
+                logging:false
+
+            }
+
+        );
+
+        const link=document.createElement("a");
+
+        link.download=
+            `${member.name} Birthday Card.png`;
+
+        link.href=
+            canvas.toDataURL("image/png",1);
+
+        link.click();
+
+    }
+
+    catch(err){
+
+      console.error(err);
+  
+      alert(err.message);
+  
+  }
+}

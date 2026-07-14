@@ -1,70 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CYON Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYON Admin Dashboard</title>
 
-  <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="admin.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
+<header>
+
     <nav class="container navbar">
 
-      <a href="index.html" class="brand">
-        <img src="img/cyon_logo.jpeg" class="cyon-logo" width="50" height="50" alt="CYON Logo" />
+        <a href="index.html" class="brand">
 
-        <div class="brand-text">
-          <h1 class="logo">CYON</h1>
-          <p class="brand-subtitle">St. Bernard’s Parish, Calabar</p>
-        </div>
-      </a>
+            <img src="img/cyon_logo.jpeg"
+                 class="cyon-logo"
+                 width="50"
+                 height="50">
 
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="members.html">Members</a></li>
-        <li><a href="addmember.html">Add Members</a></li>
-        <li><button class="logout-btn" onclick="logout()">Logout</button></li>
-      </ul>
+            <div class="brand-text">
+
+                <h1 class="logo">CYON</h1>
+
+                <p class="brand-subtitle">
+                    St. Bernard's Parish, Calabar
+                </p>
+
+            </div>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li><a href="index.html">Home</a></li>
+
+            <li><a href="members.html">Members</a></li>
+
+            <li><a href="addmember.html">Add Members</a></li>
+
+            <li>
+
+                <button
+                class="logout-btn"
+                onclick="logout()">
+
+                Logout
+
+                </button>
+
+            </li>
+
+        </ul>
 
     </nav>
-  </header>
 
-  <!-- DASHBOARD -->
-  <section class="admin-section">
+</header>
+
+<section class="admin-section">
 
     <div class="container">
 
-      <h2 class="page-title">Admin Dashboard</h2>
+        <h2 class="page-title">
+            Admin Dashboard
+        </h2>
 
-      <!-- STATS -->
-      <div class="stats-box">
-        <h3>Pending Registrations</h3>
-        <p id="pendingCount">0</p>
-      </div>
+        <div class="stats-box">
 
-      <!-- PENDING LIST -->
-      <div id="pendingList" class="grid"></div>
+            <h3>Pending Registrations</h3>
+
+            <p id="pendingCount">0</p>
+
+        </div>
+
+        <div id="pendingList" class="grid"></div>
+
+        <hr style="margin:70px 0;">
+
+        <h2 class="page-title">
+            🎂 Birthday Card Generator
+        </h2>
+
+        <div id="birthdayMembers" class="grid"></div>
 
     </div>
 
-  </section>
+</section>
 
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
-  <script src="admin.js"></script>
+<!-- =======================================
+HIDDEN BIRTHDAY CARD
+======================================== -->
 
+<!-- ===========================================
+        BIRTHDAY CARD V2
+=========================================== -->
+
+<div id="birthdayCard" class="birthday-card-template">
+
+  <!-- Decorative Background -->
+  <div class="gold-blob blob1"></div>
+  <div class="gold-blob blob2"></div>
+
+  <div class="green-wave"></div>
+
+  <!-- Watermark -->
+  <img
+      src="img/cyon_logo.jpeg"
+      class="watermark-logo"
+      alt="Watermark">
+
+  <!-- Header -->
+  <div class="card-header">
+
+      <div class="header-logo-left">
+
+          <img
+              src="img/cyon_logo.jpeg"
+              class="cyon-logo-card"
+              alt="CYON">
+
+      </div>
+
+      <div class="header-title">
+
+          <h3>
+              CATHOLIC YOUTH ORGANIZATION OF NIGERIA
+          </h3>
+
+          <p>
+              St. Bernard's Parish • Marian Hill • Calabar
+          </p>
+
+      </div>
+
+      <div class="header-logo-right">
+
+          <img
+              src="img/sbp.jpeg"
+              class="sbp-logo-card"
+              alt="SBP">
+
+      </div>
+
+  </div>
+
+  <!-- Gold Line -->
+
+  <div class="gold-divider"></div>
+
+  <!-- Happy Birthday -->
+
+  <h2 class="birthday-title">
+
+      HAPPY
+
+  </h2>
+
+  <h1 class="birthday-big">
+
+      Birthday
+
+  </h1>
+
+  <!-- Member Name -->
+
+  <div class="name-ribbon">
+
+      <span id="cardName">
+          Thomas Besong
+      </span>
+
+  </div>
+
+  <!-- Photo -->
+
+  <div class="photo-section">
+
+      <div class="photo-frame">
+
+          <img
+              id="cardPhoto"
+              class="birthday-photo"
+              alt="Member Photo">
+
+      </div>
+
+  </div>
+
+  <!-- Message -->
+
+  <div class="message-box">
+
+      <p id="cardWish">
+
+          May Almighty God continue to bless you
+          with good health, wisdom, joy, peace and
+          many fruitful years.
+
+          Continue shining your light and inspiring
+          others through Christ.
+
+      </p>
+
+  </div>
+
+  <!-- Decorative Gold Divider -->
+
+  <div class="gold-divider bottom-divider"></div>
+
+  <!-- Footer -->
+
+  <div class="card-footer">
+
+      <h3>
+
+          FROM THE CYON FAMILY
+
+      </h3>
+
+      <p>
+
+          St. Bernard's Parish<br>
+
+          Marian Hill, Calabar
+
+      </p>
+
+  </div>
+
+  <!-- Bottom Ribbon -->
+
+  <div class="footer-ribbon">
+
+      <span>
+
+          ✝ LET YOUR LIGHT SHINE ✝
+
+      </span>
+
+  </div>
+
+</div>
+
+
+    <!-- Footer -->
+
+    <div class="card-footer">
+
+        <h2>From The CYON Family ❤️</h2>
+
+        <p>
+            St. Bernard's Parish,
+            Marian Hill,
+            Calabar
+        </p>
+
+    </div>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script src="admin.js"></script>
 
 </body>
 </html>

@@ -288,15 +288,17 @@ body {
 }
 
 /* IMAGE */
-.grid img {
-  width: 80px;
-  height: 80px;
+.grid img,
+.pending-photo {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 10px;
-  border: 2px solid var(--gold);
+  object-position: center top; /* Shows the top of the photo */
+  display: block;
+  margin: 0 auto 15px;
+  border: 3px solid var(--gold);
 }
-
 /* TEXT */
 .grid h3 {
   margin: 10px 0 5px;
@@ -357,4 +359,646 @@ button:nth-child(4):hover {
 
 .logout-btn:hover {
   background: #a93226;
+}
+/* ==========================================
+   CYON PREMIUM BIRTHDAY CARD V2
+   PART 1
+========================================== */
+
+.birthday-card-template{
+
+  position:fixed;
+  left:-99999px;
+  top:0;
+
+  width:1080px;
+  height:1350px;
+
+  overflow:hidden;
+
+  font-family:"Poppins",sans-serif;
+
+  background:linear-gradient(
+      145deg,
+      #0b6e3d 0%,
+      #127245 30%,
+      #c8a63b 72%,
+      #fdf7dc 100%
+  );
+}
+
+
+/* ==========================================
+BACKGROUND DECORATION
+========================================== */
+
+.gold-blob{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.08);
+
+  filter:blur(3px);
+
+}
+
+.blob1{
+
+  width:520px;
+  height:520px;
+
+  top:-180px;
+  left:-180px;
+
+}
+
+.blob2{
+
+  width:420px;
+  height:420px;
+
+  bottom:-170px;
+  right:-150px;
+
+}
+
+
+/* Curved Green Wave */
+
+.green-wave{
+
+  position:absolute;
+
+  
+  left:-120px;
+
+  width:1350px;
+  
+
+  background:#0b6e3d;
+
+  border-radius:55%;
+
+  transform:rotate(-4deg);
+
+  height:220px;
+
+  bottom:-90px;
+
+
+ 
+
+}
+
+
+/* ==========================================
+WATERMARK
+========================================== */
+
+.watermark-logo{
+
+  position:absolute;
+
+  width:520px;
+
+  left:50%;
+
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  
+  z-index:1;
+
+  opacity:.04;
+
+}
+
+
+/* ==========================================
+WHITE CARD
+========================================== */
+
+.birthday-overlay{
+
+  position:absolute;
+
+  inset:42px;
+
+  background:
+  linear-gradient(
+  to bottom,
+  #ffffff,
+  #fffdf7
+  );
+
+  border-radius:38px;
+
+  border:10px solid #d4af37;
+
+  box-shadow:
+      0 25px 60px rgba(0,0,0,.30),
+      inset 0 0 0 3px #fff2b8;
+
+}
+
+
+/* ==========================================
+HEADER
+========================================== */
+
+.card-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:45px 70px 15px;
+
+}
+
+.header-logo-left,
+.header-logo-right{
+
+  width:150px;
+
+  display:flex;
+
+  justify-content:center;
+
+}
+
+.cyon-logo-card{
+
+  width:95px;
+
+  height:auto;
+
+}
+
+.sbp-logo-card{
+
+  width:120px;
+
+  height:auto;
+
+}
+
+.header-title{
+
+  flex:1;
+
+  text-align:center;
+
+}
+
+.header-title h3{
+
+  margin:0;
+
+  color:#d4af37;
+
+  font-family:"Merriweather",serif;
+
+  font-size:34px;
+
+  letter-spacing:1px;
+
+}
+
+.header-title p{
+
+  margin-top:10px;
+
+  color:#f3d36b;
+
+  font-size:19px;
+
+  letter-spacing:1px;
+
+}
+
+
+/* ==========================================
+DIVIDER
+========================================== */
+
+.gold-divider{
+
+  width:72%;
+
+  height:6px;
+
+  margin:10px auto 25px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+      to right,
+      transparent,
+      #d4af37,
+      #ffe89a,
+      #d4af37,
+      transparent
+  );
+
+}
+
+
+/* ==========================================
+TITLE
+========================================== */
+
+.birthday-title{
+
+  margin:0;
+
+  text-align:center;
+
+  color:#d4af37;
+
+  font-size:42px;
+
+  letter-spacing:9px;
+
+  font-weight:700;
+
+  position:relative;
+
+  z-index:10;
+
+}
+
+.birthday-big{
+
+  margin:0;
+
+  margin-top:-8px;
+
+  text-align:center;
+
+  font-size:86px;
+
+  color:#d4af37;
+
+  font-family:"Merriweather",serif;
+
+}
+
+
+/* ==========================================
+NAME RIBBON
+========================================== */
+
+.name-ribbon{
+
+  width:760px;
+
+  margin:28px auto;
+
+  padding:18px;
+
+  border-radius:60px;
+
+  text-align:center;
+
+  background:
+  linear-gradient(
+      90deg,
+      #0b6e3d,
+      #159252
+  );
+
+  border:6px solid #d4af37;
+
+  box-shadow:
+      0 12px 25px rgba(0,0,0,.18);
+
+}
+
+.name-ribbon span{
+
+  color:white;
+
+  font-size:48px;
+
+  font-weight:700;
+
+  letter-spacing:2px;
+
+}
+/* ==========================================
+PHOTO SECTION
+========================================== */
+
+.photo-section{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin-top:20px;
+
+}
+
+.photo-frame{
+
+  position:relative;
+
+  padding:14px;
+
+  border-radius:30px;
+
+  background:
+      linear-gradient(
+          135deg,
+          #fff7cf,
+          #d4af37,
+          #fff2b6
+      );
+
+  box-shadow:
+      0 18px 45px rgba(0,0,0,.25);
+
+}
+
+.photo-frame::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:8px;
+
+  border:3px solid rgba(255,255,255,.6);
+
+  border-radius:22px;
+
+}
+
+.birthday-photo{
+
+  width:330px;
+
+  height:430px;
+
+  object-fit:cover;
+
+  object-position:center top;
+
+  border-radius:18px;
+
+  display:block;
+
+  background:white;
+
+}
+
+
+/* ==========================================
+MESSAGE
+========================================== */
+
+.message-box{
+
+  width:82%;
+
+  background:#fffdf8;
+
+  border-left:8px solid #d4af37;
+
+  border-right:8px solid #d4af37;
+
+  border-radius:25px;
+
+  box-shadow:
+      0 10px 30px rgba(0,0,0,.08);
+
+  position:relative;
+
+  z-index:20;
+  
+
+  margin:30px auto;
+
+  padding:35px 45px;
+
+  position:relative;
+
+    
+
+
+}
+
+.message-box p{
+
+  margin:0;
+
+  color:#444;
+
+  font-size:31px;
+
+  line-height:1.8;
+
+  text-align:center;
+
+  
+
+}
+
+
+/* ==========================================
+BOTTOM DIVIDER
+========================================== */
+
+.bottom-divider{
+
+  margin-top:40px;
+
+}
+
+
+/* ==========================================
+FOOTER
+========================================== */
+
+.card-footer{
+
+  margin-top:35px;
+
+  text-align:center;
+
+  position:relative;
+
+  z-index:20;
+
+}
+
+.card-footer h3{
+
+  margin:0;
+
+  color:#0b6e3d;
+
+  font-size:42px;
+
+  font-family:"Merriweather",serif;
+
+  letter-spacing:2px;
+
+}
+
+.card-footer p{
+
+  margin-top:12px;
+
+  color:#555;
+
+  font-size:24px;
+
+  line-height:1.8;
+
+}
+
+
+/* ==========================================
+BOTTOM RIBBON
+========================================== */
+
+.footer-ribbon{
+
+  position:absolute;
+
+  bottom:0;
+
+  left:0;
+
+  width:100%;
+
+  height:80px;
+
+  background:
+      linear-gradient(
+          90deg,
+          #0b6e3d,
+          #169452,
+          #0b6e3d
+      );
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  color:white;
+
+  font-weight:700;
+
+  font-size:24px;
+
+  letter-spacing:3px;
+
+}
+
+
+/* ==========================================
+GOLD SPARKLES
+========================================== */
+
+.birthday-card-template::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:18px;
+  height:18px;
+
+  top:180px;
+  left:120px;
+
+  background:#ffe58f;
+
+  border-radius:50%;
+
+  box-shadow:
+
+      170px 60px #ffd84d,
+
+      420px -20px #fff4c0,
+
+      690px 80px #ffe58f,
+
+      870px 0px #fff6b5,
+
+      820px 920px #ffe58f,
+
+      640px 1050px #fff1a8,
+
+      220px 930px #ffe58f,
+
+      120px 760px #fff3b7;
+
+  opacity:.8;
+
+}
+
+
+/* ==========================================
+PREMIUM GOLD CORNERS
+========================================== */
+
+.birthday-overlay::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:18px;
+
+  border:3px solid rgba(212,175,55,.35);
+
+  border-radius:25px;
+
+  pointer-events:none;
+
+}
+
+
+/* ==========================================
+TEXT IMPROVEMENT
+========================================== */
+
+#cardName{
+
+  text-transform:uppercase;
+
+}
+
+#cardWish{
+
+  font-weight:500;
+
+}
+
+
+/* ==========================================
+EXPORT QUALITY
+========================================== */
+
+.birthday-card-template{
+
+  image-rendering:auto;
+
+}
+
+.birthday-photo{
+
+  image-rendering:auto;
+
 }
