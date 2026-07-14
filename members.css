@@ -324,9 +324,9 @@ header {
 
 .member-avatar,
 .member-avatar-placeholder{
-    width:90px;
-    height:90px;
-    border-radius:50%;
+    width:120px;
+    height:150px;
+    border-radius:40%;
     margin:0 auto 15px;
     border:3px solid var(--green);
 }
@@ -334,6 +334,7 @@ header {
 .member-avatar{
     object-fit:cover;
     display:block;
+    object-position: center top;
 }
 
 .member-avatar-placeholder{
