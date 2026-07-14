@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Update Passport Photo | CYON</title>
+
+  <link rel="stylesheet" href="updatephoto.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ===========================
+HEADER
+=========================== -->
+
+<header>
+
+  <nav class="container navbar">
+
+    <a href="index.html" class="brand">
+
+      <img
+        src="img/cyon_logo.jpeg"
+        class="cyon-logo"
+        width="50"
+        height="50"
+        alt="CYON Logo"
+      />
+
+      <div class="brand-text">
+        <h1 class="logo">CYON</h1>
+        <p class="brand-subtitle">
+          St. Bernard's Parish, Calabar
+        </p>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+
+      <li><a href="index.html">Home</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="probation.html">New Members</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+
+<!-- ===========================
+HERO
+=========================== -->
+
+<section class="hero">
+
+  <div class="container">
+
+    <h1>Update Passport Photo</h1>
+
+    <p>
+      Already a registered member?
+      Upload or change your passport photograph here.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ===========================
+FORM
+=========================== -->
+
+<section class="form-section">
+
+  <div class="container">
+
+    <div class="form-card">
+
+      <h2>Find Your Membership Record</h2>
+
+      <!-- Search -->
+
+      <div class="form-group">
+
+        <label>Phone Number</label>
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Enter your registered phone number"
+        >
+
+      </div>
+
+      <button id="searchBtn">
+        Search Member
+      </button>
+
+      <!-- Member Card -->
+
+      <div id="memberCard" class="member-card" style="display:none;">
+
+        <div class="member-photo">
+
+          <img
+            id="currentPhoto"
+            src=""
+            alt="Member Photo"
+          >
+
+          <div id="avatarPlaceholder" class="avatar-placeholder">
+            ?
+          </div>
+
+        </div>
+
+        <h3 id="memberName"></h3>
+
+        <p id="memberGroup"></p>
+
+        <p id="memberRole"></p>
+
+        <hr>
+
+        <!-- Upload -->
+
+        <div class="form-group">
+
+          <label>Select New Passport Photo</label>
+
+          <input
+            type="file"
+            id="photo"
+            accept="image/*"
+          >
+
+        </div>
+
+        <!-- Preview -->
+
+        <img
+          id="previewImage"
+          class="preview-image"
+          src=""
+          style="display:none;"
+        >
+
+        <button id="uploadBtn">
+          Update Passport Photo
+        </button>
+
+      </div>
+
+      <!-- Message -->
+
+      <div id="messageBox"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- Firebase -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<script src="updatephoto.js"></script>
+
+</body>
+</html>

@@ -7,11 +7,15 @@ const firebaseConfig = {
   appId: "1:747151921456:web:43f8bb21e9b0a4f4abf8f5"
 };
 
+// ==========================
 // INIT FIREBASE
+// ==========================
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// ==========================
 // ELEMENTS
+// ==========================
 const searchInput = document.getElementById("membersSearchInputV2");
 const membersGrid = document.getElementById("membersGridV2");
 const totalCount = document.getElementById("membersTotalCountV2");
@@ -37,12 +41,12 @@ async function loadMembers() {
 
   } catch (error) {
     console.error(error);
-    membersGrid.innerHTML = "<p>Error loading members</p>";
+    membersGrid.innerHTML = "<p>Error loading members.</p>";
   }
 }
 
 // ==========================
-// FORMAT BIRTHDAY 
+// FORMAT BIRTHDAY
 // ==========================
 function formatBirthday(month, day) {
   if (!month || !day) return "N/A";
@@ -59,11 +63,12 @@ function formatBirthday(month, day) {
 // RENDER MEMBERS
 // ==========================
 function renderMembers(data) {
+
   membersGrid.innerHTML = "";
 
   if (data.length === 0) {
-    membersGrid.innerHTML = "<p>No members found</p>";
-    totalCount.textContent = 0;
+    membersGrid.innerHTML = "<p>No members found.</p>";
+    totalCount.textContent = "0";
     return;
   }
 
@@ -81,9 +86,21 @@ function renderMembers(data) {
     membersGrid.innerHTML += `
       <div class="member-card-v2">
 
-        <div class="member-avatar">
-          ${avatar}
-        </div>
+        ${
+          member.photoURL
+            ? `
+                <img
+                  src="${member.photoURL}"
+                  alt="${member.name}"
+                  class="member-avatar"
+                >
+              `
+            : `
+                <div class="member-avatar-placeholder">
+                  ${avatar}
+                </div>
+              `
+        }
 
         <h3>${member.name || "Unknown"}</h3>
 
@@ -101,40 +118,52 @@ function renderMembers(data) {
 }
 
 // ==========================
-// SEARCH FUNCTION
+// SEARCH
 // ==========================
-searchInput.addEventListener("input", function () {
+searchInput.addEventListener("input", () => {
+
   const query = searchInput.value.toLowerCase();
 
-  const filtered = allMembers.filter(member =>
-    (
-      (member.name || "") + " " +
-      (member.group || "") + " " +
+  const filtered = allMembers.filter(member => {
+
+    return (
+      (member.name || "") +
+      " " +
+      (member.group || "") +
+      " " +
       (member.role || "")
     )
       .toLowerCase()
-      .includes(query)
-  );
+      .includes(query);
+
+  });
 
   renderMembers(filtered);
+
 });
 
 // ==========================
-// INIT
+// INITIAL LOAD
 // ==========================
 document.addEventListener("DOMContentLoaded", loadMembers);
 
-// MOBILE DROPDOWN FIX
+// ==========================
+// MOBILE DROPDOWN
+// ==========================
 document.addEventListener("DOMContentLoaded", () => {
+
   const dropdown = document.querySelector(".dropdown");
-  const link = dropdown?.querySelector("a");
+  const link = dropdown?.querySelector(".dropdown-toggle");
 
   if (!dropdown || !link) return;
 
   link.addEventListener("click", (e) => {
+
     if (window.innerWidth <= 768) {
       e.preventDefault();
       dropdown.classList.toggle("active");
     }
+
   });
+
 });

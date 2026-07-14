@@ -1,0 +1,463 @@
+/* ==========================================
+   ROOT VARIABLES
+========================================== */
+
+:root{
+    --gold:#c9a227;
+    --gold-light:#e8c96a;
+    --green:#0b7a3b;
+    --green-dark:#065a2c;
+    --white:#ffffff;
+    --text-dark:#333;
+    --shadow:rgba(0,0,0,.12);
+}
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Poppins",sans-serif;
+    background:#f5f7f9;
+    color:var(--text-dark);
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header{
+    background:var(--green);
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:999;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    flex-wrap:wrap;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+}
+
+.cyon-logo{
+    border-radius:50%;
+    border:2px solid var(--gold);
+}
+
+.logo{
+    color:white;
+    font-size:1.8rem;
+}
+
+.brand-subtitle{
+    color:#ddd;
+    font-size:.75rem;
+}
+
+.nav-links{
+    display:flex;
+    gap:20px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:var(--gold-light);
+}
+
+/* ==========================================
+   HERO
+========================================== */
+
+.hero{
+    background:linear-gradient(135deg,var(--green),var(--green-dark));
+    color:white;
+    padding:60px 20px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:2.3rem;
+    margin-bottom:10px;
+}
+
+.hero p{
+    opacity:.9;
+}
+
+/* ==========================================
+   FORM SECTION
+========================================== */
+
+.form-section{
+    padding:60px 0;
+}
+
+.form-card{
+
+    max-width:650px;
+    margin:auto;
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.form-card h2{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+    color:var(--green);
+
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.form-group{
+
+    margin-bottom:20px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.form-group input{
+
+    width:100%;
+
+    padding:13px;
+
+    border:2px solid #ddd;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus{
+
+    border-color:var(--green);
+
+    outline:none;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    margin-top:10px;
+
+    transition:.3s;
+
+}
+
+#searchBtn{
+
+    background:var(--green);
+
+    color:white;
+
+}
+
+#searchBtn:hover{
+
+    background:var(--green-dark);
+
+}
+
+#uploadBtn{
+
+    background:var(--gold);
+
+    color:white;
+
+}
+
+#uploadBtn:hover{
+
+    background:#b18f1f;
+
+}
+
+/* ==========================================
+   MEMBER CARD
+========================================== */
+
+.member-card{
+
+    margin-top:35px;
+
+    text-align:center;
+
+    animation:fadeIn .4s ease;
+
+}
+
+.member-photo{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:20px;
+
+}
+
+/* current photo */
+
+#currentPhoto{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid var(--green);
+
+    display:none;
+
+}
+
+/* avatar */
+
+.avatar-placeholder{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        var(--green),
+        var(--gold)
+    );
+
+    color:white;
+
+    font-size:3rem;
+
+    font-weight:bold;
+
+    border:4px solid var(--green);
+
+}
+
+/* ==========================================
+   MEMBER INFO
+========================================== */
+
+.member-card h3{
+
+    color:var(--green);
+
+    margin-bottom:8px;
+
+}
+
+.member-card p{
+
+    margin:5px 0;
+
+}
+
+.member-card hr{
+
+    margin:25px 0;
+
+}
+
+/* ==========================================
+   PREVIEW
+========================================== */
+
+.preview-image{
+
+    display:block;
+
+    width:150px;
+
+    height:150px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:4px solid var(--gold);
+
+    margin:20px auto;
+
+}
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+#messageBox{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    font-size:16px;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+    .navbar{
+
+        justify-content:center;
+
+        gap:15px;
+
+    }
+
+    .nav-links{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:10px;
+
+    }
+
+    .hero h1{
+
+        font-size:1.8rem;
+
+    }
+
+    .form-card{
+
+        padding:25px;
+
+    }
+
+    #currentPhoto,
+    .avatar-placeholder{
+
+        width:110px;
+
+        height:110px;
+
+    }
+
+    .preview-image{
+
+        width:120px;
+
+        height:120px;
+
+    }
+
+}
