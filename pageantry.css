@@ -1,180 +1,891 @@
-/* =========================
-   ROOT COLORS (PAGEANTRY THEME)
-========================= */
-:root {
-    --primary: #b3001b;        /* deep red */
-    --primary-dark: #7a0012;
-    --gold: #c9a227;
-    --white: #ffffff;
-    --text: #333;
-    --shadow: rgba(0, 0, 0, 0.15);
-  }
-  
-  /* =========================
-     RESET
-  ========================= */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "Poppins", sans-serif;
-    background: #f5f5f5;
-    color: var(--text);
-  }
-  
-  /* =========================
-     HERO SECTION
-  ========================= */
-  .hero {
-    background: linear-gradient(
-        rgba(179, 0, 27, 0.6),
-        rgba(0, 0, 0, 0.65)
-      ),
-      url("img/pageantryimg.jpg") center/cover no-repeat;
-  
-    color: white;
-    text-align: center;
-    padding: 5rem 1.5rem;
-  }
-  
-  .hero h1 {
-    font-size: 2.6rem;
-    margin-bottom: 1rem;
-    text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-  }
-  
-  .hero p {
-    font-size: 1rem;
-    opacity: 0.9;
-  }
-  
-  /* =========================
-     GROUP SECTION (NEW ADDITION)
-  ========================= */
-  .group-section {
-    max-width: 1100px;
-    margin: auto;
-    padding: 2rem 1.5rem;
-  }
-  
-  .group-section h2 {
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-    font-size: 1.6rem;
-    position: relative;
-  }
-  
-  .group-section h2::after {
-    content: "";
-    width: 60px;
-    height: 3px;
-    background: var(--gold);
-    display: block;
-    margin: 8px auto 0;
-    border-radius: 5px;
-  }
-  
-  /* =========================
-     CONTESTANTS GRID
-  ========================= */
-  .contestants {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  /* =========================
-     CONTESTANT CARD
-  ========================= */
-  .contestant-card {
-    background: white;
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 6px 18px var(--shadow);
-    border-top: 4px solid var(--primary);
-    transition: 0.3s ease;
-  }
-  
-  .contestant-card:hover {
-    transform: translateY(-6px);
-  }
-  
-  /* IMAGE */
-  .contestant-card img {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid var(--gold);
-    margin-bottom: 1rem;
-  }
-  
-  /* NAME */
-  .contestant-card h3 {
-    color: var(--primary-dark);
-    margin-bottom: 0.3rem;
-  }
-  
-  /* GROUP TEXT */
-  .contestant-card p {
-    color: #666;
-    margin-bottom: 1rem;
-  }
-  
-  /* =========================
-     VOTE BUTTON
-  ========================= */
-  .contestant-card button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: 600;
-  }
-  
-  .contestant-card button:hover {
-    background: var(--primary-dark);
-  }
-  
-  /* =========================
-     FOOTER
-  ========================= */
-  .footer {
-    background: var(--primary-dark);
-    color: white;
-    text-align: center;
-    padding: 2rem 1rem;
-    margin-top: 3rem;
-    border-top: 3px solid var(--gold);
-  }
-  
-  .footer p {
-    margin: 5px 0;
-  }
-  
-  .footer-copy {
-    font-size: 0.85rem;
-    opacity: 0.8;
-  }
-  
-  /* =========================
-     MOBILE
-  ========================= */
-  @media (max-width: 600px) {
-    .hero h1 {
-      font-size: 1.8rem;
-    }
-  
-    .contestant-card img {
-      width: 120px;
-      height: 120px;
-    }
-  }
+/*=========================================
+ROOT
+=========================================*/
+:root{
+  --primary:#8b0000;
+  --primary-dark:#640000;
+  --gold:#d4af37;
+  --gold-light:#f4d76b;
+  --green:#0b7a3b;
+  --white:#ffffff;
+  --dark:#222;
+  --gray:#777;
+  --light:#f8f8f8;
+  --shadow:0 12px 35px rgba(0,0,0,.15);
+}
+
+/*=========================================
+RESET
+=========================================*/
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Poppins",sans-serif;
+  background:#f5f5f5;
+  color:var(--dark);
+  line-height:1.6;
+}
+
+/*=========================================
+HERO
+=========================================*/
+
+.hero{
+
+  background:
+  linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)),
+  url("img/pageantryimg.jpg") center/cover;
+
+  min-height:70vh;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  color:white;
+
+  padding:30px;
+
+}
+
+.hero h1{
+
+  font-size:4rem;
+
+  font-family:"Merriweather",serif;
+
+  color:var(--gold);
+
+  text-shadow:0 6px 20px rgba(0,0,0,.5);
+
+  margin-bottom:20px;
+
+}
+
+.hero p{
+
+  font-size:1.2rem;
+
+  margin:6px 0;
+
+}
+
+/*=========================================
+LEADERBOARD
+=========================================*/
+
+.leaderboard{
+
+  max-width:1200px;
+
+  margin:-60px auto 70px;
+
+  padding:0 20px;
+
+  display:grid;
+
+  grid-template-columns:
+  2fr 1fr 1fr;
+
+  gap:25px;
+
+}
+
+.leaderboard-box,
+.stats-box{
+
+  background:white;
+
+  border-radius:20px;
+
+  padding:30px;
+
+  box-shadow:var(--shadow);
+
+}
+
+.leaderboard-box{
+
+  border-top:6px solid var(--gold);
+
+}
+
+.leaderboard-box h2{
+
+  color:var(--primary);
+
+  margin-bottom:20px;
+
+  text-align:center;
+
+}
+
+.stats-box{
+
+  text-align:center;
+
+}
+
+.stats-box h3{
+
+  color:var(--primary);
+
+  margin-bottom:15px;
+
+}
+
+.stats-box p{
+
+  font-size:2.2rem;
+
+  font-weight:bold;
+
+  color:var(--green);
+
+}
+
+/*=========================================
+GROUPS
+=========================================*/
+
+.groups{
+
+  max-width:1300px;
+
+  margin:auto;
+
+  padding:30px;
+
+}
+
+.group-section{
+
+  margin-bottom:80px;
+
+}
+
+.group-section h2{
+
+  text-align:center;
+
+  color:var(--primary);
+
+  font-size:2rem;
+
+  margin-bottom:35px;
+
+  position:relative;
+
+}
+
+.group-section h2::after{
+
+  content:"";
+
+  width:90px;
+
+  height:4px;
+
+  background:var(--gold);
+
+  display:block;
+
+  margin:12px auto;
+
+  border-radius:5px;
+
+}
+
+/*=========================================
+CONTESTANT GRID
+=========================================*/
+
+.contestants{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(300px,1fr));
+
+  gap:30px;
+
+}
+
+/*=========================================
+CARD
+=========================================*/
+
+.contestant-card{
+
+  background:white;
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  box-shadow:var(--shadow);
+
+  transition:.35s;
+
+  text-align:center;
+
+  padding:25px;
+
+  position:relative;
+
+}
+
+.contestant-card:hover{
+
+  transform:translateY(-10px);
+
+}
+
+.contestant-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:8px;
+
+  background:
+  linear-gradient(90deg,
+  var(--gold),
+  var(--primary));
+
+}
+
+/*=========================================
+PHOTO
+=========================================*/
+
+.contestant-card img{
+
+  width:180px;
+
+  height:180px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:6px solid var(--gold);
+
+  margin-bottom:20px;
+
+  transition:.4s;
+
+}
+
+.contestant-card:hover img{
+
+  transform:scale(1.05);
+
+}
+
+/*=========================================
+TEXT
+=========================================*/
+
+.contestant-card h3{
+
+  color:var(--primary);
+
+  font-size:1.4rem;
+
+  margin-bottom:6px;
+
+}
+
+.contestant-card p{
+
+  color:#666;
+
+  margin-bottom:18px;
+
+}
+
+/*=========================================
+VOTE COUNT
+=========================================*/
+
+.vote-count{
+
+  background:#fafafa;
+
+  border:2px solid #eee;
+
+  border-radius:15px;
+
+  padding:15px;
+
+  margin:20px 0;
+
+}
+
+.vote-count span{
+
+  display:block;
+
+  color:#777;
+
+  font-size:.9rem;
+
+}
+
+.vote-count strong{
+
+  display:block;
+
+  color:var(--green);
+
+  font-size:2rem;
+
+  margin-top:8px;
+
+}
+
+/*=========================================
+VOTE BUTTON
+=========================================*/
+
+.vote-btn{
+
+  width:100%;
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+
+  color:white;
+
+  font-size:1rem;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.vote-btn:hover{
+
+  background:linear-gradient(135deg,var(--gold),#b98d14);
+
+  color:#111;
+
+  transform:translateY(-3px);
+
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+
+}
+
+/*=========================================
+RULES
+=========================================*/
+
+.rules{
+
+  max-width:900px;
+
+  margin:80px auto;
+
+  background:white;
+
+  padding:45px;
+
+  border-radius:20px;
+
+  box-shadow:var(--shadow);
+
+}
+
+.rules h2{
+
+  color:var(--primary);
+
+  text-align:center;
+
+  margin-bottom:25px;
+
+}
+
+.rules ul{
+
+  list-style:none;
+
+}
+
+.rules li{
+
+  padding:14px 0;
+
+  border-bottom:1px solid #eee;
+
+  font-size:1rem;
+
+}
+
+.rules li:last-child{
+
+  border-bottom:none;
+
+}
+
+.rules li::before{
+
+  content:"✔";
+
+  color:var(--green);
+
+  font-weight:bold;
+
+  margin-right:12px;
+
+}
+
+/*=========================================
+MODAL
+=========================================*/
+
+.modal{
+
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,.75);
+
+  z-index:999;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:20px;
+
+}
+
+.modal-content{
+
+  background:white;
+
+  width:100%;
+
+  max-width:520px;
+
+  border-radius:20px;
+
+  padding:35px;
+
+  position:relative;
+
+  animation:popup .35s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.85);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+.close-modal{
+
+  position:absolute;
+
+  right:22px;
+
+  top:18px;
+
+  font-size:2rem;
+
+  cursor:pointer;
+
+  color:#999;
+
+}
+
+.close-modal:hover{
+
+  color:red;
+
+}
+
+/*=========================================
+MODAL HEADINGS
+=========================================*/
+
+.modal-content h2{
+
+  color:var(--primary);
+
+  text-align:center;
+
+  margin-bottom:10px;
+
+}
+
+.modal-content h3{
+
+  text-align:center;
+
+  margin-bottom:5px;
+
+}
+
+.vote-price{
+
+  text-align:center;
+
+  color:var(--green);
+
+  font-weight:bold;
+
+  margin:20px 0;
+
+}
+
+/*=========================================
+VOTE OPTIONS
+=========================================*/
+
+.vote-options{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:15px;
+
+  margin:25px 0;
+
+}
+
+.vote-option{
+
+  background:#fafafa;
+
+  border:2px solid #ddd;
+
+  border-radius:12px;
+
+  padding:18px;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+  font-weight:bold;
+
+}
+
+.vote-option:hover{
+
+  background:var(--gold);
+
+  border-color:var(--gold);
+
+  color:#111;
+
+}
+
+.vote-option.active{
+
+  background:var(--primary);
+
+  color:white;
+
+  border-color:var(--primary);
+
+}
+
+/*=========================================
+CUSTOM INPUT
+=========================================*/
+
+.custom-votes{
+
+  margin:25px 0;
+
+}
+
+.custom-votes label{
+
+  display:block;
+
+  margin-bottom:8px;
+
+  font-weight:600;
+
+}
+
+.custom-votes input{
+
+  width:100%;
+
+  padding:14px;
+
+  border:2px solid #ddd;
+
+  border-radius:10px;
+
+  font-size:1rem;
+
+}
+
+/*=========================================
+EMAIL + PHONE
+=========================================*/
+
+.modal-content input[type=email],
+.modal-content input[type=tel]{
+
+  width:100%;
+
+  margin-top:18px;
+
+  padding:14px;
+
+  border:2px solid #ddd;
+
+  border-radius:10px;
+
+  font-size:1rem;
+
+}
+
+.modal-content input:focus{
+
+  outline:none;
+
+  border-color:var(--gold);
+
+}
+
+/*=========================================
+TOTAL AMOUNT
+=========================================*/
+
+.amount-box{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  background:#f7f7f7;
+
+  border-radius:12px;
+
+  padding:16px;
+
+  margin:25px 0;
+
+}
+
+.amount-box strong{
+
+  color:var(--green);
+
+  font-size:1.6rem;
+
+}
+
+/*=========================================
+PAY BUTTON
+=========================================*/
+
+.pay-btn{
+
+  width:100%;
+
+  padding:16px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:linear-gradient(135deg,var(--green),#087c3a);
+
+  color:white;
+
+  font-size:1.05rem;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.pay-btn:hover{
+
+  background:linear-gradient(135deg,#11a54d,#0b7a3b);
+
+  transform:translateY(-2px);
+
+}
+
+/*=========================================
+LIVE MESSAGE
+=========================================*/
+
+.vote-msg{
+
+  text-align:center;
+
+  font-size:1.1rem;
+
+  font-weight:bold;
+
+  margin:35px;
+
+}
+
+/*=========================================
+FOOTER
+=========================================*/
+
+.footer{
+
+  background:var(--primary-dark);
+
+  color:white;
+
+  text-align:center;
+
+  padding:45px 20px;
+
+  margin-top:80px;
+
+  border-top:5px solid var(--gold);
+
+}
+
+.footer p{
+
+  margin:8px 0;
+
+}
+
+.footer-copy{
+
+  opacity:.75;
+
+  font-size:.9rem;
+
+}
+
+/*=========================================
+RESPONSIVE
+=========================================*/
+
+@media(max-width:900px){
+
+.leaderboard{
+
+grid-template-columns:1fr;
+
+}
+
+.hero h1{
+
+font-size:2.6rem;
+
+}
+
+}
+
+@media(max-width:650px){
+
+.vote-options{
+
+grid-template-columns:1fr;
+
+}
+
+.hero{
+
+padding:80px 20px;
+
+}
+
+.hero h1{
+
+font-size:2rem;
+
+}
+
+.group-section h2{
+
+font-size:1.5rem;
+
+}
+
+.contestant-card{
+
+padding:20px;
+
+}
+
+.contestant-card img{
+
+width:150px;
+
+height:150px;
+
+}
+
+.modal-content{
+
+padding:25px;
+
+}
+
+.amount-box strong{
+
+font-size:1.3rem;
+
+}
+
+}

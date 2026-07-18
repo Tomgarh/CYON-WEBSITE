@@ -429,3 +429,110 @@ header {
     padding: 6px;
   }
 }
+/*=========================
+  PLAYSTATION TOURNAMENT
+=========================*/
+
+.playstation-section{
+  position: relative;
+  background: url("img/ea.jpeg") center center/cover no-repeat;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+.playstation-section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+}
+
+.playstation-section .overlay{
+  position: relative;
+  z-index: 2;
+}
+
+.playstation-section .card{
+  max-width: 1000px;
+  margin: auto;
+  padding: 35px;
+  border-radius: 15px;
+
+  /* Glass Effect */
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.2);
+
+  color: #fff;
+}
+
+.playstation-section h2{
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 20px;
+}
+
+.playstation-section h3{
+  color: #fff;
+  margin: 25px 0 15px;
+}
+
+.playstation-section h4{
+  color: #FFD700;
+  margin-bottom: 10px;
+}
+
+.playstation-section p,
+.playstation-section li{
+  color: #f5f5f5;
+  line-height: 1.8;
+}
+
+.playstation-section ul{
+  padding-left: 20px;
+}
+
+.playstation-section .groups-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.playstation-section .group-box{
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.playstation-section table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.playstation-section table th,
+.playstation-section table td{
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 12px;
+  color: #fff;
+}
+
+.playstation-section table th{
+  background: rgba(255,255,255,.15);
+  color: #FFD700;
+}
+
+@media(max-width:768px){
+
+  .playstation-section{
+      padding: 60px 15px;
+  }
+
+  .playstation-section .card{
+      padding: 25px;
+  }
+
+}

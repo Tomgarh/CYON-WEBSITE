@@ -10,234 +10,927 @@
 
 <body>
 
-<!-- HERO -->
+<!-- =========================================
+HERO
+========================================= -->
+
 <section class="hero">
-  <h1>👑 Mr & Miss CYON 2026</h1>
-  <p>Pageantry Contest — CYON St. Bernard’s Parish</p>
-  <p>8 Groups • 16 Contestants • Live Voting</p>
+
+  <div class="hero-overlay">
+
+    <h1>👑 Mr & Miss CYON 2026</h1>
+
+    <p class="hero-subtitle">
+      Catholic Youth Organization of Nigeria
+    </p>
+
+    <p>
+      St. Bernard's Parish, Marian Hill, Calabar
+    </p>
+
+    <div class="hero-info">
+
+      <span>👥 16 Contestants</span>
+
+      <span>🏆 8 Groups</span>
+
+      <span>🗳️ Live Voting</span>
+
+      <span>💳 ₦100 Per Vote</span>
+
+    </div>
+
+  </div>
+
 </section>
 
-<!-- CONTESTANTS -->
+<!-- =========================================
+LIVE STATS
+========================================= -->
+
+<section class="leaderboard-section">
+
+  <div class="leaderboard-grid">
+
+    <!-- Leaderboard -->
+
+    <div class="leaderboard-box">
+
+      <h2>🏆 Live Leaderboard</h2>
+
+      <div id="leaderboardList">
+
+        <p>Loading leaderboard...</p>
+
+      </div>
+
+    </div>
+
+    <!-- Total Votes -->
+
+    <div class="stats-box">
+
+      <h3>Total Votes</h3>
+
+      <p id="totalVotes">0</p>
+
+    </div>
+
+    <!-- Countdown -->
+
+    <div class="stats-box">
+
+      <h3>Voting Ends In</h3>
+
+      <p id="countdown">
+
+        Coming Soon
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+CONTESTANTS
+========================================= -->
+
 <section class="groups">
 
-  <!-- GROUP 1 -->
-  <div class="group-section">
-    <h2>St. John Bosco</h2>
+<!-- =========================================
+GROUP 1
+========================================= -->
 
-    <div class="contestants">
+<div class="group-section">
 
-      <div class="contestant-card">
-        <img src="img/bosco-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>St. John Bosco</p>
-        <button onclick="vote('bosco_male', event)">Vote</button>
-        <p>Votes: <span id="bosco_male_votes">0</span></p>
-      </div>
+<h2>St. John Bosco</h2>
 
-      <div class="contestant-card">
-        <img src="img/bosco-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>St. John Bosco</p>
-        <button onclick="vote('bosco_female', event)">Vote</button>
-        <p>Votes: <span id="bosco_female_votes">0</span></p>
-      </div>
+<div class="contestants">
 
-    </div>
+<!-- Male -->
+
+<div class="contestant-card">
+
+<img src="img/bosco-male.jpg" alt="Bosco Male">
+
+<h3>Male Contestant</h3>
+
+<p>St. John Bosco</p>
+
+<div class="vote-count">
+
+<span>Current Votes</span>
+
+<strong id="bosco_male_votes">0</strong>
+
+</div>
+
+<button
+class="vote-btn"
+data-id="bosco_male"
+data-name="Male Contestant"
+data-group="St. John Bosco">
+
+Vote Now
+
+</button>
+
+</div>
+
+<!-- Female -->
+
+<div class="contestant-card">
+
+<img src="img/bosco-female.jpg" alt="Bosco Female">
+
+<h3>Female Contestant</h3>
+
+<p>St. John Bosco</p>
+
+<div class="vote-count">
+
+<span>Current Votes</span>
+
+<strong id="bosco_female_votes">0</strong>
+
+</div>
+
+<button
+class="vote-btn"
+data-id="bosco_female"
+data-name="Female Contestant"
+data-group="St. John Bosco">
+
+Vote Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================
+GROUP 2
+========================================= -->
+
+<div class="group-section">
+
+<h2>St. Charles L'Wanga</h2>
+
+<div class="contestants">
+
+<!-- Male -->
+
+<div class="contestant-card">
+
+<img src="img/charles-male.jpg" alt="Charles Male">
+
+<h3>Male Contestant</h3>
+
+<p>St. Charles L'Wanga</p>
+
+<div class="vote-count">
+
+<span>Current Votes</span>
+
+<strong id="charles_male_votes">0</strong>
+
+</div>
+
+<button
+class="vote-btn"
+data-id="charles_male"
+data-name="Male Contestant"
+data-group="St. Charles L'Wanga">
+
+Vote Now
+
+</button>
+
+</div>
+
+<!-- Female -->
+
+<div class="contestant-card">
+
+<img src="img/charles-female.jpg" alt="Charles Female">
+
+<h3>Female Contestant</h3>
+
+<p>St. Charles L'Wanga</p>
+
+<div class="vote-count">
+
+<span>Current Votes</span>
+
+<strong id="charles_female_votes">0</strong>
+
+</div>
+
+<button
+class="vote-btn"
+data-id="charles_female"
+data-name="Female Contestant"
+data-group="St. Charles L'Wanga">
+
+Vote Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================
+GROUP 3
+========================================= -->
+
+<div class="group-section">
+
+  <h2>St. Theresa</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/theresa-male.jpg" alt="Theresa Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>St. Theresa</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="theresa_male_votes">0</strong>
+  
   </div>
-
-  <!-- GROUP 2 -->
-  <div class="group-section">
-    <h2>St. Charles L’Wanga</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/charles-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>St. Charles L’Wanga</p>
-        <button onclick="vote('charles_male', event)">Vote</button>
-        <p>Votes: <span id="charles_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/charles-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>St. Charles L’Wanga</p>
-        <button onclick="vote('charles_female', event)">Vote</button>
-        <p>Votes: <span id="charles_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
+  <button
+  class="vote-btn"
+  data-id="theresa_male"
+  data-name="Male Contestant"
+  data-group="St. Theresa">
+  
+  Vote Now
+  
+  </button>
+  
   </div>
-
-  <!-- GROUP 3 -->
-  <div class="group-section">
-    <h2>St. Theresa</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/theresa-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>St. Theresa</p>
-        <button onclick="vote('theresa_male', event)">Vote</button>
-        <p>Votes: <span id="theresa_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/theresa-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>St. Theresa</p>
-        <button onclick="vote('theresa_female', event)">Vote</button>
-        <p>Votes: <span id="theresa_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/theresa-female.jpg" alt="Theresa Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>St. Theresa</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="theresa_female_votes">0</strong>
+  
   </div>
-
-  <!-- GROUP 4 -->
-  <div class="group-section">
-    <h2>Dominic Cardinal Ekanem</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/dominic-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>Dominic Cardinal Ekanem</p>
-        <button onclick="vote('dominic_male', event)">Vote</button>
-        <p>Votes: <span id="dominic_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/dominic-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>Dominic Cardinal Ekanem</p>
-        <button onclick="vote('dominic_female', event)">Vote</button>
-        <p>Votes: <span id="dominic_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
+  <button
+  class="vote-btn"
+  data-id="theresa_female"
+  data-name="Female Contestant"
+  data-group="St. Theresa">
+  
+  Vote Now
+  
+  </button>
+  
   </div>
-
-  <!-- GROUP 5 -->
-  <div class="group-section">
-    <h2>Bishop James M.</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/bishop-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>Bishop James M.</p>
-        <button onclick="vote('bishop_male', event)">Vote</button>
-        <p>Votes: <span id="bishop_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/bishop-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>Bishop James M.</p>
-        <button onclick="vote('bishop_female', event)">Vote</button>
-        <p>Votes: <span id="bishop_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
   </div>
-
-  <!-- GROUP 6 -->
-  <div class="group-section">
-    <h2>Archbishop Brian Usangha</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/brian-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>Archbishop Brian Usangha</p>
-        <button onclick="vote('brian_male', event)">Vote</button>
-        <p>Votes: <span id="brian_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/brian-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>Archbishop Brian Usangha</p>
-        <button onclick="vote('brian_female', event)">Vote</button>
-        <p>Votes: <span id="brian_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
   </div>
-
-  <!-- GROUP 7 -->
+  
+  <!-- =========================================
+  GROUP 4
+  ========================================= -->
+  
   <div class="group-section">
-    <h2>Pope John Paul II</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/pope-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>Pope John Paul II</p>
-        <button onclick="vote('pope_male', event)">Vote</button>
-        <p>Votes: <span id="pope_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/pope-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>Pope John Paul II</p>
-        <button onclick="vote('pope_female', event)">Vote</button>
-        <p>Votes: <span id="pope_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
+  <h2>Dominic Cardinal Ekanem</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/dominic-male.jpg" alt="Dominic Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>Dominic Cardinal Ekanem</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="dominic_male_votes">0</strong>
+  
   </div>
-
-  <!-- GROUP 8 -->
+  
+  <button
+  class="vote-btn"
+  data-id="dominic_male"
+  data-name="Male Contestant"
+  data-group="Dominic Cardinal Ekanem">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/dominic-female.jpg" alt="Dominic Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>Dominic Cardinal Ekanem</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="dominic_female_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="dominic_female"
+  data-name="Female Contestant"
+  data-group="Dominic Cardinal Ekanem">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+  <!-- =========================================
+  GROUP 5
+  ========================================= -->
+  
   <div class="group-section">
-    <h2>Blessed Tansi</h2>
-
-    <div class="contestants">
-
-      <div class="contestant-card">
-        <img src="img/tansi-male.jpg">
-        <h3>Male Contestant</h3>
-        <p>Blessed Tansi</p>
-        <button onclick="vote('tansi_male', event)">Vote</button>
-        <p>Votes: <span id="tansi_male_votes">0</span></p>
-      </div>
-
-      <div class="contestant-card">
-        <img src="img/tansi-female.jpg">
-        <h3>Female Contestant</h3>
-        <p>Blessed Tansi</p>
-        <button onclick="vote('tansi_female', event)">Vote</button>
-        <p>Votes: <span id="tansi_female_votes">0</span></p>
-      </div>
-
-    </div>
+  
+  <h2>Bishop James M.</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/bishop-male.jpg" alt="Bishop Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>Bishop James M.</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="bishop_male_votes">0</strong>
+  
   </div>
+  
+  <button
+  class="vote-btn"
+  data-id="bishop_male"
+  data-name="Male Contestant"
+  data-group="Bishop James M.">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/bishop-female.jpg" alt="Bishop Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>Bishop James M.</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="bishop_female_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="bishop_female"
+  data-name="Female Contestant"
+  data-group="Bishop James M.">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+<!-- =========================================
+GROUP 6
+========================================= -->
+
+<div class="group-section">
+
+  <h2>Archbishop Brian Usangha</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/brian-male.jpg" alt="Brian Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>Archbishop Brian Usangha</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="brian_male_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="brian_male"
+  data-name="Male Contestant"
+  data-group="Archbishop Brian Usangha">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/brian-female.jpg" alt="Brian Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>Archbishop Brian Usangha</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="brian_female_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="brian_female"
+  data-name="Female Contestant"
+  data-group="Archbishop Brian Usangha">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+  <!-- =========================================
+  GROUP 7
+  ========================================= -->
+  
+  <div class="group-section">
+  
+  <h2>Pope John Paul II</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/pope-male.jpg" alt="Pope Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>Pope John Paul II</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="pope_male_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="pope_male"
+  data-name="Male Contestant"
+  data-group="Pope John Paul II">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/pope-female.jpg" alt="Pope Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>Pope John Paul II</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="pope_female_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="pope_female"
+  data-name="Female Contestant"
+  data-group="Pope John Paul II">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+  <!-- =========================================
+  GROUP 8
+  ========================================= -->
+  
+  <div class="group-section">
+  
+  <h2>Blessed Tansi</h2>
+  
+  <div class="contestants">
+  
+  <!-- Male -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/tansi-male.jpg" alt="Tansi Male">
+  
+  <h3>Male Contestant</h3>
+  
+  <p>Blessed Tansi</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="tansi_male_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="tansi_male"
+  data-name="Male Contestant"
+  data-group="Blessed Tansi">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  <!-- Female -->
+  
+  <div class="contestant-card">
+  
+  <img src="img/tansi-female.jpg" alt="Tansi Female">
+  
+  <h3>Female Contestant</h3>
+  
+  <p>Blessed Tansi</p>
+  
+  <div class="vote-count">
+  
+  <span>Current Votes</span>
+  
+  <strong id="tansi_female_votes">0</strong>
+  
+  </div>
+  
+  <button
+  class="vote-btn"
+  data-id="tansi_female"
+  data-name="Female Contestant"
+  data-group="Blessed Tansi">
+  
+  Vote Now
+  
+  </button>
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+  </section>
+  
+<!-- =========================================
+VOTING RULES
+========================================= -->
+
+<section class="rules">
+
+  <h2>Voting Rules</h2>
+
+  <ul>
+
+    <li>₦100 = 1 Vote.</li>
+
+    <li>You may purchase multiple votes in one payment.</li>
+
+    <li>All payments are processed securely through Paystack.</li>
+
+    <li>Votes are counted only after payment has been verified.</li>
+
+    <li>Votes cannot be refunded after successful payment.</li>
+
+    <li>The contestant with the highest valid votes will be declared the winner.</li>
+
+  </ul>
 
 </section>
 
-<!-- LIVE MESSAGE -->
-<p id="vote_msg" class="vote-msg"></p>
+<!-- =========================================
+VOTE MODAL
+========================================= -->
 
-<!-- FOOTER -->
+<div id="voteModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close-modal">&times;</span>
+
+<h2>Vote for</h2>
+
+<h3 id="modalContestantName">
+Contestant
+</h3>
+
+<p id="modalContestantGroup">
+Group
+</p>
+
+<p class="vote-price">
+₦100 = 1 Vote
+</p>
+
+<div class="vote-options">
+
+<button
+class="vote-option"
+data-votes="1">
+
+1 Vote
+
+<br>
+
+<small>₦100</small>
+
+</button>
+
+<button
+class="vote-option"
+data-votes="5">
+
+5 Votes
+
+<br>
+
+<small>₦500</small>
+
+</button>
+
+<button
+class="vote-option"
+data-votes="10">
+
+10 Votes
+
+<br>
+
+<small>₦1,000</small>
+
+</button>
+
+<button
+class="vote-option"
+data-votes="20">
+
+20 Votes
+
+<br>
+
+<small>₦2,000</small>
+
+</button>
+
+<button
+class="vote-option"
+data-votes="50">
+
+50 Votes
+
+<br>
+
+<small>₦5,000</small>
+
+</button>
+
+<button
+class="vote-option"
+data-votes="100">
+
+100 Votes
+
+<br>
+
+<small>₦10,000</small>
+
+</button>
+
+</div>
+
+<div class="custom-votes">
+
+<label for="customVoteInput">
+
+Or Enter Custom Number Of Votes
+
+</label>
+
+<input
+type="number"
+id="customVoteInput"
+min="1"
+placeholder="Enter number of votes">
+
+</div>
+
+<div class="amount-box">
+
+<span>Total Amount</span>
+
+<strong id="totalAmount">
+
+₦0
+
+</strong>
+
+</div>
+
+<input
+type="email"
+id="voterEmail"
+placeholder="Enter your email"
+required>
+
+<input
+type="tel"
+id="voterPhone"
+placeholder="Phone Number (Optional)">
+
+<button
+id="proceedPayment"
+class="pay-btn">
+
+Proceed To Payment
+
+</button>
+
+</div>
+
+</div>
+
+<!-- =========================================
+SUCCESS / ERROR MESSAGE
+========================================= -->
+
+<p
+id="vote_msg"
+class="vote-msg">
+
+</p>
+
+<!-- =========================================
+FOOTER
+========================================= -->
+
 <footer class="footer">
-  <div class="container">
-    <p>CYON St. Bernard’s Parish, Calabar</p>
-    <p>Mr & Miss CYON 2026 Pageantry System</p>
-    <p class="footer-copy">
-      © 2026 CYON In-House Talent Event. All rights reserved.
-    </p>
-  </div>
+
+<div class="container">
+
+<h3>
+
+CYON St. Bernard's Parish
+
+</h3>
+
+<p>
+
+Mr & Miss CYON 2026 Online Voting Platform
+
+</p>
+
+<p>
+
+Secure payments powered by Paystack
+
+</p>
+
+<p class="footer-copy">
+
+© 2026 Catholic Youth Organization of Nigeria (CYON)
+
+St. Bernard's Parish, Marian Hill, Calabar.
+
+All Rights Reserved.
+
+</p>
+
+</div>
+
 </footer>
+
+<!-- =========================================
+SCRIPTS
+========================================= -->
+
 <script src="https://js.paystack.co/v1/inline.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <script src="pageantry.js"></script>
 
 </body>
