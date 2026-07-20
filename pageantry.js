@@ -1,4 +1,94 @@
 // ======================================
+// FIREBASE IMPORTS (LIVE VOTE COUNTS)
+// ======================================
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// ======================================
+// FIREBASE CONFIG
+// ======================================
+
+const firebaseConfig = {
+
+    // PASTE YOUR EXISTING FIREBASE CONFIG HERE
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+// ======================================
+// LIVE VOTE COUNTS
+// ======================================
+
+const contestants = [
+
+    "bosco_male",
+    "bosco_female"
+
+    // Add others:
+    // "tansi_male",
+    // "tansi_female"
+
+];
+
+
+contestants.forEach(id => {
+
+
+    const voteElement = document.getElementById(
+        id + "_votes"
+    );
+
+
+    if(!voteElement) return;
+
+
+
+    const contestantRef = doc(
+        db,
+        "contestants",
+        id
+    );
+
+
+
+    onSnapshot(contestantRef, (snapshot)=>{
+
+
+        if(snapshot.exists()){
+
+
+            const data = snapshot.data();
+
+
+            voteElement.textContent =
+                data.votes || 0;
+
+
+        }
+
+
+    });
+
+
+
+});
+
+
+
+
+// ======================================
 // GLOBAL VARIABLES
 // ======================================
 
@@ -36,9 +126,12 @@ const proceedButton = document.getElementById("proceedPayment");
 
 voteButtons.forEach(button => {
 
+
     button.addEventListener("click", () => {
 
+
         selectedContestant = {
+
 
             id: button.dataset.id,
 
@@ -46,12 +139,18 @@ voteButtons.forEach(button => {
 
             group: button.dataset.group
 
+
         };
 
 
-        contestantName.textContent = selectedContestant.name;
 
-        contestantGroup.textContent = selectedContestant.group;
+        contestantName.textContent =
+            selectedContestant.name;
+
+
+        contestantGroup.textContent =
+            selectedContestant.group;
+
 
 
         selectedVotes = 1;
@@ -60,15 +159,17 @@ voteButtons.forEach(button => {
 
         customVoteInput.value = "";
 
-
         updateAmount();
 
 
         modal.style.display = "flex";
 
+
     });
 
+
 });
+
 
 
 // ======================================
@@ -82,15 +183,19 @@ closeBtn.onclick = () => {
 };
 
 
+
 window.onclick = (e) => {
 
-    if (e.target === modal) {
+
+    if(e.target === modal){
 
         modal.style.display = "none";
 
     }
 
+
 };
+
 
 
 // ======================================
@@ -99,53 +204,66 @@ window.onclick = (e) => {
 
 optionButtons.forEach(btn => {
 
-    btn.addEventListener("click", () => {
+
+    btn.addEventListener("click", ()=>{
 
 
-        optionButtons.forEach(b => {
+        optionButtons.forEach(b=>{
 
             b.classList.remove("selected");
 
         });
 
 
+
         btn.classList.add("selected");
 
 
-        selectedVotes = parseInt(btn.dataset.votes);
 
-        selectedAmount = selectedVotes * 100;
+        selectedVotes =
+            parseInt(btn.dataset.votes);
+
+
+
+        selectedAmount =
+            selectedVotes * 100;
+
 
 
         customVoteInput.value = "";
 
-
         updateAmount();
+
 
 
     });
 
+
 });
+
 
 
 // ======================================
 // CUSTOM VOTES
 // ======================================
 
-customVoteInput.addEventListener("input", () => {
+customVoteInput.addEventListener("input", ()=>{
 
 
-    optionButtons.forEach(b => {
+    optionButtons.forEach(b=>{
 
         b.classList.remove("selected");
 
     });
 
 
-    const value = parseInt(customVoteInput.value);
+
+    const value =
+        parseInt(customVoteInput.value);
 
 
-    if (!value || value < 1) {
+
+    if(!value || value < 1){
 
 
         selectedVotes = 1;
@@ -153,7 +271,7 @@ customVoteInput.addEventListener("input", () => {
         selectedAmount = 100;
 
 
-    } else {
+    }else{
 
 
         selectedVotes = value;
@@ -164,59 +282,69 @@ customVoteInput.addEventListener("input", () => {
     }
 
 
+
     updateAmount();
 
 
 });
 
 
+
 // ======================================
 // UPDATE AMOUNT
 // ======================================
 
-function updateAmount() {
+function updateAmount(){
+
 
     totalAmount.textContent =
         "₦" + selectedAmount.toLocaleString();
 
+
 }
+
 
 
 // ======================================
 // PAYMENT BUTTON
 // ======================================
 
-proceedButton.addEventListener("click", async () => {
+proceedButton.addEventListener("click", async ()=>{
 
 
-    const email = document
-        .getElementById("voterEmail")
-        .value
-        .trim();
-
-
-    const phone = document
-        .getElementById("voterPhone")
+    const email =
+        document.getElementById("voterEmail")
         .value
         .trim();
 
 
 
-    if (email === "") {
+    const phone =
+        document.getElementById("voterPhone")
+        .value
+        .trim();
+
+
+
+    if(email === ""){
+
 
         alert("Please enter your email.");
 
         return;
 
+
     }
 
 
 
-    if (selectedContestant === null) {
+    if(selectedContestant === null){
+
 
         alert("No contestant selected.");
 
         return;
+
 
     }
 
@@ -224,89 +352,116 @@ proceedButton.addEventListener("click", async () => {
 
     proceedButton.disabled = true;
 
-    proceedButton.textContent = "Preparing Payment...";
+    proceedButton.textContent =
+        "Preparing Payment...";
 
 
 
     const payload = {
 
-        contestantId: selectedContestant.id,
 
-        votes: selectedVotes,
+        contestantId:
+            selectedContestant.id,
 
-        email: email,
 
-        phone: phone
+        votes:
+            selectedVotes,
+
+
+        email,
+
+        phone
+
 
     };
 
 
-    console.log("Payment Payload:", payload);
+
+    console.log(
+        "Payment Payload:",
+        payload
+    );
 
 
 
-    try {
+    try{
 
 
         const response = await fetch(
+
             "https://cyon-voting-worker.tomgarh.workers.dev/initialize-payment",
+
             {
 
-                method: "POST",
+                method:"POST",
 
-                headers: {
+                headers:{
 
-                    "Content-Type": "application/json"
+                    "Content-Type":
+                    "application/json"
 
                 },
 
-                body: JSON.stringify(payload)
+                body:
+                JSON.stringify(payload)
 
             }
+
         );
 
 
 
-        const data = await response.json();
-
-
-        console.log("Worker Response:", data);
+        const data =
+            await response.json();
 
 
 
-        if (
+        console.log(
+            "Worker Response:",
+            data
+        );
+
+
+
+        if(
             data.status === true &&
             data.data.authorization_url
-        ) {
+        ){
 
 
             window.location.href =
                 data.data.authorization_url;
 
 
-        } else {
+        }else{
 
 
-            alert("Payment initialization failed");
+            alert(
+                "Payment initialization failed"
+            );
+
 
         }
 
 
 
-    } catch (error) {
+    }catch(error){
 
 
         console.error(error);
 
-        alert("Something went wrong. Try again.");
+        alert(
+            "Something went wrong. Try again."
+        );
 
 
-    } finally {
+    }finally{
 
 
         proceedButton.disabled = false;
 
-        proceedButton.textContent = "Proceed To Payment";
+        proceedButton.textContent =
+            "Proceed To Payment";
 
 
     }
