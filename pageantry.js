@@ -14,13 +14,15 @@ import {
 // ======================================
 // FIREBASE CONFIG
 // ======================================
-
 const firebaseConfig = {
-
-    // PASTE YOUR EXISTING FIREBASE CONFIG HERE
-
-};
-
+    apiKey: "AIzaSyC-ADpygB1KELcBI3x2TtoOUpumKLa2zuw",
+    authDomain: "cyon-stbernard.firebaseapp.com",
+    projectId: "cyon-stbernard",
+    storageBucket: "cyon-stbernard.firebasestorage.app",
+    messagingSenderId: "747151921456",
+    appId: "1:747151921456:web:43f8bb21e9b0a4f4abf8f5"
+  };
+   
 
 const app = initializeApp(firebaseConfig);
 
@@ -32,14 +34,22 @@ const db = getFirestore(app);
 // ======================================
 
 const contestants = [
-
+    "bishop_female",
+    "bishop_male",
+    "bosco_female",
     "bosco_male",
-    "bosco_female"
-
-    // Add others:
-    // "tansi_male",
-    // "tansi_female"
-
+    "brian_female",
+    "brian_male",
+    "charles_female",
+    "charles_male",
+    "dominic_female",
+    "dominic_male",
+    "pope_female",
+    "pope_male",
+    "tansi_female",
+    "tansi_male",
+    "theresa_female",
+    "theresa_male"
 ];
 
 
