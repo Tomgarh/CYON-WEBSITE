@@ -49,6 +49,7 @@ async function loadMembers() {
 // FORMAT BIRTHDAY
 // ==========================
 function formatBirthday(month, day) {
+
   if (!month || !day) return "N/A";
 
   const months = [
@@ -57,6 +58,7 @@ function formatBirthday(month, day) {
   ];
 
   return `${months[Number(month) - 1]} ${day}`;
+
 }
 
 // ==========================
@@ -67,9 +69,11 @@ function renderMembers(data) {
   membersGrid.innerHTML = "";
 
   if (data.length === 0) {
+
     membersGrid.innerHTML = "<p>No members found.</p>";
     totalCount.textContent = "0";
     return;
+
   }
 
   data.forEach(member => {
@@ -89,17 +93,28 @@ function renderMembers(data) {
         ${
           member.photoURL
             ? `
-                <img
-                  src="${member.photoURL}"
-                  alt="${member.name}"
-                  class="member-avatar"
-                >
-              `
+              <img
+                src="${member.photoURL}"
+                alt="${member.name}"
+                class="member-avatar"
+                onerror="
+                  this.style.display='none';
+                  this.nextElementSibling.style.display='flex';
+                "
+              >
+
+              <div
+                class="member-avatar-placeholder"
+                style="display:none;"
+              >
+                ${avatar}
+              </div>
+            `
             : `
-                <div class="member-avatar-placeholder">
-                  ${avatar}
-                </div>
-              `
+              <div class="member-avatar-placeholder">
+                ${avatar}
+              </div>
+            `
         }
 
         <h3>${member.name || "Unknown"}</h3>
@@ -112,9 +127,11 @@ function renderMembers(data) {
 
       </div>
     `;
+
   });
 
   totalCount.textContent = data.length;
+
 }
 
 // ==========================

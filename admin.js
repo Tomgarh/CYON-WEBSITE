@@ -262,117 +262,135 @@ async function loadBirthdayMembers() {
 // =========================
 // GENERATE BIRTHDAY CARD
 // =========================
-async function generateBirthdayCard(id){
+async function generateBirthdayCard(id) {
 
-    try{
+  try {
 
-        const doc = await db.collection("members").doc(id).get();
+      const doc = await db.collection("members").doc(id).get();
 
-        if(!doc.exists){
-            alert("Member not found.");
-            return;
-        }
+      if (!doc.exists) {
+          alert("Member not found.");
+          return;
+      }
 
-        const member = doc.data();
+      const member = doc.data();
 
-        // =====================
-        // Fill Card Details
-        // =====================
+      // Fill Card Details
+      document.getElementById("cardName").textContent = member.name;
 
-        document.getElementById("cardName").textContent =
-            member.name;
+      document.getElementById("cardWish").innerHTML = `
+          Wishing you abundant grace,
+          divine favour, happiness,
+          long life and prosperity.
+          <br><br>
+          May God continue to strengthen
+          and bless you always.
+      `;
 
-        document.getElementById("cardWish").innerHTML = `
-        Wishing you abundant grace,
-        divine favour, happiness,
-        long life and prosperity.
-        <br><br>
-        May God continue to strengthen
-        and bless you always.
-        `;
+      const photo = document.getElementById("cardPhoto");
 
-        const photo =
-            document.getElementById("cardPhoto");
+      // If there is no photo
+      if (!member.photoURL) {
+          alert("This member has not uploaded a passport photo.");
+          return;
+      }
 
-        photo.crossOrigin = "anonymous";
+      // Convert old HEIC Cloudinary URLs to browser-friendly delivery
+      let imageUrl = member.photoURL;
 
-        photo.src = member.photoURL;
+      if (
+          imageUrl.toLowerCase().endsWith(".heic") ||
+          imageUrl.toLowerCase().endsWith(".heif")
+      ) {
+          imageUrl = imageUrl.replace(
+              "/upload/",
+              "/upload/f_auto/"
+          );
+      }
 
-        // =====================
-        // Wait for ALL images
-        // =====================
+      photo.crossOrigin = "anonymous";
+      photo.src = imageUrl;
 
-        const images =
-            document.querySelectorAll("#birthdayCard img");
+      // Wait for card photo
+      await new Promise((resolve, reject) => {
 
-        await Promise.all(
+          if (photo.complete && photo.naturalWidth > 0) {
+              resolve();
+              return;
+          }
 
-            [...images].map(img=>{
+          photo.onload = resolve;
 
-                return new Promise(resolve=>{
+          photo.onerror = () => {
+              reject(
+                  new Error(
+                      "Unable to load the member's passport photo."
+                  )
+              );
+          };
 
-                    if(img.complete){
+      });
 
-                        resolve();
+      // Wait for logos/watermark
+      const images = document.querySelectorAll("#birthdayCard img");
 
-                    }else{
+      await Promise.all(
 
-                        img.onload = resolve;
-                        img.onerror = resolve;
+          [...images].map(img => {
 
-                    }
+              return new Promise(resolve => {
 
-                });
+                  if (img.complete) {
 
-            })
+                      resolve();
 
-        );
+                  } else {
 
-        // Small delay for fonts
+                      img.onload = resolve;
+                      img.onerror = resolve;
 
-        await new Promise(resolve=>setTimeout(resolve,300));
+                  }
 
-        // =====================
-        // Create Image
-        // =====================
+              });
 
-        const canvas = await html2canvas(
+          })
 
-            document.getElementById("birthdayCard"),
+      );
 
-            {
+      // Allow fonts to render
+      await new Promise(resolve => setTimeout(resolve, 300));
 
-                scale:4,
+      // Generate image
+      const canvas = await html2canvas(
 
-                useCORS:true,
+          document.getElementById("birthdayCard"),
 
-                allowTaint:true,
+          {
+              scale: 4,
+              useCORS: true,
+              allowTaint: false,
+              backgroundColor: null,
+              logging: false
+          }
 
-                backgroundColor:null,
+      );
 
-                logging:false
+      const link = document.createElement("a");
 
-            }
+      link.download = `${member.name} Birthday Card.png`;
 
-        );
+      link.href = canvas.toDataURL("image/png");
 
-        const link=document.createElement("a");
+      link.click();
 
-        link.download=
-            `${member.name} Birthday Card.png`;
+  }
 
-        link.href=
-            canvas.toDataURL("image/png",1);
-
-        link.click();
-
-    }
-
-    catch(err){
+  catch (err) {
 
       console.error(err);
-  
+
       alert(err.message);
-  
+
   }
+
 }
