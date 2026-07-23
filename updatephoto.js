@@ -123,63 +123,64 @@ searchBtn.addEventListener("click", async () => {
 // PREVIEW
 // ========================================
 
-photoInput.addEventListener("change", async () => {
+photoInput.addEventListener("change", () => {
 
-    let file = photoInput.files[0];
+  const file = photoInput.files[0];
 
-    if (!file) return;
+  if (!file) return;
 
-    try {
+  // Reject HEIC / HEIF
+  if (
+      file.type === "image/heic" ||
+      file.type === "image/heif" ||
+      file.name.toLowerCase().endsWith(".heic") ||
+      file.name.toLowerCase().endsWith(".heif")
+  ) {
 
-        if (
-            file.type === "image/heic" ||
-            file.type === "image/heif" ||
-            file.name.toLowerCase().endsWith(".heic") ||
-            file.name.toLowerCase().endsWith(".heif")
-        ) {
+      photoInput.value = "";
 
-            showMessage("Converting iPhone photo...", "#0b7a3b");
+      preview.style.display = "none";
 
-            const convertedBlob = await heic2any({
-                blob: file,
-                toType: "image/jpeg",
-                quality: 0.9
-            });
+      return showMessage(
+          "❌ HEIC images are not supported. Please upload a JPG, JPEG, PNG or WEBP image.",
+          "red"
+      );
+  }
 
-            file = new File(
-                [convertedBlob],
-                file.name.replace(/\.(heic|heif)$/i, ".jpg"),
-                {
-                    type: "image/jpeg"
-                }
-            );
+  // Allow only supported formats
+  const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+  ];
 
-        }
+  if (!allowedTypes.includes(file.type)) {
 
-        window.selectedFile = file;
+      photoInput.value = "";
 
-        const reader = new FileReader();
+      preview.style.display = "none";
 
-        reader.onload = function (e) {
+      return showMessage(
+          "❌ Please upload a JPG, JPEG, PNG or WEBP image.",
+          "red"
+      );
+  }
 
-            preview.src = e.target.result;
-            preview.style.display = "block";
+  window.selectedFile = file;
 
-        };
+  const reader = new FileReader();
 
-        reader.readAsDataURL(file);
+  reader.onload = function (e) {
 
-        showMessage("", "");
+      preview.src = e.target.result;
 
-    }
+      preview.style.display = "block";
 
-    catch (err) {
+  };
 
-        console.error(err);
+  reader.readAsDataURL(file);
 
-        showMessage("Unable to read image.", "red");
-
-    }
+  showMessage("", "");
 
 });
 

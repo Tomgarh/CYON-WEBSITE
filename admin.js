@@ -80,12 +80,21 @@ async function loadPending() {
   }
 </p>
 
-        ${
-          m.photoURL
-            ? `<img src="${m.photoURL}" class="pending-photo" />`
-            : `<p><em>No photo uploaded</em></p>`
-        }
-
+${
+  m.photoURL &&
+  !m.photoURL.toLowerCase().endsWith(".heic") &&
+  !m.photoURL.toLowerCase().endsWith(".heif")
+    ? `
+      <img
+        src="${m.photoURL}"
+        class="pending-photo"
+        onerror="this.outerHTML='<p><em>Photo unavailable</em></p>';"
+      />
+    `
+    : `
+      <p><em>No supported photo uploaded</em></p>
+    `
+}
         <div class="actions">
           <button class="approve-btn" data-id="${doc.id}">
             Approve
@@ -233,11 +242,26 @@ async function loadBirthdayMembers() {
 
         <div class="member-card">
 
-            ${
-                member.photoURL
-                ? `<img src="${member.photoURL}" class="pending-photo">`
-                : `<div class="member-avatar">${member.name.charAt(0)}</div>`
-            }
+        ${
+          member.photoURL &&
+          !member.photoURL.toLowerCase().endsWith(".heic") &&
+          !member.photoURL.toLowerCase().endsWith(".heif")
+              ? `
+                  <img
+                      src="${member.photoURL}"
+                      class="pending-photo"
+                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                  >
+                  <div class="member-avatar" style="display:none;">
+                      ${member.name.charAt(0).toUpperCase()}
+                  </div>
+                `
+              : `
+                  <div class="member-avatar">
+                      ${member.name.charAt(0).toUpperCase()}
+                  </div>
+                `
+      }
 
             <h3>${member.name}</h3>
 
@@ -295,22 +319,21 @@ async function generateBirthdayCard(id) {
           return;
       }
 
-      // Convert old HEIC Cloudinary URLs to browser-friendly delivery
-      let imageUrl = member.photoURL;
+      // Reject old HEIC photos
+if (
+  member.photoURL.toLowerCase().endsWith(".heic") ||
+  member.photoURL.toLowerCase().endsWith(".heif")
+) {
 
-      if (
-          imageUrl.toLowerCase().endsWith(".heic") ||
-          imageUrl.toLowerCase().endsWith(".heif")
-      ) {
-          imageUrl = imageUrl.replace(
-              "/upload/",
-              "/upload/f_auto/"
-          );
-      }
+  alert(
+      "This member's passport photo is in HEIC format. Please ask them to upload a JPG, JPEG, PNG or WEBP image."
+  );
 
-      photo.crossOrigin = "anonymous";
-      photo.src = imageUrl;
+  return;
+}
 
+photo.crossOrigin = "anonymous";
+photo.src = member.photoURL;
       // Wait for card photo
       await new Promise((resolve, reject) => {
 

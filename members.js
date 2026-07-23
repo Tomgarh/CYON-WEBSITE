@@ -90,32 +90,34 @@ function renderMembers(data) {
     membersGrid.innerHTML += `
       <div class="member-card-v2">
 
-        ${
-          member.photoURL
-            ? `
-              <img
-                src="${member.photoURL}"
-                alt="${member.name}"
-                class="member-avatar"
-                onerror="
-                  this.style.display='none';
-                  this.nextElementSibling.style.display='flex';
-                "
-              >
-
-              <div
-                class="member-avatar-placeholder"
-                style="display:none;"
-              >
-                ${avatar}
-              </div>
-            `
-            : `
-              <div class="member-avatar-placeholder">
-                ${avatar}
-              </div>
-            `
-        }
+      ${
+        member.photoURL &&
+        !member.photoURL.toLowerCase().endsWith(".heic") &&
+        !member.photoURL.toLowerCase().endsWith(".heif")
+          ? `
+            <img
+              src="${member.photoURL}"
+              alt="${member.name}"
+              class="member-avatar"
+              onerror="
+                this.style.display='none';
+                this.nextElementSibling.style.display='flex';
+              "
+            >
+      
+            <div
+              class="member-avatar-placeholder"
+              style="display:none;"
+            >
+              ${avatar}
+            </div>
+          `
+          : `
+            <div class="member-avatar-placeholder">
+              ${avatar}
+            </div>
+          `
+      }
 
         <h3>${member.name || "Unknown"}</h3>
 

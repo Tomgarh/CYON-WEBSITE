@@ -29,6 +29,52 @@ const submitBtn = document.getElementById("submitBtn");
 const photoInput = document.getElementById("photo");
 
 // =========================
+// SUPPORTED IMAGE FORMATS
+// =========================
+
+const ALLOWED_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp"
+];
+
+const ALLOWED_EXTENSIONS = [
+  "jpg",
+  "jpeg",
+  "png",
+  "webp"
+];
+
+photoInput.addEventListener("change", () => {
+
+  const file = photoInput.files[0];
+
+  if (!file) return;
+
+  const extension = file.name
+    .split(".")
+    .pop()
+    .toLowerCase();
+
+  if (
+    !ALLOWED_TYPES.includes(file.type) ||
+    !ALLOWED_EXTENSIONS.includes(extension)
+  ) {
+
+    photoInput.value = "";
+
+    showMessage(
+      "❌ Unsupported photo format. Please upload a JPG, JPEG, PNG or WEBP image.",
+      "red"
+    );
+
+    return;
+
+  }
+
+  showMessage("", "");
+
+});// =========================
 // SUBMIT FORM
 // =========================
 form.addEventListener("submit", async function (e) {
@@ -114,6 +160,25 @@ form.addEventListener("submit", async function (e) {
 
     const file = photoInput.files[0];
 
+    const extension = file.name
+    .split(".")
+    .pop()
+    .toLowerCase();
+  
+  if (
+    !ALLOWED_TYPES.includes(file.type) ||
+    !ALLOWED_EXTENSIONS.includes(extension)
+  ) {
+  
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Add Member";
+  
+    return showMessage(
+      "❌ Unsupported photo format. Please upload a JPG, JPEG, PNG or WEBP image.",
+      "red"
+    );
+  
+  }
     const data = new FormData();
 
     data.append("file", file);
