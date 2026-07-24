@@ -1,0 +1,616 @@
+/* =========================
+RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fa;
+    color:#333;
+    line-height:1.6;
+
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero{
+
+    background:#0b7a3b;
+    color:#fff;
+    padding:45px 20px;
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:2rem;
+    margin-bottom:10px;
+
+}
+
+.hero p{
+
+    opacity:.9;
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+
+    max-width:900px;
+    margin:40px auto;
+    padding:20px;
+
+}
+
+/* =========================
+NOTICE
+========================= */
+
+.notice{
+
+    background:#fff8e5;
+    border-left:5px solid orange;
+    padding:20px;
+    margin-bottom:30px;
+    border-radius:8px;
+
+}
+
+.notice h2{
+
+    margin-bottom:15px;
+    color:#0b7a3b;
+
+}
+
+.notice ul{
+
+    padding-left:20px;
+
+}
+
+.notice li{
+
+    margin-bottom:10px;
+
+}
+
+/* =========================
+FORM
+========================= */
+
+form{
+
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+form h2{
+
+    color:#0b7a3b;
+    margin-bottom:20px;
+
+}
+
+label{
+
+    display:block;
+    margin-top:18px;
+    margin-bottom:8px;
+    font-weight:bold;
+
+}
+
+input,
+select{
+
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:16px;
+
+}
+
+input:focus,
+select:focus{
+
+    outline:none;
+    border-color:#0b7a3b;
+
+}
+
+hr{
+
+    margin:35px 0;
+
+}
+
+/* =========================
+CONTESTANT CARD
+========================= */
+
+.contestant-card{
+
+    background:#fafafa;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:25px;
+
+}
+
+.contestant-title{
+
+    color:#0b7a3b;
+    margin-bottom:15px;
+
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+button{
+
+    cursor:pointer;
+    border:none;
+    transition:.3s;
+
+}
+
+#addContestant{
+
+    background:#0b7a3b;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:6px;
+    margin-top:10px;
+
+}
+
+#addContestant:hover{
+
+    background:#08602e;
+
+}
+
+.removeContestant{
+
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:#d32f2f;
+    color:white;
+    border-radius:6px;
+
+}
+
+.removeContestant:hover{
+
+    background:#b71c1c;
+
+}
+
+/* =========================
+SUMMARY
+========================= */
+
+.summary{
+
+    margin:30px 0;
+    background:#f3f3f3;
+    padding:20px;
+    border-radius:8px;
+
+}
+
+.summary p{
+
+    display:flex;
+    justify-content:space-between;
+    font-size:18px;
+    margin-bottom:12px;
+
+}
+
+.summary strong{
+
+    color:#0b7a3b;
+
+}
+
+/* =========================
+PAY BUTTON
+========================= */
+
+#proceedPayment{
+
+    width:100%;
+    padding:16px;
+    background:#0b7a3b;
+    color:#fff;
+    font-size:18px;
+    border-radius:8px;
+
+}
+
+#proceedPayment:hover{
+
+    background:#08602e;
+
+}
+.contestant-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-bottom:35px;
+
+    border:1px solid #e7e7e7;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.06);
+
+    transition:.35s ease;
+
+}
+
+.contestant-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.12);
+
+}
+    
+.contestant-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.contestant-title{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#0b7a3b;
+
+}
+   
+.removeContestant{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#fff0f0;
+
+    color:#d63031;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.removeContestant:hover{
+
+    background:#d63031;
+
+    color:white;
+
+    transform:rotate(90deg);
+
+}
+.photo-section{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.photo-preview{
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:5px solid #0b7a3b;
+
+    box-shadow:
+    0 10px 30px rgba(11,122,59,.25);
+
+    margin-bottom:20px;
+
+}
+
+.photo-placeholder{
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    background:#f4f4f4;
+
+    border:2px dashed #c8c8c8;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    transition:.3s;
+
+}
+
+.photo-placeholder:hover{
+
+    border-color:#0b7a3b;
+
+    background:#eef9f2;
+
+}
+    .photo-placeholder p{
+    
+    font-size:14px;
+    margin-top:8px;
+    
+    }
+    
+    .photo{
+    
+    max-width:300px;
+    
+    }
+    
+    .contestant-card label{
+    
+    margin-top:15px;
+    
+    }
+    
+    .contestant-card input,
+    .contestant-card select{
+    
+    margin-bottom:10px;
+    
+    }
+
+    label{
+
+        display:block;
+    
+        font-weight:600;
+    
+        margin-bottom:8px;
+    
+        margin-top:20px;
+    
+    }
+    
+    input,
+    select{
+    
+        width:100%;
+    
+        padding:15px;
+    
+        border-radius:10px;
+    
+        border:1px solid #d8d8d8;
+    
+        font-size:15px;
+    
+        transition:.3s;
+    
+        background:white;
+    
+    }
+    
+    input:focus,
+    select:focus{
+    
+        outline:none;
+    
+        border-color:#0b7a3b;
+    
+        box-shadow:
+        0 0 0 4px rgba(11,122,59,.15);
+    
+    }
+    .photo{
+
+        display:none;
+    
+    }
+
+    .upload-btn{
+
+        display:inline-block;
+    
+        background:#0b7a3b;
+    
+        color:white;
+    
+        padding:12px 22px;
+    
+        border-radius:30px;
+    
+        cursor:pointer;
+    
+        transition:.3s;
+    
+    }
+    
+    .upload-btn:hover{
+    
+        background:#075d2c;
+    
+        transform:translateY(-2px);
+    
+    }
+    
+    .upload-btn input{
+    
+        display:none;
+    
+    }
+
+    .summary{
+
+        background:linear-gradient(
+            135deg,
+            #0b7a3b,
+            #169c53
+        );
+    
+        color:white;
+    
+        padding:25px;
+    
+        border-radius:15px;
+    
+        margin-top:35px;
+    
+    }
+    
+    .summary p{
+    
+        display:flex;
+    
+        justify-content:space-between;
+    
+        font-size:20px;
+    
+        margin-bottom:15px;
+    
+    }
+    
+    .summary strong{
+    
+        color:white;
+    
+    }
+
+    #proceedPayment{
+
+        width:100%;
+    
+        padding:18px;
+    
+        border:none;
+    
+        border-radius:12px;
+    
+        background:#0b7a3b;
+    
+        color:white;
+    
+        font-size:18px;
+    
+        font-weight:bold;
+    
+        cursor:pointer;
+    
+        transition:.3s;
+    
+    }
+    
+    #proceedPayment:hover{
+    
+        background:#075d2c;
+    
+        transform:translateY(-2px);
+    
+    }
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.hero h1{
+
+    font-size:1.6rem;
+
+}
+
+.container{
+
+    padding:15px;
+
+}
+
+form{
+
+    padding:18px;
+
+}
+
+.summary p{
+
+    font-size:16px;
+
+}
+
+#proceedPayment{
+
+    font-size:16px;
+
+}
+
+}

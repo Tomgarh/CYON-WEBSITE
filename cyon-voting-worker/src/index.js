@@ -263,7 +263,130 @@ url.pathname==="/"
 
 }
 
+// ======================================
+// INITIALIZE REGISTRATION PAYMENT
+// ======================================
 
+if (
+    request.method === "POST" &&
+    url.pathname === "/initialize-registration"
+) {
+
+    try {
+
+        const body = await request.json();
+
+        const {
+            group,
+            amount,
+            contestants
+        } = body;
+
+        if (
+            !group ||
+            !contestants ||
+            contestants.length === 0
+        ) {
+
+            return Response.json({
+
+                error:
+                "Invalid registration."
+
+            },{
+
+                status:400,
+                headers:corsHeaders
+
+            });
+
+        }
+
+        // Always calculate on the server
+        const payableContestants =
+            Math.max(contestants.length, 2);
+
+        const totalAmount =
+            payableContestants * 2500;
+
+        const email =
+            contestants[0].email;
+
+        const paystackResponse =
+        await fetch(
+
+            "https://api.paystack.co/transaction/initialize",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    Authorization:
+                    `Bearer ${env.PAYSTACK_SECRET}`,
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+                body:JSON.stringify({
+
+                    email,
+
+                    amount:
+                    totalAmount * 100,
+
+                    metadata:{
+
+                        source:
+                        "CYON Pageant Registration",
+
+                        group,
+
+                        contestants
+
+                    },
+
+                    callback_url:
+
+"https://cyon-voting-worker.tomgarh.workers.dev/verify-registration"
+
+                })
+
+            }
+
+        );
+
+        const data =
+        await paystackResponse.json();
+
+        return Response.json(
+            data,
+            {
+                headers:corsHeaders
+            }
+        );
+
+    }
+
+    catch(error){
+
+        return Response.json({
+
+            error:error.message
+
+        },{
+
+            status:500,
+            headers:corsHeaders
+
+        });
+
+    }
+
+}
 
 
 

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr & Miss CYON 2026 Registration</title>
+
+    <link rel="stylesheet" href="contest-registration.css">
+</head>
+<body>
+
+<header class="hero">
+
+    <h1>👑 Mr & Miss CYON 2026</h1>
+
+    <p>
+        Contestant Registration
+    </p>
+
+</header>
+
+<main class="container">
+
+    <div class="notice">
+
+        <h2>Registration Information</h2>
+
+        <ul>
+
+            <li>Registration Fee: <strong>₦2,500 per contestant</strong></li>
+
+            <li>Each group must present at least <strong>2 contestants</strong>.</li>
+
+            <li>If a group presents only one contestant, the group still pays <strong>₦5,000</strong>.</li>
+
+            <li>Groups may register more than two contestants.</li>
+
+            <li>Accepted passport formats: JPG, JPEG, PNG, WEBP.</li>
+
+        </ul>
+
+    </div>
+
+    <form id="registrationForm">
+
+        <h2>Group Information</h2>
+
+        <label>
+            Select Group
+        </label>
+
+        <select id="group" required>
+
+            <option value="">
+                Select Group
+            </option>
+
+        </select>
+
+        <hr>
+
+        <h2>Contestants</h2>
+
+        <div id="contestantsContainer">
+
+        </div>
+
+        <button
+            type="button"
+            id="addContestant">
+
+            + Add Another Contestant
+
+        </button>
+
+        <hr>
+
+        <div class="summary">
+
+            <p>
+
+                Contestants:
+
+                <strong id="contestantCount">
+                    1
+                </strong>
+
+            </p>
+
+            <p>
+
+                Total Amount:
+
+                <strong id="totalAmount">
+
+                    ₦5,000
+
+                </strong>
+
+            </p>
+
+        </div>
+        <p id="formMessage"></p>
+        <button
+            type="submit"
+            id="proceedPayment">
+
+            Proceed To Payment
+
+        </button>
+
+    </form>
+
+</main>
+
+<template id="contestantTemplate">
+
+    <div class="contestant-card">
+    
+    <div class="contestant-header">
+    
+    <span class="contestant-title">
+    Contestant 1
+    </span>
+    
+    <button
+    type="button"
+    class="removeContestant"
+    title="Remove Contestant">
+    
+    ✕
+    
+    </button>
+    
+    </div>
+    
+    <div class="photo-section">
+    
+    <img
+    class="photo-preview"
+    src=""
+    alt="Passport Preview"
+    style="display:none;">
+    
+    <div class="photo-placeholder">
+    
+    📷
+    
+    <p>Passport Photo</p>
+    
+    </div>
+    
+    <label class="upload-btn">
+
+        Choose Passport
+        
+        <input
+        type="file"
+        class="photo"
+        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+        required>
+        
+        </label>
+    </div>
+    
+    <label>Full Name</label>
+    
+    <input
+    type="text"
+    class="fullname"
+    placeholder="Enter full name"
+    required>
+    
+    <label>Phone Number</label>
+    
+    <input
+    type="tel"
+    class="phone"
+    placeholder="08012345678"
+    required>
+    
+    <label>Email Address</label>
+    
+    <input
+    type="email"
+    class="email"
+    placeholder="example@email.com"
+    required>
+    
+    <label>Gender</label>
+    
+    <select class="gender" required>
+    
+    <option value="">
+    Select Gender
+    </option>
+    
+    <option value="Male">
+    Male
+    </option>
+    
+    <option value="Female">
+    Female
+    </option>
+    
+    </select>
+    
+    </div>
+    
+    </template>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    
+    <script src="contest-registration.js"></script>
+
+</body>
+</html>
