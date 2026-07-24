@@ -278,7 +278,6 @@ if (
 
         const {
             group,
-            amount,
             contestants
         } = body;
 
@@ -563,8 +562,6 @@ status:400
 }
 
 
-
-
 // CHECK IF ALREADY PROCESSED
 
 
@@ -780,6 +777,307 @@ headers:corsHeaders
 
 }
 
+// ======================================
+// VERIFY REGISTRATION
+// ======================================
+
+if (
+	request.method === "GET" &&
+	url.pathname === "/verify-registration"
+) {
+
+	try {
+
+		const reference =
+			url.searchParams.get("reference");
+
+		if (!reference) {
+
+			return Response.redirect(
+				"https://tomgarh.github.io/CYON-WEBSITE/registration-failed.html",
+				302
+			);
+
+		}
+
+		const accessToken =
+			await getGoogleAccessToken(env);
+
+		// Prevent duplicate processing
+
+		const existing = await fetch(
+
+			`https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/payments/${reference}`,
+
+			{
+
+				headers: {
+
+					Authorization:
+						`Bearer ${accessToken}`
+
+				}
+
+			}
+
+		);
+
+		if (existing.ok) {
+
+			return Response.redirect(
+
+				"https://tomgarh.github.io/CYON-WEBSITE/registration-successful.html",
+
+				302
+
+			);
+
+		}
+
+		// Verify with Paystack
+
+		const verify = await fetch(
+
+			`https://api.paystack.co/transaction/verify/${reference}`,
+
+			{
+
+				headers: {
+
+					Authorization:
+						`Bearer ${env.PAYSTACK_SECRET}`
+
+				}
+
+			}
+
+		);
+
+		const payment =
+			await verify.json();
+
+		if (
+			!payment.status ||
+			payment.data.status !== "success"
+		) {
+
+			return Response.redirect(
+
+				"https://tomgarh.github.io/CYON-WEBSITE/registration-failed.html",
+
+				302
+
+			);
+
+		}
+
+		const metadata =
+			payment.data.metadata;
+
+		const contestants =
+			metadata.contestants;
+
+		const group =
+			metadata.group;
+
+		// Verify server-side amount
+
+		const expectedAmount =
+			Math.max(contestants.length, 2) *
+			2500 *
+			100;
+
+		if (
+			payment.data.amount !== expectedAmount
+		) {
+
+			return Response.redirect(
+
+				"https://tomgarh.github.io/CYON-WEBSITE/registration-failed.html",
+
+				302
+
+			);
+
+		}
+
+		// Create contestants
+
+		for (const contestant of contestants) {
+
+			if (
+				await emailExists(
+					env,
+					accessToken,
+					contestant.email
+				)
+			) {
+				continue;
+			}
+
+			if (
+				await phoneExists(
+					env,
+					accessToken,
+					contestant.phone
+				)
+			) {
+				continue;
+			}
+
+			const id =
+				generateFirestoreId();
+
+			await fetch(
+
+				`https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/contestants/${id}`,
+
+				{
+
+					method: "PATCH",
+
+					headers: {
+
+						Authorization:
+							`Bearer ${accessToken}`,
+
+						"Content-Type":
+							"application/json"
+
+					},
+
+					body: JSON.stringify({
+
+						fields: {
+
+							name: {
+								stringValue:
+									contestant.name
+							},
+
+							email: {
+								stringValue:
+									contestant.email
+							},
+
+							phone: {
+								stringValue:
+									contestant.phone
+							},
+
+							gender: {
+								stringValue:
+									contestant.gender
+							},
+
+							group: {
+								stringValue:
+									group
+							},
+
+							photoURL: {
+								stringValue:
+									contestant.photoURL
+							},
+
+							votes: {
+								integerValue: "0"
+							},
+
+							registeredAt: {
+								timestampValue:
+									new Date().toISOString()
+							}
+
+						}
+
+					})
+
+				}
+
+			);
+
+		}
+
+		// Save processed payment
+
+		await fetch(
+
+			`https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/payments/${reference}`,
+
+			{
+
+				method: "PATCH",
+
+				headers: {
+
+					Authorization:
+						`Bearer ${accessToken}`,
+
+					"Content-Type":
+						"application/json"
+
+				},
+
+				body: JSON.stringify({
+
+					fields: {
+
+						status: {
+							stringValue: "success"
+						},
+
+						type: {
+							stringValue: "registration"
+						},
+
+						group: {
+							stringValue: group
+						},
+
+						contestantCount: {
+							integerValue:
+								String(contestants.length)
+						},
+
+						processedAt: {
+							timestampValue:
+								new Date().toISOString()
+						}
+
+					}
+
+				})
+
+			}
+
+		);
+
+		return Response.redirect(
+
+			"https://tomgarh.github.io/CYON-WEBSITE/registration-successful.html",
+
+			302
+
+		);
+
+	}
+
+	catch (error) {
+
+		console.error(error);
+
+		return Response.redirect(
+
+			"https://tomgarh.github.io/CYON-WEBSITE/registration-failed.html",
+
+			302
+
+		);
+
+	}
+
+}
 
 
 
@@ -802,3 +1100,149 @@ headers:corsHeaders
 }
 
 };
+function generateFirestoreId() {
+
+	const chars =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	let id = "";
+
+	for (let i = 0; i < 20; i++) {
+
+		id += chars.charAt(
+			Math.floor(Math.random() * chars.length)
+		);
+
+	}
+
+	return id;
+
+}
+
+async function emailExists(env, accessToken, email) {
+
+	const response = await fetch(
+
+		`https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents:runQuery`,
+
+		{
+
+			method: "POST",
+
+			headers: {
+
+				Authorization: `Bearer ${accessToken}`,
+
+				"Content-Type": "application/json"
+
+			},
+
+			body: JSON.stringify({
+
+				structuredQuery: {
+
+					from: [
+
+						{
+							collectionId: "contestants"
+						}
+
+					],
+
+					where: {
+
+						fieldFilter: {
+
+							field: {
+								fieldPath: "email"
+							},
+
+							op: "EQUAL",
+
+							value: {
+								stringValue: email
+							}
+
+						}
+
+					},
+
+					limit: 1
+
+				}
+
+			})
+
+		}
+
+	);
+
+	const result = await response.json();
+
+	return result.some(item => item.document);
+
+}
+
+async function phoneExists(env, accessToken, phone) {
+
+	const response = await fetch(
+
+		`https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents:runQuery`,
+
+		{
+
+			method: "POST",
+
+			headers: {
+
+				Authorization: `Bearer ${accessToken}`,
+
+				"Content-Type": "application/json"
+
+			},
+
+			body: JSON.stringify({
+
+				structuredQuery: {
+
+					from: [
+
+						{
+							collectionId: "contestants"
+						}
+
+					],
+
+					where: {
+
+						fieldFilter: {
+
+							field: {
+								fieldPath: "phone"
+							},
+
+							op: "EQUAL",
+
+							value: {
+								stringValue: phone
+							}
+
+						}
+
+					},
+
+					limit: 1
+
+				}
+
+			})
+
+		}
+
+	);
+
+	const result = await response.json();
+
+	return result.some(item => item.document);
+
+}
