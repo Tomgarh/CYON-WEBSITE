@@ -956,6 +956,114 @@ LIVE MESSAGE
 
 }
 
+.group-name{
+
+  color: var(--gray);
+
+  font-size: .95rem;
+
+  font-weight: 600;
+
+  margin-bottom: 18px;
+
+}
+
+.leaderboard-item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+  padding:15px;
+
+  border-bottom:1px solid #eee;
+
+}
+
+.leaderboard-item:last-child{
+
+  border-bottom:none;
+
+}
+
+.leaderboard-item img{
+
+  width:55px;
+
+  height:55px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:3px solid var(--gold);
+
+}
+
+.leaderboard-rank{
+
+  width:45px;
+
+  text-align:center;
+
+  font-size:1.4rem;
+
+  font-weight:bold;
+
+}
+
+.leaderboard-details{
+
+  flex:1;
+
+}
+
+.leaderboard-details h4{
+
+  margin-bottom:4px;
+
+  color:var(--primary);
+
+}
+
+.leaderboard-group{
+
+  color:#777;
+
+  font-size:.9rem;
+
+  margin-bottom:6px;
+
+}
+
+.leaderboard-gender{
+
+  display:inline-block;
+
+  background:#f7f7f7;
+
+  padding:4px 10px;
+
+  border-radius:20px;
+
+  font-size:.8rem;
+
+  font-weight:600;
+
+}
+
+.leaderboard-votes{
+
+  font-weight:bold;
+
+  color:var(--green);
+
+  font-size:1rem;
+
+}
+
 /*=========================================
 FOOTER
 =========================================*/
@@ -989,6 +1097,8 @@ FOOTER
   font-size:.9rem;
 
 }
+
+
 
 /*=========================================
 RESPONSIVE

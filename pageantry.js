@@ -32,6 +32,8 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
+const groupNames = {};
+
 // ======================================
 // LOAD GROUPS & CONTESTANTS
 // ======================================
@@ -47,6 +49,17 @@ async function loadContestants(){
     await getDocs(
         collection(db, "groups")
     );
+    groupsSnapshot.forEach(doc => {
+
+        groupNames[doc.id] = doc.data().name;
+    
+    });
+
+groupsSnapshot.forEach(doc => {
+
+    groupNames[doc.id] = doc.data().name;
+
+});
 
     const contestantsSnapshot =
     await getDocs(
@@ -115,6 +128,11 @@ document.getElementById("groupCount").textContent =
                 <h3>${contestant.name}</h3>
 
                 <p class="gender-badge">${contestant.gender}</p>
+                <p class="group-name">
+
+    ${groupNames[contestant.group] || contestant.group}
+
+</p>
 
                 <div class="vote-count">
 
@@ -592,68 +610,85 @@ function loadLeaderboard() {
             document.getElementById("totalVotes").textContent =
                 totalVotes.toLocaleString();
 
-            contestants.sort((a, b) =>
-                (b.votes || 0) - (a.votes || 0)
-            );
-            leaderboard.innerHTML = "";
-
-            contestants.slice(0, 10).forEach((contestant, index) => {
-            
-                const item = document.createElement("div");
-            
-                item.className = "leaderboard-item";
-            
-                let medal = "";
-            
-                if(index === 0){
-            
-                    medal = "🥇";
-                    item.classList.add("gold");
-            
-                }else if(index === 1){
-            
-                    medal = "🥈";
-                    item.classList.add("silver");
-            
-                }else if(index === 2){
-            
-                    medal = "🥉";
-                    item.classList.add("bronze");
-            
-                }
-            
-                item.innerHTML = `
-            
-                    <div class="leaderboard-rank">
-            
-                        ${medal || "#" + (index + 1)}
-            
-                    </div>
-            
-                    <img
-                        src="${contestant.photoURL}"
-                        alt="${contestant.name}"
-                    >
-            
-                    <div class="leaderboard-details">
-            
-                        <h4>${contestant.name}</h4>
-            
-                        <p>${contestant.group}</p>
-            
-                    </div>
-            
-                    <div class="leaderboard-votes">
-            
-                        ❤️ ${contestant.votes || 0}
-            
-                    </div>
-            
-                `;
-            
-                leaderboard.appendChild(item);
-            
-            });
+                contestants.sort((a, b) =>
+                    (b.votes || 0) - (a.votes || 0)
+                );
+                
+                leaderboard.innerHTML = "";
+                
+                contestants.slice(0, 10).forEach((contestant, index) => {
+                
+                    const item = document.createElement("div");
+                
+                    item.className = "leaderboard-item";
+                
+                    let medal = "";
+                
+                    if (index === 0) {
+                
+                        medal = "🥇";
+                        item.classList.add("gold");
+                
+                    } else if (index === 1) {
+                
+                        medal = "🥈";
+                        item.classList.add("silver");
+                
+                    } else if (index === 2) {
+                
+                        medal = "🥉";
+                        item.classList.add("bronze");
+                
+                    }
+                
+                    item.innerHTML = `
+                
+                        <div class="leaderboard-rank">
+                
+                            ${medal || "#" + (index + 1)}
+                
+                        </div>
+                
+                        <img
+                            src="${contestant.photoURL}"
+                            alt="${contestant.name}"
+                        >
+                
+                        <div class="leaderboard-details">
+                
+                            <h4>${contestant.name}</h4>
+                
+                            <p class="leaderboard-group">
+                
+                                ${groupNames[contestant.group] || contestant.group}
+                
+                            </p>
+                
+                            <span class="leaderboard-gender">
+                
+                                ${
+                                    contestant.gender === "Male"
+                                        ? "👨 Mr."
+                                        : contestant.gender === "Female"
+                                        ? "👩 Miss."
+                                        : "👤 Contestant"
+                                }
+                
+                            </span>
+                
+                        </div>
+                
+                        <div class="leaderboard-votes">
+                
+                            ❤️ ${contestant.votes || 0}
+                
+                        </div>
+                
+                    `;
+                
+                    leaderboard.appendChild(item);
+                
+                });
         }
 
     );
