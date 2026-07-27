@@ -826,7 +826,7 @@ if (
 
 			return Response.redirect(
 
-				"https://tomgarh.github.io/CYON-WEBSITE/registration-successful.html",
+				"https://tomgarh.github.io/CYON-WEBSITE/registration-success.html",
 
 				302
 
@@ -1055,7 +1055,7 @@ if (
 
 		return Response.redirect(
 
-			"https://tomgarh.github.io/CYON-WEBSITE/registration-successful.html",
+			"https://tomgarh.github.io/CYON-WEBSITE/registration-success.html",
 
 			302
 

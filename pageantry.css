@@ -85,6 +85,154 @@ HERO
 LEADERBOARD
 =========================================*/
 
+/*=========================================
+LIVE LEADERBOARD
+=========================================*/
+
+#leaderboardList{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:16px;
+
+}
+
+.leaderboard-item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:#fafafa;
+
+  transition:.3s;
+
+  border:1px solid #eee;
+
+}
+
+.leaderboard-item:hover{
+
+  transform:translateX(6px);
+
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.leaderboard-item img{
+
+  width:60px;
+
+  height:60px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:3px solid var(--gold);
+
+}
+
+.leaderboard-rank{
+
+  font-size:1.4rem;
+
+  width:45px;
+
+  text-align:center;
+
+  font-weight:bold;
+
+}
+
+.leaderboard-details{
+
+  flex:1;
+
+}
+
+.leaderboard-details h4{
+
+  color:var(--primary);
+
+  margin-bottom:4px;
+
+}
+
+.leaderboard-details p{
+
+  color:#666;
+
+  font-size:.9rem;
+
+}
+
+.leaderboard-votes{
+
+  font-weight:bold;
+
+  color:var(--green);
+
+  font-size:1.1rem;
+
+}
+
+.gold{
+
+  background:linear-gradient(
+
+      90deg,
+
+      #fff8dc,
+
+      #fff
+
+  );
+
+  border-left:8px solid gold;
+
+}
+
+.silver{
+
+  background:linear-gradient(
+
+      90deg,
+
+      #f4f4f4,
+
+      #fff
+
+  );
+
+  border-left:8px solid silver;
+
+}
+
+.bronze{
+
+  background:linear-gradient(
+
+      90deg,
+
+      #f7e2d3,
+
+      #fff
+
+  );
+
+  border-left:8px solid #cd7f32;
+
+}
+
 .leaderboard{
 
   max-width:1200px;
@@ -210,45 +358,50 @@ GROUPS
 /*=========================================
 CONTESTANT GRID
 =========================================*/
-
-.contestants{
+.contestants-grid{
 
   display:grid;
 
   grid-template-columns:
-  repeat(auto-fit,minmax(300px,1fr));
+  repeat(auto-fit,minmax(280px,1fr));
 
-  gap:30px;
+  gap:35px;
 
 }
-
 /*=========================================
 CARD
 =========================================*/
 
 .contestant-card{
 
-  background:white;
+  background:#fff;
 
-  border-radius:22px;
+  border-radius:24px;
 
   overflow:hidden;
 
-  box-shadow:var(--shadow);
-
-  transition:.35s;
-
   text-align:center;
 
-  padding:25px;
+  padding:30px;
 
   position:relative;
+
+  transition:.35s ease;
+
+  box-shadow:
+  0 12px 30px rgba(0,0,0,.08);
+
+  border:1px solid rgba(212,175,55,.25);
 
 }
 
 .contestant-card:hover{
 
-  transform:translateY(-10px);
+  transform:
+  translateY(-8px);
+
+  box-shadow:
+  0 20px 45px rgba(0,0,0,.18);
 
 }
 
@@ -277,19 +430,19 @@ PHOTO
 
 .contestant-card img{
 
-  width:180px;
+  width:190px;
 
-  height:180px;
-
-  border-radius:50%;
+  height:190px;
 
   object-fit:cover;
 
-  border:6px solid var(--gold);
+  border-radius:50%;
 
-  margin-bottom:20px;
+  border:7px solid var(--gold);
 
-  transition:.4s;
+  margin-bottom:22px;
+
+  transition:.35s;
 
 }
 
@@ -297,25 +450,46 @@ PHOTO
 
   transform:scale(1.05);
 
-}
+  border-color:var(--primary);
 
+}
 /*=========================================
 TEXT
 =========================================*/
 
 .contestant-card h3{
 
+  font-size:1.55rem;
+
   color:var(--primary);
 
-  font-size:1.4rem;
+  margin-bottom:8px;
 
-  margin-bottom:6px;
+  font-weight:700;
 
 }
 
 .contestant-card p{
 
   color:#666;
+
+  margin-bottom:18px;
+
+}
+
+.gender-badge{
+
+  display:inline-block;
+
+  background:#fff6dc;
+
+  color:#8b0000;
+
+  padding:8px 18px;
+
+  border-radius:40px;
+
+  font-weight:600;
 
   margin-bottom:18px;
 

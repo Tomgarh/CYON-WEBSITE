@@ -6,6 +6,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 
 import {
     getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
     doc,
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -28,72 +32,155 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-
 // ======================================
-// LIVE VOTE COUNTS
+// LOAD GROUPS & CONTESTANTS
 // ======================================
 
-const contestants = [
-    "bishop_female",
-    "bishop_male",
-    "bosco_female",
-    "bosco_male",
-    "brian_female",
-    "brian_male",
-    "charles_female",
-    "charles_male",
-    "dominic_female",
-    "dominic_male",
-    "pope_female",
-    "pope_male",
-    "tansi_female",
-    "tansi_male",
-    "theresa_female",
-    "theresa_male"
-];
+const groupsContainer =
+document.getElementById("groupsContainer");
 
+async function loadContestants(){
 
-contestants.forEach(id => {
+    groupsContainer.innerHTML = "";
 
-
-    const voteElement = document.getElementById(
-        id + "_votes"
+    const groupsSnapshot =
+    await getDocs(
+        collection(db, "groups")
     );
 
-
-    if(!voteElement) return;
-
-
-
-    const contestantRef = doc(
-        db,
-        "contestants",
-        id
+    const contestantsSnapshot =
+    await getDocs(
+        collection(db, "contestants")
     );
 
+    const contestants =
+    contestantsSnapshot.docs.map(doc => ({
+
+        id: doc.id,
+
+        ...doc.data()
+
+    }));
+    document.getElementById("contestantCount").textContent =
+    contestants.length;
+
+document.getElementById("groupCount").textContent =
+    groupsSnapshot.size;
+
+    groupsSnapshot.forEach(groupDoc => {
+
+        const group = groupDoc.data();
+
+        const members =
+        contestants.filter(c =>
+
+            c.group === groupDoc.id
+
+        );
+
+        if(members.length === 0)
+            return;
+
+        const section =
+        document.createElement("section");
+
+        section.className = "group-section";
+
+        section.innerHTML = `
+
+            <h2>${group.name}</h2>
+
+            <div class="contestants-grid"></div>
+
+        `;
+
+        const grid =
+        section.querySelector(".contestants-grid");
+
+        members.forEach(contestant => {
+
+            const card =
+            document.createElement("div");
+
+            card.className =
+            "contestant-card";
+
+            card.innerHTML = `
+
+                <img
+                    src="${contestant.photoURL}"
+                    alt="${contestant.name}"
+                >
+
+                <h3>${contestant.name}</h3>
+
+                <p class="gender-badge">${contestant.gender}</p>
+
+                <div class="vote-count">
+
+<span>
+
+❤️ LIVE VOTES
+
+</span>
+
+<strong id="${contestant.id}_votes">
+
+${contestant.votes || 0}
+
+</strong>
+
+</div>
+                <button
+                    class="vote-btn"
+                    data-id="${contestant.id}"
+                    data-name="${contestant.name}"
+                    data-group="${group.name}"
+                >
+
+                    Vote Now
+
+                </button>
+
+            `;
+
+            grid.appendChild(card);
+
+            const contestantRef = doc(
+                db,
+                "contestants",
+                contestant.id
+            );
+            
+            onSnapshot(contestantRef, (snapshot) => {
+            
+                if (!snapshot.exists()) return;
+            
+                const data = snapshot.data();
+            
+                const voteElement = document.getElementById(
+                    contestant.id + "_votes"
+                );
+            
+                if (voteElement) {
+            
+                    voteElement.textContent =
+                        data.votes || 0;
+            
+                }
+            
+            });
+
+        });
 
 
-    onSnapshot(contestantRef, (snapshot)=>{
 
-
-        if(snapshot.exists()){
-
-
-            const data = snapshot.data();
-
-
-            voteElement.textContent =
-                data.votes || 0;
-
-
-        }
-
+        groupsContainer.appendChild(section);
 
     });
 
+}
 
-
-});
 
 
 
@@ -134,52 +221,43 @@ const proceedButton = document.getElementById("proceedPayment");
 // OPEN MODAL
 // ======================================
 
-voteButtons.forEach(button => {
+document.addEventListener("click", (e) => {
 
+    const button = e.target.closest(".vote-btn");
 
-    button.addEventListener("click", () => {
+    if (!button) return;
 
+    selectedContestant = {
 
-        selectedContestant = {
+        id: button.dataset.id,
 
+        name: button.dataset.name,
 
-            id: button.dataset.id,
+        group: button.dataset.group
 
-            name: button.dataset.name,
+    };
 
-            group: button.dataset.group
+    contestantName.textContent =
+        selectedContestant.name;
 
+    contestantGroup.textContent =
+        selectedContestant.group;
 
-        };
+    selectedVotes = 1;
 
+    selectedAmount = 100;
 
+    customVoteInput.value = "";
 
-        contestantName.textContent =
-            selectedContestant.name;
+    optionButtons.forEach(btn =>
+        btn.classList.remove("selected")
+    );
 
+    updateAmount();
 
-        contestantGroup.textContent =
-            selectedContestant.group;
-
-
-
-        selectedVotes = 1;
-
-        selectedAmount = 100;
-
-        customVoteInput.value = "";
-
-        updateAmount();
-
-
-        modal.style.display = "flex";
-
-
-    });
-
+    modal.style.display = "flex";
 
 });
-
 
 
 // ======================================
@@ -478,3 +556,109 @@ proceedButton.addEventListener("click", async ()=>{
 
 
 });
+function loadLeaderboard() {
+
+    const leaderboard =
+        document.getElementById("leaderboardList");
+
+    onSnapshot(
+        collection(db, "contestants"),
+        (snapshot) => {
+
+            const contestants = [];
+
+            snapshot.forEach(doc => {
+
+                contestants.push({
+
+                    id: doc.id,
+
+                    ...doc.data()
+
+                });
+
+
+            });
+            const totalVotes = contestants.reduce(
+
+                (sum, contestant) =>
+            
+                    sum + (contestant.votes || 0),
+            
+                0
+            
+            );
+            
+            document.getElementById("totalVotes").textContent =
+                totalVotes.toLocaleString();
+
+            contestants.sort((a, b) =>
+                (b.votes || 0) - (a.votes || 0)
+            );
+            leaderboard.innerHTML = "";
+
+            contestants.slice(0, 10).forEach((contestant, index) => {
+            
+                const item = document.createElement("div");
+            
+                item.className = "leaderboard-item";
+            
+                let medal = "";
+            
+                if(index === 0){
+            
+                    medal = "🥇";
+                    item.classList.add("gold");
+            
+                }else if(index === 1){
+            
+                    medal = "🥈";
+                    item.classList.add("silver");
+            
+                }else if(index === 2){
+            
+                    medal = "🥉";
+                    item.classList.add("bronze");
+            
+                }
+            
+                item.innerHTML = `
+            
+                    <div class="leaderboard-rank">
+            
+                        ${medal || "#" + (index + 1)}
+            
+                    </div>
+            
+                    <img
+                        src="${contestant.photoURL}"
+                        alt="${contestant.name}"
+                    >
+            
+                    <div class="leaderboard-details">
+            
+                        <h4>${contestant.name}</h4>
+            
+                        <p>${contestant.group}</p>
+            
+                    </div>
+            
+                    <div class="leaderboard-votes">
+            
+                        ❤️ ${contestant.votes || 0}
+            
+                    </div>
+            
+                `;
+            
+                leaderboard.appendChild(item);
+            
+            });
+        }
+
+    );
+
+}
+
+loadContestants();
+loadLeaderboard();
