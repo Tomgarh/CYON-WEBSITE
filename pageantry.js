@@ -55,11 +55,6 @@ async function loadContestants(){
     
     });
 
-groupsSnapshot.forEach(doc => {
-
-    groupNames[doc.id] = doc.data().name;
-
-});
 
     const contestantsSnapshot =
     await getDocs(
@@ -576,11 +571,16 @@ proceedButton.addEventListener("click", async ()=>{
 });
 function loadLeaderboard() {
 
-    const leaderboard =
-        document.getElementById("leaderboardList");
+    const maleLeaderboard =
+        document.getElementById("maleLeaderboard");
+
+    const femaleLeaderboard =
+        document.getElementById("femaleLeaderboard");
 
     onSnapshot(
+
         collection(db, "contestants"),
+
         (snapshot) => {
 
             const contestants = [];
@@ -595,103 +595,129 @@ function loadLeaderboard() {
 
                 });
 
-
             });
+
+            // Total Votes
             const totalVotes = contestants.reduce(
 
                 (sum, contestant) =>
-            
+
                     sum + (contestant.votes || 0),
-            
+
                 0
-            
+
             );
-            
+
             document.getElementById("totalVotes").textContent =
                 totalVotes.toLocaleString();
 
-                contestants.sort((a, b) =>
-                    (b.votes || 0) - (a.votes || 0)
-                );
-                
-                leaderboard.innerHTML = "";
-                
-                contestants.slice(0, 10).forEach((contestant, index) => {
-                
-                    const item = document.createElement("div");
-                
-                    item.className = "leaderboard-item";
-                
-                    let medal = "";
-                
-                    if (index === 0) {
-                
-                        medal = "🥇";
-                        item.classList.add("gold");
-                
-                    } else if (index === 1) {
-                
-                        medal = "🥈";
-                        item.classList.add("silver");
-                
-                    } else if (index === 2) {
-                
-                        medal = "🥉";
-                        item.classList.add("bronze");
-                
-                    }
-                
-                    item.innerHTML = `
-                
-                        <div class="leaderboard-rank">
-                
-                            ${medal || "#" + (index + 1)}
-                
-                        </div>
-                
-                        <img
-                            src="${contestant.photoURL}"
-                            alt="${contestant.name}"
-                        >
-                
-                        <div class="leaderboard-details">
-                
-                            <h4>${contestant.name}</h4>
-                
-                            <p class="leaderboard-group">
-                
-                                ${groupNames[contestant.group] || contestant.group}
-                
-                            </p>
-                
-                            <span class="leaderboard-gender">
-                
-                                ${
-                                    contestant.gender === "Male"
-                                        ? "👨 Mr."
-                                        : contestant.gender === "Female"
-                                        ? "👩 Miss."
-                                        : "👤 Contestant"
-                                }
-                
-                            </span>
-                
-                        </div>
-                
-                        <div class="leaderboard-votes">
-                
-                            ❤️ ${contestant.votes || 0}
-                
-                        </div>
-                
-                    `;
-                
-                    leaderboard.appendChild(item);
-                
-                });
+            // Highest votes first
+            contestants.sort(
+
+                (a, b) => (b.votes || 0) - (a.votes || 0)
+
+            );
+
+            // Split by gender
+            const males = contestants.filter(
+
+                contestant => contestant.gender === "Male"
+
+            );
+
+            const females = contestants.filter(
+
+                contestant => contestant.gender === "Female"
+
+            );
+
+            renderLeaderboard(maleLeaderboard, males);
+
+            renderLeaderboard(femaleLeaderboard, females);
+
         }
 
     );
+
+}
+
+
+// ======================================
+// RENDER LEADERBOARD
+// ======================================
+
+function renderLeaderboard(container, contestants) {
+
+    container.innerHTML = "";
+
+    contestants.forEach((contestant, index) => {
+
+        const item = document.createElement("div");
+
+        item.className = "leaderboard-item";
+
+        if (index === 0) {
+
+            item.classList.add("gold");
+
+        } else if (index === 1) {
+
+            item.classList.add("silver");
+
+        } else if (index === 2) {
+
+            item.classList.add("bronze");
+
+        }
+
+        let medal = "";
+
+        if (index === 0) {
+
+            medal = "🥇";
+
+        } else if (index === 1) {
+
+            medal = "🥈";
+
+        } else if (index === 2) {
+
+            medal = "🥉";
+
+        }
+
+        item.innerHTML = `
+
+            <div class="leaderboard-rank">
+
+                ${medal || "#" + (index + 1)}
+
+            </div>
+
+            <img
+                src="${contestant.photoURL}"
+                alt="${contestant.name}"
+            >
+
+            <div class="leaderboard-details">
+
+                <h4>${contestant.name}</h4>
+
+                <p>${groupNames[contestant.group] || contestant.group} </p>
+
+            </div>
+
+            <div class="leaderboard-votes">
+
+                ❤️ ${contestant.votes || 0}
+
+            </div>
+
+        `;
+
+        container.appendChild(item);
+
+    });
 
 }
 
