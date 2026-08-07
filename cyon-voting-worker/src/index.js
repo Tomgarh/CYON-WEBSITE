@@ -212,7 +212,6 @@ export default {
 
 async fetch(request, env){
 
-
 const corsHeaders = {
 
 	"Access-Control-Allow-Origin":"*",
@@ -260,6 +259,590 @@ url.pathname==="/"
 	},{
 		headers:corsHeaders
 	});
+
+}
+
+// ==========================================
+// AWARDS REGISTRATION
+// ==========================================
+
+if (
+    request.method === "POST" &&
+    url.pathname === "/awards/initialize-registration"
+) {
+
+    try {
+
+        const body = await request.json();
+
+        const {
+            fullName,
+            gender,
+            dob,
+            phone,
+            email,
+            occupation,
+            address,
+            unit,
+            bio,
+            categories
+        } = body;
+
+
+        // ==========================================
+        // BASIC VALIDATION
+        // ==========================================
+
+        if (
+            !fullName ||
+            !gender ||
+            !dob ||
+            !phone ||
+            !email ||
+            !occupation ||
+            !address ||
+            !unit ||
+            !bio ||
+            !Array.isArray(categories) ||
+            categories.length === 0
+        ) {
+
+            return Response.json(
+                {
+                    error: "All required fields must be provided."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VALID CATEGORIES
+        // ==========================================
+
+        const validCategories = [
+            "best_executive",
+            "best_group_leader",
+            "most_active_male",
+            "most_active_female",
+            "most_social_male",
+            "most_social_female",
+            "male_entrepreneur",
+            "female_entrepreneur"
+        ];
+
+
+        // Check that every submitted category is valid
+
+        const invalidCategory = categories.some(
+            category => !validCategories.includes(category)
+        );
+
+
+        if (invalidCategory) {
+
+            return Response.json(
+                {
+                    error: "Invalid award category."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // EXECUTIVE / GROUP LEADER RULE
+        // ==========================================
+
+        if (
+            categories.includes("best_executive") &&
+            categories.includes("best_group_leader")
+        ) {
+
+            return Response.json(
+                {
+                    error:
+                        "A contestant cannot register for both Best Executive Member and Best Group Leader."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // GENDER RULE
+        // ==========================================
+
+        if (gender === "male") {
+
+            const femaleCategories = [
+                "most_active_female",
+                "most_social_female",
+                "female_entrepreneur"
+            ];
+
+            if (
+                categories.some(
+                    category =>
+                        femaleCategories.includes(category)
+                )
+            ) {
+
+                return Response.json(
+                    {
+                        error:
+                            "Female categories cannot be selected by a male contestant."
+                    },
+                    {
+                        status: 400,
+                        headers: corsHeaders
+                    }
+                );
+
+            }
+
+        }
+
+
+        if (gender === "female") {
+
+            const maleCategories = [
+                "most_active_male",
+                "most_social_male",
+                "male_entrepreneur"
+            ];
+
+            if (
+                categories.some(
+                    category =>
+                        maleCategories.includes(category)
+                )
+            ) {
+
+                return Response.json(
+                    {
+                        error:
+                            "Male categories cannot be selected by a female contestant."
+                    },
+                    {
+                        status: 400,
+                        headers: corsHeaders
+                    }
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // CALCULATE REGISTRATION FEE
+        // ==========================================
+
+        const REGISTRATION_FEE = 1000;
+
+        const amount =
+            categories.length * REGISTRATION_FEE;
+
+
+        // ==========================================
+        // INITIALIZE PAYSTACK
+        // ==========================================
+
+        const paystackResponse = await fetch(
+            "https://api.paystack.co/transaction/initialize",
+            {
+                method: "POST",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${env.PAYSTACK_SECRET}`,
+
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    email,
+
+                    // Paystack expects kobo
+                    amount: amount * 100,
+
+                    metadata: {
+
+                        type: "cyon_awards_registration",
+
+                        fullName,
+                        gender,
+                        dob,
+                        phone,
+                        occupation,
+                        address,
+                        unit,
+                        bio,
+                        categories,
+
+                        registrationFee:
+                            REGISTRATION_FEE,
+
+                        categoryCount:
+                            categories.length
+
+                    },
+
+                    callback_url:
+    					"https://cyon-voting-worker.tomgarh.workers.dev/awards/verify-payment"
+
+                })
+
+            }
+        );
+
+
+        const data =
+            await paystackResponse.json();
+
+
+        // ==========================================
+        // PAYSTACK ERROR
+        // ==========================================
+
+        if (!paystackResponse.ok) {
+
+            return Response.json(
+                {
+                    error:
+                        data.message ||
+                        "Unable to initialize payment."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // RETURN PAYSTACK RESPONSE
+        // ==========================================
+
+        return Response.json(
+            data,
+            {
+                headers: corsHeaders
+            }
+        );
+
+
+    } catch (error) {
+
+        return Response.json(
+            {
+                error: error.message
+            },
+            {
+                status: 500,
+                headers: corsHeaders
+            }
+        );
+
+    }
+
+}
+
+// ==========================================
+// AWARDS PAYMENT VERIFICATION
+// ==========================================
+
+if (
+    request.method === "GET" &&
+    url.pathname === "/awards/verify-payment"
+) {
+
+    try {
+
+        const reference = url.searchParams.get("reference");
+
+        if (!reference) {
+
+            return new Response(
+                "Payment reference is missing.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VERIFY PAYMENT WITH PAYSTACK
+        // ==========================================
+
+        const paystackResponse = await fetch(
+            `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+            {
+                method: "GET",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${env.PAYSTACK_SECRET}`
+                }
+            }
+        );
+
+
+        const payment = await paystackResponse.json();
+
+
+        if (
+            !paystackResponse.ok ||
+            !payment.status ||
+            payment.data?.status !== "success"
+        ) {
+
+            return new Response(
+                "Payment could not be verified.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // MAKE SURE THIS IS AN AWARDS REGISTRATION
+        // ==========================================
+
+        const metadata =
+            payment.data?.metadata;
+
+
+        if (
+            !metadata ||
+            metadata.type !== "cyon_awards_registration"
+        ) {
+
+            return new Response(
+                "Invalid awards registration payment.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VERIFY AMOUNT
+        // ==========================================
+
+        const categories =
+            metadata.categories || [];
+
+        const expectedAmount =
+            categories.length * 1000 * 100;
+
+
+        if (
+            Number(payment.data.amount) !==
+            expectedAmount
+        ) {
+
+            return new Response(
+                "Payment amount does not match registration.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // GET GOOGLE ACCESS TOKEN
+        // ==========================================
+
+        const accessToken =
+            await getGoogleAccessToken(env);
+
+
+        // ==========================================
+        // CREATE FIRESTORE REGISTRATION
+        // ==========================================
+
+        const registrationId =
+            `award_${reference}`;
+
+
+        const firestoreResponse = await fetch(
+            `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations?documentId=${registrationId}`,
+            {
+                method: "POST",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${accessToken}`,
+
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    fields: {
+
+                        fullName: {
+                            stringValue:
+                                metadata.fullName
+                        },
+
+                        gender: {
+                            stringValue:
+                                metadata.gender
+                        },
+
+                        dob: {
+                            stringValue:
+                                metadata.dob
+                        },
+
+                        phone: {
+                            stringValue:
+                                metadata.phone
+                        },
+
+                        email: {
+                            stringValue:
+                                payment.data.customer?.email ||
+                                ""
+                        },
+
+                        occupation: {
+                            stringValue:
+                                metadata.occupation
+                        },
+
+                        address: {
+                            stringValue:
+                                metadata.address
+                        },
+
+                        unit: {
+                            stringValue:
+                                metadata.unit
+                        },
+
+                        bio: {
+                            stringValue:
+                                metadata.bio
+                        },
+
+                        categories: {
+                            arrayValue: {
+                                values:
+                                    categories.map(category => ({
+                                        stringValue: category
+                                    }))
+                            }
+                        },
+
+                        paymentReference: {
+                            stringValue:
+                                reference
+                        },
+
+                        paymentStatus: {
+                            stringValue:
+                                "paid"
+                        },
+
+                        votes: {
+                            integerValue:
+                                "0"
+                        },
+
+                        createdAt: {
+                            timestampValue:
+                                new Date().toISOString()
+                        }
+
+                    }
+
+                })
+
+            }
+        );
+
+
+        const registration =
+            await firestoreResponse.json();
+
+
+        if (!firestoreResponse.ok) {
+
+            console.error(
+                "Firestore error:",
+                registration
+            );
+
+            return new Response(
+                "Payment verified, but registration could not be saved.",
+                {
+                    status: 500,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // SEND USER BACK TO WEBSITE
+        // ==========================================
+
+        return Response.redirect(
+            `https://tomgarh.github.io/CYON-WEBSITE/awards-success.html?reference=${encodeURIComponent(reference)}`,
+            302
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Awards verification error:",
+            error
+        );
+
+        return new Response(
+            "Something went wrong while verifying payment.",
+            {
+                status: 500,
+                headers: corsHeaders
+            }
+        );
+
+    }
 
 }
 
@@ -1246,3 +1829,4 @@ async function phoneExists(env, accessToken, phone) {
 	return result.some(item => item.document);
 
 }
+

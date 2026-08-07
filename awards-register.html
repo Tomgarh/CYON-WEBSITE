@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | CYON Awards</title>
+
+    <link rel="stylesheet" href="awards.css">
+    <link rel="stylesheet" href="awards-register.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="awards-header">
+
+        <div class="container">
+
+            <div class="logo">
+                <h2>CYON</h2>
+                <span>St. Bernard Parish</span>
+            </div>
+
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="awards-index.html">Awards</a>
+                <a href="awards-register.html">Register</a>
+                <a href="awards-vote.html">Vote</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+
+        <div class="container">
+
+            <p class="eyebrow">CYON AWARDS 2026</p>
+
+            <h1>Contestant Registration</h1>
+
+            <p>
+                Register for one or more eligible award categories.
+                Registration is ₦1,000 per category.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- REGISTRATION FORM -->
+    <main class="registration-section">
+
+        <div class="container">
+
+            <form id="awardsRegistrationForm">
+
+
+                <!-- PERSONAL INFORMATION -->
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">STEP 1</p>
+
+                        <h2>Personal Information</h2>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="gender">
+                                Gender *
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                                required
+                            >
+
+                                <option value="">
+                                    Select gender
+                                </option>
+
+                                <option value="male">
+                                    Male
+                                </option>
+
+                                <option value="female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="dob">
+                                Date of Birth *
+                            </label>
+
+                            <input
+                                type="date"
+                                id="dob"
+                                name="dob"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="08012345678"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="example@email.com"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="occupation">
+                                Occupation / School *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="occupation"
+                                name="occupation"
+                                placeholder="Occupation or school"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label for="address">
+                                Address *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                placeholder="Enter your address"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="unit">
+                                Parish Unit *
+                            </label>
+
+                            <select
+                                id="unit"
+                                name="unit"
+                                required
+                            >
+
+                                <option value="">
+                                    Select your unit
+                                </option>
+
+                                <option value="choir">
+                                    Choir
+                                </option>
+
+                                <option value="altar_servers">
+                                    Altar Servers
+                                </option>
+
+                                <option value="media">
+                                    Media
+                                </option>
+
+                                <option value="security">
+                                    Security
+                                </option>
+
+                                <option value="sanitation">
+                                    Sanitation
+                                </option>
+
+                                <option value="publicity">
+                                    Publicity
+                                </option>
+
+                                <option value="sunday_school">
+                                    Sunday School
+                                </option>
+
+                                <option value="other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- BIO -->
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">STEP 2</p>
+
+                        <h2>About You</h2>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bio">
+                            Short Bio *
+                        </label>
+
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            rows="5"
+                            maxlength="500"
+                            placeholder="Tell voters a little about yourself..."
+                            required
+                        ></textarea>
+
+                        <small>
+                            Maximum 500 characters.
+                        </small>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PHOTO -->
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">STEP 3</p>
+
+                        <h2>Contestant Photo</h2>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="photo">
+                            Upload Your Photo *
+                        </label>
+
+                        <input
+                            type="file"
+                            id="photo"
+                            name="photo"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+
+                        <small>
+                            Use a clear photo of yourself.
+                        </small>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CATEGORIES -->
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">STEP 4</p>
+
+                        <h2>Select Award Categories</h2>
+
+                        <p>
+                            You may select multiple eligible categories.
+                            Each category costs ₦1,000.
+                        </p>
+
+                    </div>
+
+
+                    <div class="category-selection">
+
+
+                        <!-- EXECUTIVE -->
+                        <label class="category-option">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="best_executive"
+                                data-price="1000"
+                                data-group="leadership"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Best Executive Member
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- GROUP LEADER -->
+                        <label class="category-option">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="best_group_leader"
+                                data-price="1000"
+                                data-group="leadership"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Best Group Leader
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- ACTIVE MALE -->
+                        <label class="category-option male-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="most_active_male"
+                                data-price="1000"
+                                data-gender="male"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Most Active Male Member
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- ACTIVE FEMALE -->
+                        <label class="category-option female-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="most_active_female"
+                                data-price="1000"
+                                data-gender="female"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Most Active Female Member
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- SOCIAL MALE -->
+                        <label class="category-option male-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="most_social_male"
+                                data-price="1000"
+                                data-gender="male"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Most Social Male Member
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- SOCIAL FEMALE -->
+                        <label class="category-option female-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="most_social_female"
+                                data-price="1000"
+                                data-gender="female"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Most Social Female Member
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- MALE ENTREPRENEUR -->
+                        <label class="category-option male-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="male_entrepreneur"
+                                data-price="1000"
+                                data-gender="male"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Male Entrepreneur of the Year
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- FEMALE ENTREPRENEUR -->
+                        <label class="category-option female-category">
+
+                            <input
+                                type="checkbox"
+                                name="categories"
+                                value="female_entrepreneur"
+                                data-price="1000"
+                                data-gender="female"
+                            >
+
+                            <span class="category-info">
+
+                                <strong>
+                                    Female Entrepreneur of the Year
+                                </strong>
+
+                                <small>
+                                    ₦1,000
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                    </div>
+
+                </section>
+
+
+                <!-- PAYMENT SUMMARY -->
+                <section class="payment-summary">
+
+                    <div>
+
+                        <span>
+                            Categories Selected
+                        </span>
+
+                        <strong id="categoryCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Registration Fee
+                        </span>
+
+                        <strong id="registrationTotal">
+                            ₦0
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <!-- TERMS -->
+                <div class="terms">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <span>
+                            I confirm that the information provided is
+                            correct and I agree to the CYON Awards
+                            registration and voting rules.
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+                <button
+                    type="submit"
+                    id="registerButton"
+                    class="btn primary"
+                    disabled
+                >
+                    Proceed to Payment
+                </button>
+
+
+                <p
+                    id="formMessage"
+                    class="form-message"
+                ></p>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container">
+
+            <p>
+                © 2026 CYON St. Bernard Parish.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="awards-register.js"></script>
+
+</body>
+
+</html>
