@@ -2205,23 +2205,6 @@ if (
             await getGoogleAccessToken(env);
 
 
-            // ==========================================
-// PREVENT DUPLICATE PAYMENT PROCESSING
-// ==========================================
-
-const voteRecordResponse =
-await fetch(
-    `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_votes/${encodeURIComponent(reference)}`,
-    {
-        method: "GET",
-
-        headers: {
-            Authorization:
-                `Bearer ${accessToken}`
-        }
-    }
-);
-
 
 // ==========================================
 // PAYMENT ALREADY PROCESSED
@@ -2312,60 +2295,61 @@ if (existingStatus === "paid") {
         }
 
 
-        // ==========================================
-        // INCREMENT CATEGORY VOTES
-        // ==========================================
+   // ==========================================
+// ATOMICALLY RECORD VOTE + PAYMENT
+// PREVENT DUPLICATE PAYMENT PROCESSING
+// ==========================================
 
-        const contestantPath =
-            `projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations/${contestantId}`;
+const contestantPath =
+`projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations/${contestantId}`;
+
+const voteFieldPath =
+`votes.${category}`;
+
+const voteRecordPath =
+`projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_votes/${reference}`;
 
 
-        const voteFieldPath =
-            `votes.${category}`;
+const commitResponse =
+await fetch(
+    `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents:commit`,
+    {
+        method: "POST",
 
+        headers: {
+            Authorization:
+                `Bearer ${accessToken}`,
 
-        const updateResponse =
-            await fetch(
-                `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents:commit`,
+            "Content-Type":
+                "application/json"
+        },
+
+        body: JSON.stringify({
+
+            writes: [
+
+                // ==========================================
+                // 1. INCREMENT CONTESTANT VOTES
+                // ==========================================
+
                 {
-                    method: "POST",
 
-                    headers: {
-                        Authorization:
-                            `Bearer ${accessToken}`,
+                    transform: {
 
-                        "Content-Type":
-                            "application/json"
-                    },
+                        document:
+                            contestantPath,
 
-                    body: JSON.stringify({
-
-                        writes: [
+                        fieldTransforms: [
 
                             {
 
-                                transform: {
+                                fieldPath:
+                                    voteFieldPath,
 
-                                    document:
-                                        contestantPath,
+                                increment: {
 
-                                    fieldTransforms: [
-
-                                        {
-
-                                            fieldPath:
-                                                voteFieldPath,
-
-                                            increment: {
-
-                                                integerValue:
-                                                    String(voteCount)
-
-                                            }
-
-                                        }
-
-                                    ]
+                                    integerValue:
+                                        String(voteCount)
 
                                 }
 
@@ -2373,33 +2357,137 @@ if (existingStatus === "paid") {
 
                         ]
 
-                    })
+                    }
 
-                }
-            );
-
-
-        const updateData =
-            await updateResponse.json();
+                },
 
 
-        if (!updateResponse.ok) {
+                // ==========================================
+                // 2. CREATE PAYMENT RECORD
+                // ONLY IF IT DOES NOT ALREADY EXIST
+                // ==========================================
 
-            console.error(
-                "Awards vote update error:",
-                updateData
-            );
-
-            return new Response(
-                "Vote payment verified, but votes could not be recorded.",
                 {
-                    status: 500,
-                    headers: corsHeaders
+
+                    update: {
+
+                        name:
+                            voteRecordPath,
+
+                        fields: {
+
+                            paymentReference: {
+
+                                stringValue:
+                                    reference
+
+                            },
+
+                            contestantId: {
+
+                                stringValue:
+                                    contestantId
+
+                            },
+
+                            category: {
+
+                                stringValue:
+                                    category
+
+                            },
+
+                            votes: {
+
+                                integerValue:
+                                    String(voteCount)
+
+                            },
+
+                            amount: {
+
+                                integerValue:
+                                    String(payment.data.amount)
+
+                            },
+
+                            paymentStatus: {
+
+                                stringValue:
+                                    "paid"
+
+                            },
+
+                            createdAt: {
+
+                                timestampValue:
+                                    new Date().toISOString()
+
+                            }
+
+                        }
+
+                    },
+
+                    currentDocument: {
+
+                        exists: false
+
+                    }
+
                 }
-            );
 
-        }
+            ]
 
+        })
+
+    }
+);
+
+
+const commitData =
+await commitResponse.json();
+
+
+// ==========================================
+// CHECK ATOMIC COMMIT
+// ==========================================
+
+if (!commitResponse.ok) {
+
+console.error(
+    "Awards vote atomic commit error:",
+    commitData
+);
+
+
+// ==========================================
+// DUPLICATE PAYMENT
+// ==========================================
+
+if (
+    JSON.stringify(commitData)
+        .toLowerCase()
+        .includes("already exists")
+) {
+
+    return Response.redirect(
+        `https://tomgarh.github.io/CYON-WEBSITE/awards-vote-success.html?reference=${encodeURIComponent(reference)}`,
+        302
+    );
+
+}
+
+
+return new Response(
+    "Vote payment was verified, but the vote could not be recorded.",
+    {
+        status: 500,
+        headers: corsHeaders
+    }
+);
+
+}
 
         // ==========================================
         // SAVE VOTE PAYMENT
