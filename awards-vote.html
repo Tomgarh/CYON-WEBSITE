@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vote | CYON Awards</title>
+
+    <link rel="stylesheet" href="awards.css">
+
+</head>
+
+<body>
+
+
+    <!-- HEADER -->
+    <header class="awards-header">
+
+        <div class="container">
+
+            <div class="logo">
+
+                <h2>CYON</h2>
+
+                <span>
+                    St. Bernard Parish
+                </span>
+
+            </div>
+
+
+            <nav>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="awards-index.html">
+                    Awards
+                </a>
+
+                <a href="awards-register.html">
+                    Register
+                </a>
+
+                <a href="awards-vote.html">
+                    Vote
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <p class="eyebrow">
+                CYON AWARDS 2026
+            </p>
+
+            <h1>
+                Cast Your Vote
+            </h1>
+
+            <p>
+                Support your favourite contestants and
+                help them win their award category.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- VOTING -->
+
+    <main class="registration-section">
+
+        <div class="container">
+
+            <form id="awardsVotingForm">
+
+
+                <!-- CATEGORY -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">
+                            STEP 1
+                        </p>
+
+                        <h2>
+                            Select Award Category
+                        </h2>
+
+                        <p>
+                            Choose the category you want
+                            to vote in.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Award Category *
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select a category
+                            </option>
+
+                            <option value="best_executive">
+                                Best Executive Member
+                            </option>
+
+                            <option value="best_group_leader">
+                                Best Group Leader
+                            </option>
+
+                            <option value="most_active_male">
+                                Most Active Male Member
+                            </option>
+
+                            <option value="most_active_female">
+                                Most Active Female Member
+                            </option>
+
+                            <option value="most_social_male">
+                                Most Social Male Member
+                            </option>
+
+                            <option value="most_social_female">
+                                Most Social Female Member
+                            </option>
+
+                            <option value="male_entrepreneur">
+                                Male Entrepreneur of the Year
+                            </option>
+
+                            <option value="female_entrepreneur">
+                                Female Entrepreneur of the Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- CONTESTANTS -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">
+                            STEP 2
+                        </p>
+
+                        <h2>
+                            Select Contestant
+                        </h2>
+
+                        <p>
+                            Contestants registered for the
+                            selected category will appear here.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="contestant">
+                            Contestant *
+                        </label>
+
+                        <select
+                            id="contestant"
+                            name="contestant"
+                            required
+                            disabled
+                        >
+
+                            <option value="">
+                                Select a category first
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div id="contestantInfo">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- VOTES -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">
+                            STEP 3
+                        </p>
+
+                        <h2>
+                            Choose Number of Votes
+                        </h2>
+
+                        <p>
+                            Each vote costs ₦100.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="votes">
+                            Number of Votes *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="votes"
+                            name="votes"
+                            min="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="payment-summary">
+
+                        <div>
+
+                            <span>
+                                Cost Per Vote
+                            </span>
+
+                            <strong>
+                                ₦100
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="voteTotal">
+                                ₦100
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- VOTER INFORMATION -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <p class="eyebrow">
+                            STEP 4
+                        </p>
+
+                        <h2>
+                            Voter Information
+                        </h2>
+
+                        <p>
+                            Enter your details to continue
+                            to payment.
+                        </p>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="example@email.com"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="08012345678"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    id="voteButton"
+                    class="btn primary"
+                    disabled
+                >
+                    Proceed to Payment
+                </button>
+
+
+                <p
+                    id="formMessage"
+                    class="form-message"
+                ></p>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+
+                © 2026 CYON St. Bernard Parish.
+                All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    
+    <script src="awards-vote.js"></script>
+
+</body>
+
+</html>

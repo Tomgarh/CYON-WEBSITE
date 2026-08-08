@@ -563,6 +563,351 @@ if (
     }
 
 }
+// ==========================================
+// AWARDS VOTING — INITIALIZE VOTE
+// ==========================================
+
+if (
+    request.method === "POST" &&
+    url.pathname === "/awards/initialize-vote"
+) {
+
+    try {
+
+        const body = await request.json();
+
+        const {
+            contestantId,
+            category,
+            votes,
+            email,
+            phone
+        } = body;
+
+
+        // ==========================================
+        // BASIC VALIDATION
+        // ==========================================
+
+        if (
+            !contestantId ||
+            !category ||
+            !votes ||
+            !email ||
+            !phone
+        ) {
+
+            return Response.json(
+                {
+                    error:
+                        "contestantId, category, votes and email are required."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VALIDATE VOTE COUNT
+        // ==========================================
+
+        const voteCount = Number(votes);
+
+        if (
+            !Number.isInteger(voteCount) ||
+            voteCount <= 0
+        ) {
+
+            return Response.json(
+                {
+                    error:
+                        "Vote count must be a positive whole number."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VALID AWARD CATEGORIES
+        // ==========================================
+
+        const validCategories = [
+            "best_executive",
+            "best_group_leader",
+            "most_active_male",
+            "most_active_female",
+            "most_social_male",
+            "most_social_female",
+            "male_entrepreneur",
+            "female_entrepreneur"
+        ];
+
+
+        if (!validCategories.includes(category)) {
+
+            return Response.json(
+                {
+                    error:
+                        "Invalid award category."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // GET GOOGLE ACCESS TOKEN
+        // ==========================================
+
+        const accessToken =
+            await getGoogleAccessToken(env);
+
+
+        // ==========================================
+        // GET CONTESTANT FROM FIRESTORE
+        // ==========================================
+
+        const contestantResponse =
+            await fetch(
+
+                `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations/${encodeURIComponent(contestantId)}`,
+
+                {
+                    method: "GET",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${accessToken}`
+                    }
+                }
+
+            );
+
+
+        const contestant =
+            await contestantResponse.json();
+
+
+        // ==========================================
+        // CONTESTANT NOT FOUND
+        // ==========================================
+
+        if (!contestantResponse.ok) {
+
+            return Response.json(
+                {
+                    error:
+                        "Contestant not found."
+                },
+                {
+                    status: 404,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // CHECK PAYMENT STATUS
+        // ==========================================
+
+        const paymentStatus =
+            contestant.fields?.paymentStatus?.stringValue;
+
+
+        if (paymentStatus !== "paid") {
+
+            return Response.json(
+                {
+                    error:
+                        "This contestant is not eligible for voting."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // CHECK CATEGORY
+        // ==========================================
+
+        const registeredCategories =
+            contestant.fields?.categories?.arrayValue?.values || [];
+
+
+        const categoryIsRegistered =
+            registeredCategories.some(
+                item =>
+                    item.stringValue === category
+            );
+
+
+        if (!categoryIsRegistered) {
+
+            return Response.json(
+                {
+                    error:
+                        "This contestant is not registered for this award category."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VOTE PRICE
+        // ==========================================
+
+        const PRICE_PER_VOTE = 100;
+
+        const amount =
+            voteCount * PRICE_PER_VOTE;
+
+
+        // ==========================================
+        // INITIALIZE PAYSTACK
+        // ==========================================
+
+        const paystackResponse =
+            await fetch(
+
+                "https://api.paystack.co/transaction/initialize",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        Authorization:
+                            `Bearer ${env.PAYSTACK_SECRET}`,
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        email,
+
+                        // Paystack expects kobo
+                        amount:
+                            amount * 100,
+
+                        metadata: {
+
+                            type:
+                                "cyon_awards_vote",
+
+                            contestantId,
+
+                            category,
+
+                            votes:
+                                voteCount,
+
+                            phone,
+
+                            amount:
+
+                                amount
+
+                        },
+
+                        callback_url:
+
+                            "https://cyon-voting-worker.tomgarh.workers.dev/awards/verify-vote"
+
+                    })
+
+                }
+
+            );
+
+
+        const data =
+            await paystackResponse.json();
+
+
+        // ==========================================
+        // PAYSTACK ERROR
+        // ==========================================
+
+        if (!paystackResponse.ok) {
+
+            return Response.json(
+                {
+                    error:
+                        data.message ||
+                        "Unable to initialize voting payment."
+                },
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // RETURN PAYSTACK RESPONSE
+        // ==========================================
+
+        return Response.json(
+            data,
+            {
+                headers: corsHeaders
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Awards vote initialization error:",
+            error
+        );
+
+
+        return Response.json(
+            {
+                error:
+                    error.message ||
+                    "Something went wrong while initializing the vote."
+            },
+            {
+                status: 500,
+                headers: corsHeaders
+            }
+        );
+
+    }
+
+}
 
 // ==========================================
 // AWARDS PAYMENT VERIFICATION
@@ -777,8 +1122,16 @@ if (
                         },
 
                         votes: {
-                            integerValue:
-                                "0"
+                            mapValue: {
+                                fields: Object.fromEntries(
+                                    categories.map(category => [
+                                        category,
+                                        {
+                                            integerValue: "0"
+                                        }
+                                    ])
+                                )
+                            }
                         },
 
                         createdAt: {
@@ -1658,6 +2011,443 @@ if (
 		);
 
 	}
+
+}
+// ==========================================
+// AWARDS VERIFY VOTE
+// ==========================================
+
+if (
+    request.method === "GET" &&
+    url.pathname === "/awards/verify-vote"
+) {
+
+    try {
+
+        const reference =
+            url.searchParams.get("reference");
+
+        if (!reference) {
+
+            return new Response(
+                "Payment reference is missing.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VERIFY PAYMENT WITH PAYSTACK
+        // ==========================================
+
+        const paystackResponse = await fetch(
+            `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+            {
+                method: "GET",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${env.PAYSTACK_SECRET}`
+                }
+            }
+        );
+
+
+        const payment =
+            await paystackResponse.json();
+
+
+        // ==========================================
+        // CHECK PAYMENT
+        // ==========================================
+
+        if (
+            !paystackResponse.ok ||
+            !payment.status ||
+            payment.data?.status !== "success"
+        ) {
+
+            return new Response(
+                "Payment could not be verified.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // GET METADATA
+        // ==========================================
+
+        const metadata =
+            payment.data?.metadata;
+
+
+        // ==========================================
+        // MAKE SURE THIS IS AN AWARDS VOTE
+        // ==========================================
+
+        if (
+            !metadata ||
+            metadata.type !== "cyon_awards_vote"
+        ) {
+
+            return new Response(
+                "Invalid awards voting payment.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        const contestantId =
+            metadata.contestantId;
+
+        const category =
+            metadata.category;
+
+        const voteCount =
+            Number(metadata.votes);
+
+
+        // ==========================================
+        // BASIC VALIDATION
+        // ==========================================
+
+        if (
+            !contestantId ||
+            !category ||
+            !Number.isInteger(voteCount) ||
+            voteCount <= 0
+        ) {
+
+            return new Response(
+                "Invalid voting information.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+    
+
+
+        // ==========================================
+        // VALID AWARD CATEGORIES
+        // ==========================================
+
+        const validCategories = [
+            "best_executive",
+            "best_group_leader",
+            "most_active_male",
+            "most_active_female",
+            "most_social_male",
+            "most_social_female",
+            "male_entrepreneur",
+            "female_entrepreneur"
+        ];
+
+
+        if (!validCategories.includes(category)) {
+
+            return new Response(
+                "Invalid award category.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // VERIFY PAYMENT AMOUNT
+        // ₦100 PER VOTE
+        // ==========================================
+
+        const expectedAmount =
+            voteCount * 100 * 100;
+
+
+        if (
+            Number(payment.data.amount) !==
+            expectedAmount
+        ) {
+
+            return new Response(
+                "Payment amount does not match vote quantity.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // GET GOOGLE ACCESS TOKEN
+        // ==========================================
+
+        const accessToken =
+            await getGoogleAccessToken(env);
+
+
+        // ==========================================
+        // GET CONTESTANT
+        // ==========================================
+
+        const contestantResponse =
+            await fetch(
+                `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations/${contestantId}`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${accessToken}`
+                    }
+                }
+            );
+
+
+        const contestant =
+            await contestantResponse.json();
+
+
+        if (!contestantResponse.ok) {
+
+            return new Response(
+                "Contestant not found.",
+                {
+                    status: 404,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // MAKE SURE CONTESTANT IS REGISTERED
+        // FOR THIS CATEGORY
+        // ==========================================
+
+        const registeredCategories =
+            contestant.fields?.categories?.arrayValue?.values || [];
+
+
+        const isRegistered =
+            registeredCategories.some(
+                item =>
+                    item.stringValue === category
+            );
+
+
+        if (!isRegistered) {
+
+            return new Response(
+                "Contestant is not registered for this category.",
+                {
+                    status: 400,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // INCREMENT CATEGORY VOTES
+        // ==========================================
+
+        const contestantPath =
+            `projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_registrations/${contestantId}`;
+
+
+        const voteFieldPath =
+            `votes.${category}`;
+
+
+        const updateResponse =
+            await fetch(
+                `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents:commit`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${accessToken}`,
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        writes: [
+
+                            {
+
+                                transform: {
+
+                                    document:
+                                        contestantPath,
+
+                                    fieldTransforms: [
+
+                                        {
+
+                                            fieldPath:
+                                                voteFieldPath,
+
+                                            increment: {
+
+                                                integerValue:
+                                                    String(voteCount)
+
+                                            }
+
+                                        }
+
+                                    ]
+
+                                }
+
+                            }
+
+                        ]
+
+                    })
+
+                }
+            );
+
+
+        const updateData =
+            await updateResponse.json();
+
+
+        if (!updateResponse.ok) {
+
+            console.error(
+                "Awards vote update error:",
+                updateData
+            );
+
+            return new Response(
+                "Vote payment verified, but votes could not be recorded.",
+                {
+                    status: 500,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // SAVE VOTE PAYMENT
+        // ==========================================
+
+        await fetch(
+            `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_votes/${reference}`,
+            {
+                method: "PATCH",
+
+                headers: {
+                    Authorization:
+                        `Bearer ${accessToken}`,
+
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    fields: {
+
+                        paymentReference: {
+                            stringValue:
+                                reference
+                        },
+
+                        contestantId: {
+                            stringValue:
+                                contestantId
+                        },
+
+                        category: {
+                            stringValue:
+                                category
+                        },
+
+                        votes: {
+                            integerValue:
+                                String(voteCount)
+                        },
+
+                        amount: {
+                            integerValue:
+                                String(payment.data.amount)
+                        },
+
+                        paymentStatus: {
+                            stringValue:
+                                "paid"
+                        },
+
+                        createdAt: {
+                            timestampValue:
+                                new Date().toISOString()
+                        }
+
+                    }
+
+                })
+
+            }
+        );
+
+
+        // ==========================================
+        // SEND USER BACK TO WEBSITE
+        // ==========================================
+
+        return Response.redirect(
+            `https://tomgarh.github.io/CYON-WEBSITE/awards-vote-success.html?reference=${encodeURIComponent(reference)}`,
+            302
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Awards vote verification error:",
+            error
+        );
+
+        return new Response(
+            "Something went wrong while verifying the vote.",
+            {
+                status: 500,
+                headers: corsHeaders
+            }
+        );
+
+    }
 
 }
 
