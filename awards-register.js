@@ -260,40 +260,35 @@ form.addEventListener("submit", async (event) => {
 
         fullName:
             document.getElementById("fullName").value.trim(),
-
+    
         gender:
             genderSelect.value,
-
+    
         dob:
             document.getElementById("dob").value,
-
+    
         phone:
             document.getElementById("phone").value.trim(),
-
+    
         email:
             document.getElementById("email").value.trim(),
-
+    
         occupation:
             document.getElementById("occupation").value.trim(),
-
+    
         address:
             document.getElementById("address").value.trim(),
-
-        unit:
-            document.getElementById("unit").value,
-
+    
         bio:
             document.getElementById("bio").value.trim(),
-
+    
         categories:
             selectedCategories,
-
+    
         registrationFee:
             amount
-
+    
     };
-
-
     // ==========================================
 // SEND REGISTRATION TO CLOUDFLARE WORKER
 // ==========================================

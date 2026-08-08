@@ -283,7 +283,6 @@ if (
             email,
             occupation,
             address,
-            unit,
             bio,
             categories
         } = body;
@@ -301,7 +300,6 @@ if (
             !email ||
             !occupation ||
             !address ||
-            !unit ||
             !bio ||
             !Array.isArray(categories) ||
             categories.length === 0
@@ -491,7 +489,6 @@ if (
                         phone,
                         occupation,
                         address,
-                        unit,
                         bio,
                         categories,
 
@@ -748,10 +745,6 @@ if (
                                 metadata.address
                         },
 
-                        unit: {
-                            stringValue:
-                                metadata.unit
-                        },
 
                         bio: {
                             stringValue:
