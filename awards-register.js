@@ -5,9 +5,16 @@
 // Registration fee per category
 const PRICE_PER_CATEGORY = 1000;
 
+// Cloudinary
+const CLOUDINARY_CLOUD_NAME = "t71rt123";
+const CLOUDINARY_UPLOAD_PRESET = "cyon-awards";
+
+
 // Form elements
 const form = document.getElementById("awardsRegistrationForm");
 const genderSelect = document.getElementById("gender");
+const photoInput = document.getElementById("photo");
+
 const categoryCheckboxes = document.querySelectorAll(
     'input[name="categories"]'
 );
@@ -17,7 +24,6 @@ const registrationTotal = document.getElementById("registrationTotal");
 const registerButton = document.getElementById("registerButton");
 const termsCheckbox = document.getElementById("terms");
 const formMessage = document.getElementById("formMessage");
-
 
 // ==========================================
 // UPDATE CATEGORY AVAILABILITY
@@ -52,7 +58,6 @@ function updateCategoryAvailability() {
             }
         }
 
-
         // Female category
         if (requiredGender === "female") {
 
@@ -78,7 +83,6 @@ function updateCategoryAvailability() {
 
     updateTotal();
 }
-
 
 // ==========================================
 // EXECUTIVE / GROUP LEADER RULE
@@ -109,7 +113,6 @@ function enforceLeadershipRule(changedCheckbox) {
     updateTotal();
 }
 
-
 // ==========================================
 // CALCULATE TOTAL
 // ==========================================
@@ -136,7 +139,6 @@ function updateTotal() {
     updateButtonState();
 }
 
-
 // ==========================================
 // CHECK FORM STATE
 // ==========================================
@@ -160,7 +162,6 @@ function updateButtonState() {
         !acceptedTerms;
 }
 
-
 // ==========================================
 // CATEGORY CHANGE
 // ==========================================
@@ -177,7 +178,6 @@ categoryCheckboxes.forEach((checkbox) => {
 
 });
 
-
 // ==========================================
 // GENDER CHANGE
 // ==========================================
@@ -187,7 +187,6 @@ genderSelect.addEventListener("change", () => {
     updateCategoryAvailability();
 
 });
-
 
 // ==========================================
 // TERMS CHECKBOX
@@ -199,7 +198,6 @@ termsCheckbox.addEventListener("change", () => {
 
 });
 
-
 // ==========================================
 // FORM INPUT VALIDATION
 // ==========================================
@@ -210,6 +208,50 @@ form.addEventListener("input", () => {
 
 });
 
+// ==========================================
+// CLOUDINARY PHOTO UPLOAD
+// ==========================================
+
+async function uploadPhotoToCloudinary(file) {
+
+    const cloudinaryUrl =
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+    const uploadData = new FormData();
+
+    uploadData.append("file", file);
+
+    uploadData.append(
+        "upload_preset",
+        CLOUDINARY_UPLOAD_PRESET
+    );
+
+    const response = await fetch(
+        cloudinaryUrl,
+        {
+            method: "POST",
+            body: uploadData
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+        console.error(
+            "Cloudinary upload error:",
+            data
+        );
+
+        throw new Error(
+            data.error?.message ||
+            "Unable to upload contestant photo."
+        );
+
+    }
+
+    return data.secure_url;
+}
 
 // ==========================================
 // FORM SUBMISSION
@@ -219,8 +261,10 @@ form.addEventListener("submit", async (event) => {
 
     event.preventDefault();
 
+    // ==========================================
+    // GET SELECTED CATEGORIES
+    // ==========================================
 
-    // Get selected categories
     const selectedCategories = [];
 
     categoryCheckboxes.forEach((checkbox) => {
@@ -235,8 +279,10 @@ form.addEventListener("submit", async (event) => {
 
     });
 
+    // ==========================================
+    // MAKE SURE CATEGORY IS SELECTED
+    // ==========================================
 
-    // Make sure at least one category is selected
     if (selectedCategories.length === 0) {
 
         showMessage(
@@ -245,157 +291,216 @@ form.addEventListener("submit", async (event) => {
         );
 
         return;
-
     }
 
+    // ==========================================
+    // MAKE SURE PHOTO EXISTS
+    // ==========================================
 
-    // Calculate payment amount
+    const photoFile = photoInput.files[0];
+
+    if (!photoFile) {
+
+        showMessage(
+            "Please upload your contestant photo.",
+            "error"
+        );
+
+        return;
+    }
+
+    // ==========================================
+    // CHECK PHOTO TYPE
+    // ==========================================
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(photoFile.type)) {
+
+        showMessage(
+            "Please upload a JPG, PNG, or WebP image.",
+            "error"
+        );
+
+        return;
+    }
+
+    // ==========================================
+    // CHECK PHOTO SIZE
+    // ==========================================
+
+    const maxFileSize = 5 * 1024 * 1024;
+
+    if (photoFile.size > maxFileSize) {
+
+        showMessage(
+            "Photo must be 5MB or smaller.",
+            "error"
+        );
+
+        return;
+    }
+
+    // ==========================================
+    // CALCULATE PAYMENT
+    // ==========================================
+
     const amount =
         selectedCategories.length *
         PRICE_PER_CATEGORY;
 
-
-    // Collect form data
-    const formData = {
-
-        fullName:
-            document.getElementById("fullName").value.trim(),
-    
-        gender:
-            genderSelect.value,
-    
-        dob:
-            document.getElementById("dob").value,
-    
-        phone:
-            document.getElementById("phone").value.trim(),
-    
-        email:
-            document.getElementById("email").value.trim(),
-    
-        occupation:
-            document.getElementById("occupation").value.trim(),
-    
-        address:
-            document.getElementById("address").value.trim(),
-    
-        bio:
-            document.getElementById("bio").value.trim(),
-    
-        categories:
-            selectedCategories,
-    
-        registrationFee:
-            amount
-    
-    };
     // ==========================================
-// SEND REGISTRATION TO CLOUDFLARE WORKER
-// ==========================================
-
-registerButton.disabled = true;
-registerButton.textContent = "Processing...";
-
-try {
-
-    const response = await fetch(
-        "https://cyon-voting-worker.tomgarh.workers.dev/awards/initialize-registration",
-        {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(formData)
-        }
-    );
-
-
-    const data = await response.json();
-
-
-    // ==========================================
-    // HANDLE ERROR
+    // DISABLE BUTTON
     // ==========================================
 
-    if (!response.ok || !data.status) {
+    registerButton.disabled = true;
+    registerButton.textContent = "Uploading Photo...";
 
-        throw new Error(
-            data.error ||
-            data.message ||
-            "Unable to initialize registration."
+    try {
+
+        // ==========================================
+        // UPLOAD PHOTO TO CLOUDINARY
+        // ==========================================
+
+        const photoUrl =
+            await uploadPhotoToCloudinary(photoFile);
+
+        console.log(
+            "Cloudinary photo URL:",
+            photoUrl
         );
 
+        // ==========================================
+        // COLLECT FORM DATA
+        // ==========================================
+
+        const formData = {
+
+            fullName:
+                document.getElementById("fullName")
+                    .value
+                    .trim(),
+
+            gender:
+                genderSelect.value,
+
+            dob:
+                document.getElementById("dob")
+                    .value,
+
+            phone:
+                document.getElementById("phone")
+                    .value
+                    .trim(),
+
+            email:
+                document.getElementById("email")
+                    .value
+                    .trim(),
+
+            occupation:
+                document.getElementById("occupation")
+                    .value
+                    .trim(),
+
+            address:
+                document.getElementById("address")
+                    .value
+                    .trim(),
+
+            bio:
+                document.getElementById("bio")
+                    .value
+                    .trim(),
+
+            categories:
+                selectedCategories,
+
+            registrationFee:
+                amount,
+
+            photoUrl:
+                photoUrl
+        };
+
+        // ==========================================
+        // SEND REGISTRATION TO CLOUDFLARE WORKER
+        // ==========================================
+
+        registerButton.textContent =
+            "Processing Payment...";
+
+        const response = await fetch(
+            "https://cyon-voting-worker.tomgarh.workers.dev/awards/initialize-registration",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(formData)
+            }
+        );
+
+        const data =
+            await response.json();
+
+        // ==========================================
+        // HANDLE ERROR
+        // ==========================================
+
+        if (!response.ok || !data.status) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Unable to initialize registration."
+            );
+        }
+
+        // ==========================================
+        // SEND CONTESTANT TO PAYSTACK
+        // ==========================================
+
+        if (
+            data.data &&
+            data.data.authorization_url
+        ) {
+
+            window.location.href =
+                data.data.authorization_url;
+
+            return;
+        }
+
+        throw new Error(
+            "Paystack did not return a payment link."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Awards registration error:",
+            error
+        );
+
+        showMessage(
+            error.message ||
+            "Something went wrong. Please try again.",
+            "error"
+        );
+
+        registerButton.disabled = false;
+
+        registerButton.textContent =
+            "Proceed to Payment";
     }
-
-
-    // ==========================================
-    // SEND CONTESTANT TO PAYSTACK
-    // ==========================================
-
-    if (data.data && data.data.authorization_url) {
-
-        window.location.href =
-            data.data.authorization_url;
-
-        return;
-
-    }
-
-
-    throw new Error(
-        "Paystack did not return a payment link."
-    );
-
-
-} catch (error) {
-
-    console.error(
-        "Awards registration error:",
-        error
-    );
-
-    showMessage(
-        error.message ||
-        "Something went wrong. Please try again.",
-        "error"
-    );
-
-    registerButton.disabled = false;
-    registerButton.textContent = "Register & Pay";
-
-}
-
-    /*
-    ==========================================
-    NEXT STEP — PAYSTACK
-    ==========================================
-
-    We will send formData to the Cloudflare
-    Worker here.
-
-    The Worker will:
-
-    1. Validate the categories
-    2. Calculate the amount again
-    3. Initialize Paystack
-    4. Return the authorization URL
-
-    We will NOT trust the amount calculated
-    by the browser.
-
-    ==========================================
-    */
-
-
-    showMessage(
-        `Registration information ready. Total: ₦${amount.toLocaleString("en-NG")}`,
-        "success"
-    );
-
 });
-
 
 // ==========================================
 // MESSAGE FUNCTION
@@ -407,9 +512,7 @@ function showMessage(message, type) {
 
     formMessage.className =
         `form-message ${type}`;
-
 }
-
 
 // ==========================================
 // INITIAL STATE

@@ -275,35 +275,37 @@ if (
 
         const body = await request.json();
 
-        const {
-            fullName,
-            gender,
-            dob,
-            phone,
-            email,
-            occupation,
-            address,
-            bio,
-            categories
-        } = body;
+		const {
+			fullName,
+			gender,
+			dob,
+			phone,
+			email,
+			occupation,
+			address,
+			bio,
+			categories,
+			photoUrl
+		} = body;
 
 
         // ==========================================
         // BASIC VALIDATION
         // ==========================================
 
-        if (
-            !fullName ||
-            !gender ||
-            !dob ||
-            !phone ||
-            !email ||
-            !occupation ||
-            !address ||
-            !bio ||
-            !Array.isArray(categories) ||
-            categories.length === 0
-        ) {
+		if (
+			!fullName ||
+			!gender ||
+			!dob ||
+			!phone ||
+			!email ||
+			!occupation ||
+			!address ||
+			!bio ||
+			!photoUrl ||
+			!Array.isArray(categories) ||
+			categories.length === 0
+		) {
 
             return Response.json(
                 {
@@ -479,26 +481,26 @@ if (
                     // Paystack expects kobo
                     amount: amount * 100,
 
-                    metadata: {
+					metadata: {
 
-                        type: "cyon_awards_registration",
-
-                        fullName,
-                        gender,
-                        dob,
-                        phone,
-                        occupation,
-                        address,
-                        bio,
-                        categories,
-
-                        registrationFee:
-                            REGISTRATION_FEE,
-
-                        categoryCount:
-                            categories.length
-
-                    },
+						type: "cyon_awards_registration",
+					
+						fullName,
+						gender,
+						dob,
+						phone,
+						occupation,
+						address,
+						bio,
+						photoUrl,
+						categories,
+					
+						registrationFee:
+							REGISTRATION_FEE,
+					
+						categoryCount:
+							categories.length
+					},
 
                     callback_url:
     					"https://cyon-voting-worker.tomgarh.workers.dev/awards/verify-payment"
@@ -750,6 +752,10 @@ if (
                             stringValue:
                                 metadata.bio
                         },
+						photoUrl: {
+							stringValue:
+								metadata.photoUrl
+						},
 
                         categories: {
                             arrayValue: {
