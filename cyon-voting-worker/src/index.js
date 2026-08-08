@@ -2205,6 +2205,49 @@ if (
             await getGoogleAccessToken(env);
 
 
+            // ==========================================
+// PREVENT DUPLICATE PAYMENT PROCESSING
+// ==========================================
+
+const voteRecordResponse =
+await fetch(
+    `https://firestore.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/databases/(default)/documents/cyon_awards_votes/${encodeURIComponent(reference)}`,
+    {
+        method: "GET",
+
+        headers: {
+            Authorization:
+                `Bearer ${accessToken}`
+        }
+    }
+);
+
+
+// ==========================================
+// PAYMENT ALREADY PROCESSED
+// ==========================================
+
+if (voteRecordResponse.ok) {
+
+const existingVote =
+    await voteRecordResponse.json();
+
+
+const existingStatus =
+    existingVote.fields?.paymentStatus?.stringValue;
+
+
+if (existingStatus === "paid") {
+
+    return Response.redirect(
+        `https://tomgarh.github.io/CYON-WEBSITE/awards-vote-success.html?reference=${encodeURIComponent(reference)}`,
+        302
+    );
+
+}
+
+}
+
         // ==========================================
         // GET CONTESTANT
         // ==========================================
